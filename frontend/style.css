@@ -1520,3 +1520,205 @@ button:disabled {
 #portal-methods {
   margin-top: 24px;
 }
+
+
+/* === Odoo 17/18 Tactile Micro-Interactions & Form Configurator === */
+
+.btn .spinner-inline {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  border-top-color: #FFFFFF;
+  animation: odooBtnSpin 0.65s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.btn-secondary .spinner-inline {
+  border-color: rgba(33, 37, 41, 0.2);
+  border-top-color: var(--odoo-primary);
+}
+
+.o_arrow_button.o_arrow_confirmed {
+  background-color: #1D4ED8;
+  color: #FFFFFF;
+  border-color: #1D4ED8;
+}
+
+/* Live Password Validation Checklist */
+.pwd-hints-box {
+  background: #F8F9FA;
+  border: 1px solid var(--odoo-border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  font-size: 0.75rem;
+}
+
+.pwd-hints-title {
+  font-weight: 700;
+  color: var(--odoo-text-main);
+  margin-bottom: 6px;
+}
+
+.pwd-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--odoo-text-muted);
+  margin-bottom: 3px;
+  transition: color 0.15s ease;
+}
+
+.pwd-hint.valid {
+  color: var(--odoo-success);
+  font-weight: 600;
+}
+
+.pwd-hint.valid::before {
+  content: "✓";
+  color: var(--odoo-success);
+}
+
+.pwd-hint.invalid {
+  color: var(--odoo-danger);
+}
+
+.pwd-hint.invalid::before {
+  content: "✕";
+  color: var(--odoo-danger);
+}
+
+/* 2. Authentic Odoo Toast Notification System */
+.o_toast_container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.o_toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 320px;
+  max-width: 440px;
+  padding: 12px 18px;
+  background: #FFFFFF;
+  border: 1px solid var(--odoo-border);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  font-size: 0.875rem;
+  color: var(--odoo-text-main);
+  animation: odooToastSlideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.o_toast.success {
+  border-left: 4px solid var(--odoo-success);
+}
+
+.o_toast.error {
+  border-left: 4px solid var(--odoo-danger);
+}
+
+.o_toast.warning {
+  border-left: 4px solid var(--odoo-warning);
+}
+
+.o_toast.info {
+  border-left: 4px solid var(--odoo-teal);
+}
+
+.o_toast_icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.o_toast_body {
+  flex: 1;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.o_toast_close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--odoo-text-muted);
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+}
+
+.o_toast_close:hover {
+  opacity: 1;
+}
+
+.o_toast_dismissing {
+  opacity: 0 !important;
+  transform: translateX(100%) !important;
+}
+
+.o_calc_box {
+  background: #F8F9FA;
+  border: 1px solid var(--odoo-border);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-bottom: 24px;
+}
+
+.o_badge_odoo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background-color: #FBF0F6;
+  border: 1px solid #714B67;
+  color: #714B67;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* 4. Modal Overlays & Cards */
+.o_modal_overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: odooModalFadeIn 0.15s ease;
+}
+
+.o_modal_card {
+  background: #FFFFFF;
+  border-radius: 8px;
+  border: 1px solid var(--odoo-border);
+  width: 100%;
+  max-width: 540px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  animation: odooModalSlideUp 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 5. Discount Order Line Highlight */
+.o_discount_tr {
+  background: #F0FDF4 !important;
+  color: #166534;
+  animation: odooDiscountHighlight 0.25s ease;
+}

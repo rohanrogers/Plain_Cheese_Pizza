@@ -18,6 +18,17 @@ from dotenv import load_dotenv
 load_dotenv()
 os.environ["SMTP_HOST"] = ""
 os.environ["LOCAL_MAILBOX"] = "true"
+raw_db_url = os.environ.get("DATABASE_URL", "")
+if raw_db_url.startswith("postgresql://") and not raw_db_url.startswith("postgresql+"):
+    try:
+        import psycopg2
+    except ImportError:
+        try:
+            import psycopg
+            raw_db_url = "postgresql+psycopg://" + raw_db_url[len("postgresql://"):]
+            os.environ["DATABASE_URL"] = raw_db_url
+        except ImportError:
+            pass
 url = make_url(os.environ["DATABASE_URL"])
 if url.get_backend_name() != "postgresql":
     raise RuntimeError("These tests require local PostgreSQL")

@@ -27,8 +27,10 @@ Chart.js and its license are vendored under frontend/vendor; there is no fronten
 - Billing preview/execution, missed-period catch-up, line taxes/discounts, invoice snapshots, period de-duplication, confirmation/cancellation/print/email.
 - Partial/full manual payments with balance validation, unique references and an audit ledger.
 - Live MRR/ARR estimates, invoice/collection/receivable totals, aging, pagination and PostgreSQL monthly invoice summaries.
-
-The full catalog/quotation/lifecycle editing UI remains assigned to its team owner. Read adapters and backend scaffolding exist. This repository does not yet represent a finished whole hackathon submission.
+- **Module 2: Dynamic Product & Variant Catalog**: Base + variant modifier calculation (`price_modifier` in BigInteger cents, e.g. +$560.00 = `56000` cents), nested variant arrays, and dynamic attribute management.
+- **Module 3: Quotation Templates & 5-Stage Subscription Lifecycle**: Strict FSM (`DRAFT` ➔ `QUOTATION` ➔ `CONFIRMED` ➔ `ACTIVE` ➔ `CLOSED`), one-click spawning from preset templates with validity periods, automatic HTTP 422 quotation expiry enforcement, and line-item Price Freezing upon confirmation.
+- **Module 5: Standalone Discount & Promotion Rule Engine**: Live validation endpoint (`POST /api/discounts/validate`) verifying date windows, maximum usage limits, minimum order spend, and minimum quantity thresholds with real-time integer cents deduction.
+- **Odoo 17/18 Light Theme UI**: Authentic purple navigation bar (`#714B67`), 9-dot App Drawer, Subscriptions Kanban board, Document Sheet (`.o_form_sheet`) with 5-stage status ribbon, live variant simulator, and tactile 120ms micro-interactions.
 
 ## Test
 
@@ -37,9 +39,11 @@ npm run check
 npm test
 # IAM only:
 npm run test:iam
+# Modules 2, 3, 5 (Catalog, Quotation Templates, FSM Price Freeze, Discount Validator):
+python -m unittest backend.tests.test_modules_2_3_5 -v
 ```
 
-The 22 PostgreSQL integration tests create/drop a random isolated schema and do not clear application data. They cover auth/security regressions, permissions, billing correctness, concurrent retries, rollback and reporting. See IAM_INTEGRATION.md for definitions, migration behavior and validation details.
+The comprehensive backend test suite covers authentication/security regressions, permissions, billing correctness, dynamic product variants, quotation templates, price freezing guarantees, discount validation rules, concurrent retries, rollback and reporting. See IAM_INTEGRATION.md for definitions, migration behavior and validation details.
 
 ## Unattended billing
 
