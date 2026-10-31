@@ -21,13 +21,39 @@ END;
 $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION sync_finance_monthly_summary() RETURNS trigger AS $$
 BEGIN
+    -- Draft/cancelled documents contribute nothing to the issued-revenue cache.
+    -- Transition tables let us check the affected statement once, including bulk
+    -- writes, without rebuilding every customer's history for each draft insert.
+    IF TG_OP = 'INSERT' THEN
+        IF NOT EXISTS (SELECT 1 FROM new_invoice_rows WHERE state IN ('CONFIRMED', 'PAID')) THEN
+            RETURN NULL;
+        END IF;
+    ELSIF TG_OP = 'DELETE' THEN
+        IF NOT EXISTS (SELECT 1 FROM old_invoice_rows WHERE state IN ('CONFIRMED', 'PAID')) THEN
+            RETURN NULL;
+        END IF;
+    ELSE
+        IF NOT EXISTS (SELECT 1 FROM new_invoice_rows WHERE state IN ('CONFIRMED', 'PAID'))
+           AND NOT EXISTS (SELECT 1 FROM old_invoice_rows WHERE state IN ('CONFIRMED', 'PAID')) THEN
+            RETURN NULL;
+        END IF;
+    END IF;
     PERFORM refresh_finance_monthly_summary();
     RETURN NULL;
 END;
 $$ LANGUAGE plpgsql;
 DROP TRIGGER IF EXISTS finance_monthly_summary ON invoices;
-CREATE TRIGGER finance_monthly_summary
-AFTER INSERT OR UPDATE OR DELETE ON invoices
+DROP TRIGGER IF EXISTS finance_monthly_summary_insert ON invoices;
+DROP TRIGGER IF EXISTS finance_monthly_summary_update ON invoices;
+DROP TRIGGER IF EXISTS finance_monthly_summary_delete ON invoices;
+CREATE TRIGGER finance_monthly_summary_insert
+AFTER INSERT ON invoices REFERENCING NEW TABLE AS new_invoice_rows
+FOR EACH STATEMENT EXECUTE FUNCTION sync_finance_monthly_summary();
+CREATE TRIGGER finance_monthly_summary_update
+AFTER UPDATE ON invoices REFERENCING NEW TABLE AS new_invoice_rows OLD TABLE AS old_invoice_rows
+FOR EACH STATEMENT EXECUTE FUNCTION sync_finance_monthly_summary();
+CREATE TRIGGER finance_monthly_summary_delete
+AFTER DELETE ON invoices REFERENCING OLD TABLE AS old_invoice_rows
 FOR EACH STATEMENT EXECUTE FUNCTION sync_finance_monthly_summary();
 SELECT refresh_finance_monthly_summary();
 """

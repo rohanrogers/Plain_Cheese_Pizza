@@ -99,13 +99,13 @@ function navigateTo(viewName) {
   if (!currentUser && viewName !== "login") viewName = "login";
   if (
     currentUser?.role === "CUSTOMER" &&
-    !["portal", "invoice-form", "login", "settings"].includes(viewName)
+    !["portal", "form", "invoice-form", "login", "settings"].includes(viewName)
   )
     viewName = "portal";
   if (viewName === "form" && !currentSubscription)
     return notify("Choose a subscription first.");
   currentActiveView = viewName;
-  if (viewName === "settings") renderAccountSettings().catch(notify);
+  if (viewName === "settings") renderSettingsView().catch(notify);
   const allViews = [
     "login",
     "dashboard",
@@ -705,7 +705,7 @@ async function renderPortal() {
     api("/subscriptions?page=" + portalSubscriptionPage),
   ]);
   $("portal-live").innerHTML =
-    `<h2>${esc(currentUser.name)}</h2><p>Active subscriptions ${d.active_subscriptions} · Outstanding ${money(d.outstanding)}</p><p>Manual payments are recorded by staff. Contact your billing team to update payment details.</p><h3>Subscriptions</h3>${subs.items.map((s) => `<p>${esc(s.number)} · ${esc(s.state)} · ${esc(s.plan_name)}</p>`).join("")}<div id="portal-subscription-pager" class="record-pager"></div><h3>Invoices</h3><table class="o_list_table"><tbody>${invoiceRows(inv.items, true)}</tbody></table><div id="portal-invoice-pager" class="record-pager"></div><button class="btn btn-secondary" onclick="navigateTo('settings')">Account security</button><div id="portal-methods"></div>`;
+    `<h2>${esc(currentUser.name)}</h2><p>Active subscriptions ${d.active_subscriptions} · Outstanding ${money(d.outstanding)}</p><p>Manual payments are recorded by staff. Contact your billing team to update payment details.</p><h3>Subscriptions</h3>${subs.items.map((s) => `<p><button class="record-link" onclick="openSubscription('${esc(s.id)}')">${esc(s.number)}</button> · ${esc(s.state)} · ${esc(s.plan_name)}</p>`).join("")}<div id="portal-subscription-pager" class="record-pager"></div><h3>Invoices</h3><table class="o_list_table"><tbody>${invoiceRows(inv.items, true)}</tbody></table><div id="portal-invoice-pager" class="record-pager"></div><button class="btn btn-secondary" onclick="navigateTo('settings')">Account security</button><div id="portal-methods"></div>`;
   pager(
     "portal-invoice-pager",
     portalInvoicePage,

@@ -567,6 +567,12 @@ def create_discount(
 ):
     if payload.product_id:
         require(db, Product, payload.product_id)
+    if (
+        db.query(Discount)
+        .filter(func.lower(Discount.name) == payload.name.lower())
+        .first()
+    ):
+        raise HTTPException(400, "A discount with this code already exists")
     item = Discount(**payload.model_dump())
     db.add(item)
     db.flush()
@@ -584,6 +590,12 @@ def edit_discount(
     item = require(db, Discount, id)
     if payload.product_id:
         require(db, Product, payload.product_id)
+    if (
+        db.query(Discount)
+        .filter(func.lower(Discount.name) == payload.name.lower(), Discount.id != id)
+        .first()
+    ):
+        raise HTTPException(400, "A discount with this code already exists")
     if payload.max_uses < item.uses:
         raise HTTPException(400, "Usage cap cannot be below uses already consumed")
     for k, v in payload.model_dump().items():
@@ -653,6 +665,20 @@ def validate_discount_endpoint(
                     "tax_id": None,
                 }
             )
+    if payload.plan_id:
+        plan = require(db, Plan, payload.plan_id)
+        if not payload.lines:
+            raise HTTPException(400, "Select product lines for a plan preview")
+        if plan.price:
+            lines = [
+                {
+                    "product_id": None,
+                    "description": plan.name + " · base plan fee",
+                    "unit_price": plan.price,
+                    "quantity": 1,
+                    "tax_id": None,
+                }
+            ] + lines
     taxes = {x.id: x for x in db.query(Tax).all()}
     day = payload.target_date or (
         subscription.next_billing_date if subscription else date.today()
@@ -760,6 +786,7 @@ def create_subscription_from_template(
         plan_id=template.plan_id,
         discount_id=payload.discount_id,
         starts_on=payload.starts_on or date.today(),
+        expires_on=payload.expires_on,
         payment_days=payload.payment_days,
         validity_days=template.validity_days,
         lines=inputs,
@@ -836,12 +863,7 @@ def subscriptions(
     }
 
 
-@app.post("/api/subscriptions", status_code=201)
-def create_subscription(
-    payload: SubscriptionInput,
-    user=Depends(operator),
-    db=Depends(db_session, scope="function"),
-):
+def subscription_values(db, payload):
     customer = require(db, User, payload.customer_id)
     if customer.role != "CUSTOMER":
         raise HTTPException(400, "Select a customer account")
@@ -872,9 +894,14 @@ def create_subscription(
                 "tax_id": None,
             },
         )
-    item = Subscription(
-        id=uid(),
-        number="SUB-" + uid()[:8].upper(),
+    if payload.discount_id:
+        discount = require(db, Discount, payload.discount_id)
+        calculated = amounts(
+            lines, discount, payload.starts_on, {t.id: t for t in db.query(Tax).all()}
+        )
+        if calculated["discount_reason"] != "Eligible":
+            raise HTTPException(400, calculated["discount_reason"])
+    return dict(
         customer_id=customer.id,
         plan_id=plan.id,
         discount_id=payload.discount_id,
@@ -884,10 +911,37 @@ def create_subscription(
         payment_days=payload.payment_days,
         next_billing_date=payload.starts_on,
         anchor_date=payload.starts_on,
+        cycle_index=0,
         interval=plan.interval,
         interval_count=plan.interval_count,
         lines=lines,
     )
+
+
+@app.post("/api/subscriptions/preview")
+def preview_subscription(
+    payload: SubscriptionInput,
+    user=Depends(operator),
+    db=Depends(db_session, scope="function"),
+):
+    values = subscription_values(db, payload)
+    discount = db.get(Discount, payload.discount_id) if payload.discount_id else None
+    return amounts(
+        values["lines"],
+        discount,
+        payload.starts_on,
+        {t.id: t for t in db.query(Tax).all()},
+    )
+
+
+@app.post("/api/subscriptions", status_code=201)
+def create_subscription(
+    payload: SubscriptionInput,
+    user=Depends(operator),
+    db=Depends(db_session, scope="function"),
+):
+    values = subscription_values(db, payload)
+    item = Subscription(id=uid(), number="SUB-" + uid()[:8].upper(), **values)
     db.add(item)
     db.flush()
     audit(
@@ -896,6 +950,34 @@ def create_subscription(
         item.id,
         "SUBSCRIPTION_CREATED",
         "Draft created; price and recurrence snapshot saved",
+    )
+    return sub_result(db, item)
+
+
+@app.put("/api/subscriptions/{id}")
+def edit_subscription(
+    id: str,
+    payload: SubscriptionInput,
+    user=Depends(operator),
+    db=Depends(db_session, scope="function"),
+):
+    item = require(db, Subscription, id)
+    if (
+        item.state not in ("DRAFT", "QUOTATION")
+        or db.query(Invoice).filter(Invoice.subscription_id == id).first()
+    ):
+        raise HTTPException(
+            400,
+            "Only an unbilled draft or quotation can be edited; confirmed prices are frozen",
+        )
+    for key, value in subscription_values(db, payload).items():
+        setattr(item, key, value)
+    audit(
+        db,
+        user,
+        id,
+        "SUBSCRIPTION_UPDATED",
+        "Quotation lines and terms updated before confirmation",
     )
     return sub_result(db, item)
 
@@ -986,6 +1068,13 @@ def transition(
             raise HTTPException(
                 400, "Choose a renewal end after today and the current term"
             )
+        # Paused/closed periods are not a retroactive billing obligation.
+        if previous in ("PAUSED", "CLOSED"):
+            while sub.next_billing_date < today:
+                sub.cycle_index += 1
+                sub.next_billing_date = period_date(
+                    sub.anchor_date, sub.interval, sub.interval_count, sub.cycle_index
+                )
         sub.expires_on = payload.expires_on
         sub.state = "ACTIVE"
     else:

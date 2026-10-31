@@ -1756,3 +1756,71 @@ button:disabled {
   color: #166534;
   animation: odooDiscountHighlight 0.25s ease;
 }
+
+/* Configuration and quotation editors share the app's spacing and colors. */
+.configuration-tabs,
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px 0;
+}
+.configuration-section {
+  margin-top: 24px;
+}
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.check-field {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+}
+.check-field input {
+  width: auto;
+}
+.quote-lines-table {
+  min-width: 760px;
+}
+.quote-lines-table .line-product {
+  min-width: 190px;
+}
+.quote-lines-table .line-variant {
+  min-width: 180px;
+}
+.quote-lines-table .line-quantity {
+  min-width: 75px;
+}
+#quote-error,
+#product-error,
+#renewal-error,
+#configuration-error {
+  color: #9c2635;
+  white-space: pre-line;
+}
+#renewal-form {
+  margin-top: 20px;
+}
+#customer-back-to-portal {
+  margin: 12px 0;
+}
+.configuration-section .o_list_table {
+  width: 100%;
+}
+#contract-info p {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .identity-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #quotation-builder,
+  #admin-configuration {
+    padding: 16px;
+  }
+  .form-actions .btn {
+    flex: 1 1 auto;
+  }
+}

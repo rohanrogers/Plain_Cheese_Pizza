@@ -31,7 +31,7 @@ jobs:
       - run: pip install ruff==0.11.13
       - run: ruff check backend --select E9,F63,F7,F82
       - run: npm ci --ignore-scripts --no-audit
-      - run: npx --no-install prettier --check frontend/app.js frontend/identity.js frontend/catalog.js frontend/index.html frontend/style.css
+      - run: npx --no-install prettier --check frontend/app.js frontend/identity.js frontend/catalog.js frontend/configuration.js frontend/index.html frontend/style.css
   backend-test-and-verify:
     name: Backend & IAM Verification (PostgreSQL)
     runs-on: ubuntu-latest
@@ -55,7 +55,7 @@ jobs:
           python-version: "3.11"
           cache: pip
       - run: pip install -r requirements.txt
-      - run: python -m unittest backend.tests.test_finance backend.tests.test_iam backend.tests.test_modules_2_3_5 backend.tests.test_regressions -v
+      - run: python -m unittest backend.tests.test_finance backend.tests.test_iam backend.tests.test_modules_2_3_5 backend.tests.test_regressions backend.tests.test_completion -v
   frontend-verify:
     name: Main frontend syntax and integration contracts
     runs-on: ubuntu-latest

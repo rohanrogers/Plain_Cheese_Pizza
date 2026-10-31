@@ -45,7 +45,7 @@ class FrontendContracts(unittest.TestCase):
             self.assertTrue((ROOT / "frontend" / src).is_file(), src)
         sources = "\n".join(
             (ROOT / "frontend" / x).read_text()
-            for x in ("app.js", "identity.js", "catalog.js")
+            for x in ("app.js", "identity.js", "catalog.js", "configuration.js")
         )
         for route in (
             "/analytics/dashboard",
@@ -56,9 +56,56 @@ class FrontendContracts(unittest.TestCase):
             self.assertNotIn(route, sources)
 
     def test_catalog_controls_exist(self):
+        for name in ("catalog.js", "configuration.js"):
+            source = (ROOT / "frontend" / name).read_text()
+            for key in re.findall(r'\$\("([^"\n]+)"\)', source):
+                self.assertIn(key, self.page.ids, f"{name} controller needs #{key}")
+
+    def test_customer_can_open_own_contract_screen(self):
+        source = (ROOT / "frontend/app.js").read_text()
+        script = (
+            """
+const elements = new Map();
+const document = {
+  addEventListener() {}, querySelectorAll() { return []; },
+  getElementById(id) { if (!elements.has(id)) elements.set(id, {style:{},classList:{toggle(){}}}); return elements.get(id); }
+};
+"""
+            + source
+            + """
+currentUser = {role:'CUSTOMER'}; currentSubscription={number:'SUB-OWN'};
+navigateTo('form');
+console.log(JSON.stringify({form:elements.get('view-form').style.display, portal:elements.get('view-portal').style.display, controls:elements.get('odoo-control-panel').style.display}));
+"""
+        )
+        result = subprocess.run(
+            ["node", "-e", script], text=True, capture_output=True, check=True
+        )
+        self.assertEqual(
+            json.loads(result.stdout),
+            {"form": "block", "portal": "none", "controls": "none"},
+        )
+
+    def test_quotation_collects_multiple_product_lines(self):
         source = (ROOT / "frontend/catalog.js").read_text()
-        for key in re.findall(r'\$\("([^"\n]+)"\)', source):
-            self.assertIn(key, self.page.ids, f"Catalog controller needs #{key}")
+        script = (
+            """
+const values = [{'.line-product':'p1','.line-variant':'v1','.line-quantity':'2'},{'.line-product':'p2','.line-variant':'','.line-quantity':'3'}];
+const $ = id => ({children:values.map(row => ({querySelector:selector => ({value:row[selector]})}))});
+"""
+            + source
+            + "\nconsole.log(JSON.stringify(quoteLines()));"
+        )
+        result = subprocess.run(
+            ["node", "-e", script], text=True, capture_output=True, check=True
+        )
+        self.assertEqual(
+            json.loads(result.stdout),
+            [
+                {"product_id": "p1", "variant_id": "v1", "quantity": 2},
+                {"product_id": "p2", "variant_id": None, "quantity": 3},
+            ],
+        )
 
     def test_money_input_preserves_paise_and_rejects_invalid_values(self):
         source = (ROOT / "frontend/catalog.js").read_text()
