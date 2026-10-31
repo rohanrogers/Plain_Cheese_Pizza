@@ -446,3 +446,10 @@ The architecture combines a clean state-machine-driven workflow with a scalable 
 
 This repository currently documents the system architecture and execution model for a subscription platform designed to satisfy the core requirements of an enterprise recurring billing product.
 
+
+
+## 💻 Frontend Working Prototype (Odoo Enterprise Light UI)
+The complete 13-Screen Odoo 17/18 Enterprise Light Theme ERP suite for Brightloop Subscription Management System is located in **[`frontend/`](frontend/)**:
+- **[frontend/index.html](frontend/index.html)**: 13-screen suite structure (Login, Executive Dashboard, Invoicing, Subscriptions Kanban & List, Automated Batch Billing, Products, Pivot, Settings, and Customer Portal).
+- **[frontend/style.css](frontend/style.css)**: Official Odoo purple & teal light theme design system.
+- **[frontend/app.js](frontend/app.js)**: Full MVC controller with authentication, dynamic state transitions, Chart.js visualizers, and batch renewal engine.
