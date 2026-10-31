@@ -43,6 +43,8 @@ Thumbs.db
 # Session / scratch files
 scratch/
 temp_repo/
+Make_A_Ton_resources/
+*.pdf
 
 
 # Python finance runtime and local verification

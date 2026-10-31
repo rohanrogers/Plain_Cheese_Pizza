@@ -11,7 +11,8 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
   security-events: write
 
 jobs:
@@ -172,6 +173,10 @@ jobs:
         working-directory: iam-react-portal
         run: npm run typecheck
 
+      - name: Lint with oxlint
+        working-directory: iam-react-portal
+        run: npm run lint
+
       - name: React Portal Production Build (Vite)
         working-directory: iam-react-portal
         run: npm run build
@@ -232,7 +237,7 @@ jobs:
           echo "✅ Verified: Container runs safely under unprivileged user '$CONTAINER_USER'."
 
   # ─────────────────────────────────────────────
-  # GATE JOB: Blocks merge/push on any failure
+  # GATE JOB: Blocks merge on failure / Auto-merges on success
   # ─────────────────────────────────────────────
   ci-gate:
     name: CI Gate — All Checks Passed
@@ -258,3 +263,19 @@ jobs:
             exit 1
           fi
           echo "✅ All verification, typechecks, security audits, code quality checks, and container builds passed successfully."
+
+      - name: Automatically merge verified PR to main
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          echo "🚀 All verification checks passed! Automatically merging PR #${PR_NUMBER} to main..."
+          gh pr merge "${PR_NUMBER}" --repo "${{ github.repository }}" --squash --delete-branch || {
+            echo "Attempting REST API fallback merge..."
+            curl -sf -X PUT \
+              -H "Authorization: token ${GH_TOKEN}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}/merge" \
+              -d '{"merge_method":"squash","commit_title":"Auto-merge verified PR #'${PR_NUMBER}'"}'
+          }
