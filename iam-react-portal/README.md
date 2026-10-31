@@ -1,3 +1,11 @@
+# Original IAM portal prototype
+
+This is the teammate's React prototype from commit `3026801`, preserved for reference and attribution. The supported combined application is `frontend/` + `backend/app/iam.py` on port 3000, with PostgreSQL and the shared finance session. Run the root README instructions. This prototype's old localhost:5000 API is retired; do not use it as the integrated application.
+
+See `../IAM_INTEGRATION.md` for the implementation and regression checks.
+
+---
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.

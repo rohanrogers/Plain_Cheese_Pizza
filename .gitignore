@@ -44,3 +44,14 @@ Thumbs.db
 scratch/
 temp_repo/
 
+
+# Python finance runtime and local verification
+.venv/
+venv/
+__pycache__/
+*.pyc
+.ruff_cache/
+.pytest_cache/
+*.db-shm
+*.db-wal
+test-results/

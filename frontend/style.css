@@ -1,31 +1,31 @@
-/* Odoo 17/18 Enterprise Light Theme - Official Design System */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Odoo 17/18 Enterprise Light Theme - Odoo-inspired design */
 
 :root {
-  /* Odoo Official Color Palette */
-  --odoo-primary: #714B67;          /* Classic Odoo Purple */
+  /* Workspace color palette */
+  --odoo-primary: #714b67; /* Classic Odoo Purple */
   --odoo-primary-dark: #583950;
-  --odoo-primary-light: #8E6583;
-  --odoo-teal: #00A09D;             /* Odoo Action Teal */
-  --odoo-teal-dark: #00827F;
-  --odoo-teal-light: #E6F6F6;
-  
-  --odoo-bg: #F0F2F5;               /* Canvas light gray */
-  --odoo-sheet-bg: #FFFFFF;         /* Document paper white */
-  --odoo-border: #DEE2E6;           /* Crisp enterprise line */
-  --odoo-border-dark: #CED4DA;
-  
-  --odoo-text-main: #212529;        /* High-contrast ink */
-  --odoo-text-muted: #6C757D;       /* Subtext gray */
-  --odoo-text-light: #495057;
-  
-  --odoo-success: #28A745;
-  --odoo-warning: #FFC107;
-  --odoo-danger: #DC3545;
-  --odoo-info: #17A2B8;
+  --odoo-primary-light: #8e6583;
+  --odoo-teal: #00a09d; /* Odoo Action Teal */
+  --odoo-teal-dark: #00827f;
+  --odoo-teal-light: #e6f6f6;
 
-  --font-sans: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --odoo-bg: #f0f2f5; /* Canvas light gray */
+  --odoo-sheet-bg: #ffffff; /* Document paper white */
+  --odoo-border: #dee2e6; /* Crisp enterprise line */
+  --odoo-border-dark: #ced4da;
+
+  --odoo-text-main: #212529; /* High-contrast ink */
+  --odoo-text-muted: #6c757d; /* Subtext gray */
+  --odoo-text-light: #495057;
+
+  --odoo-success: #28a745;
+  --odoo-warning: #ffc107;
+  --odoo-danger: #dc3545;
+  --odoo-info: #17a2b8;
+
+  --font-sans:
+    "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 }
 
 * {
@@ -46,7 +46,7 @@ body {
 .o_main_navbar {
   height: 48px;
   background-color: var(--odoo-primary);
-  color: #FFFFFF;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -82,7 +82,7 @@ body {
 .o_app_drawer_dot {
   width: 5px;
   height: 5px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 50%;
 }
 
@@ -115,12 +115,12 @@ body {
 
 .o_nav_tab:hover {
   background: rgba(255, 255, 255, 0.12);
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .o_nav_tab.active {
   background: rgba(255, 255, 255, 0.22);
-  color: #FFFFFF;
+  color: #ffffff;
   font-weight: 700;
 }
 
@@ -131,7 +131,7 @@ body {
 }
 
 .o_portal_toggle_btn {
-  background: #FFFFFF;
+  background: #ffffff;
   color: var(--odoo-primary);
   border: none;
   padding: 5px 12px;
@@ -146,19 +146,19 @@ body {
 }
 
 .o_portal_toggle_btn:hover {
-  background: #F1F3F5;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  background: #f1f3f5;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* 2. CONTROL PANEL (Odoo Action Bar & Breadcrumbs) */
 .o_control_panel {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-bottom: 1px solid var(--odoo-border);
   padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 }
 
 .o_breadcrumb {
@@ -196,7 +196,7 @@ body {
 .o_search_box {
   display: flex;
   align-items: center;
-  background: #F8F9FA;
+  background: #f8f9fa;
   border: 1px solid var(--odoo-border);
   border-radius: 4px;
   padding: 4px 10px;
@@ -229,7 +229,7 @@ body {
 
 .btn-primary {
   background-color: var(--odoo-primary);
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .btn-primary:hover {
@@ -238,7 +238,7 @@ body {
 
 .btn-teal {
   background-color: var(--odoo-teal);
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .btn-teal:hover {
@@ -246,13 +246,13 @@ body {
 }
 
 .btn-secondary {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   color: var(--odoo-text-main);
   border-color: var(--odoo-border);
 }
 
 .btn-secondary:hover {
-  background-color: #F8F9FA;
+  background-color: #f8f9fa;
   border-color: var(--odoo-border-dark);
 }
 
@@ -269,7 +269,7 @@ body {
 }
 
 .o_form_statusbar {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border: 1px solid var(--odoo-border);
   border-bottom: none;
   border-radius: 8px 8px 0 0;
@@ -296,7 +296,7 @@ body {
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--odoo-text-muted);
-  background: #F8F9FA;
+  background: #f8f9fa;
   border: 1px solid var(--odoo-border);
   border-right: none;
   cursor: pointer;
@@ -314,13 +314,13 @@ body {
 
 .o_arrow_button.o_arrow_active {
   background-color: var(--odoo-primary);
-  color: #FFFFFF;
+  color: #ffffff;
   border-color: var(--odoo-primary);
 }
 
 .o_arrow_button.o_arrow_in_progress {
   background-color: var(--odoo-teal);
-  color: #FFFFFF;
+  color: #ffffff;
   border-color: var(--odoo-teal);
 }
 
@@ -330,7 +330,7 @@ body {
 }
 
 .o_form_sheet {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border: 1px solid var(--odoo-border);
   border-radius: 0 0 8px 8px;
   padding: 24px 32px;
@@ -347,13 +347,13 @@ body {
   border: 1px solid var(--odoo-border);
   border-radius: 6px;
   overflow: hidden;
-  background: #FFFFFF;
+  background: #ffffff;
 }
 
 .oe_stat_button {
   padding: 8px 14px;
   border: none;
-  background: #FFFFFF;
+  background: #ffffff;
   border-right: 1px solid var(--odoo-border);
   cursor: pointer;
   display: flex;
@@ -368,7 +368,7 @@ body {
 }
 
 .oe_stat_button:hover {
-  background: #F8F9FA;
+  background: #f8f9fa;
 }
 
 .o_stat_value {
@@ -429,7 +429,7 @@ body {
   font-size: 0.875rem;
   border: 1px solid var(--odoo-border);
   border-radius: 4px;
-  background: #FFFFFF;
+  background: #ffffff;
   outline: none;
 }
 
@@ -467,7 +467,7 @@ body {
 }
 
 .o_table th {
-  background: #F8F9FA;
+  background: #f8f9fa;
   padding: 10px 14px;
   font-size: 0.8rem;
   font-weight: 700;
@@ -484,7 +484,7 @@ body {
 }
 
 .o_table tr:hover td {
-  background-color: #FAFAFB;
+  background-color: #fafafb;
 }
 
 /* 6. ODOO KANBAN VIEW */
@@ -496,7 +496,7 @@ body {
 }
 
 .o_kanban_group {
-  background: #EBEDF0;
+  background: #ebedf0;
   border-radius: 6px;
   padding: 12px;
   min-height: 450px;
@@ -513,7 +513,7 @@ body {
 }
 
 .o_kanban_record {
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid var(--odoo-border);
   border-radius: 6px;
   padding: 12px;
@@ -543,14 +543,26 @@ body {
   border-radius: 4px;
 }
 
-.o_tag_purple { background: #EFEAF0; color: var(--odoo-primary); }
-.o_tag_teal { background: var(--odoo-teal-light); color: var(--odoo-teal-dark); }
-.o_tag_green { background: #E8F5E9; color: var(--odoo-success); }
-.o_tag_red { background: #FFEBEE; color: var(--odoo-danger); }
+.o_tag_purple {
+  background: #efeaf0;
+  color: var(--odoo-primary);
+}
+.o_tag_teal {
+  background: var(--odoo-teal-light);
+  color: var(--odoo-teal-dark);
+}
+.o_tag_green {
+  background: #e8f5e9;
+  color: var(--odoo-success);
+}
+.o_tag_red {
+  background: #ffebee;
+  color: var(--odoo-danger);
+}
 
 /* 7. ODOO PIVOT VIEW (.o_pivot_table) */
 .o_pivot_container {
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid var(--odoo-border);
   border-radius: 8px;
   padding: 16px;
@@ -562,14 +574,15 @@ body {
   border-collapse: collapse;
 }
 
-.o_pivot_table th, .o_pivot_table td {
+.o_pivot_table th,
+.o_pivot_table td {
   border: 1px solid var(--odoo-border);
   padding: 8px 12px;
   font-size: 0.85rem;
 }
 
 .o_pivot_header {
-  background: #F8F9FA;
+  background: #f8f9fa;
   font-weight: 700;
   color: var(--odoo-text-main);
 }
@@ -581,7 +594,7 @@ body {
 }
 
 .o_pivot_total_cell {
-  background: #F1F3F5;
+  background: #f1f3f5;
   font-weight: 700;
   text-align: right;
 }
@@ -601,16 +614,16 @@ body {
 }
 
 .o_modal_dialog {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 8px;
   width: 90%;
   max-width: 650px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   overflow: hidden;
 }
 
 .o_modal_header {
-  background: #F8F9FA;
+  background: #f8f9fa;
   border-bottom: 1px solid var(--odoo-border);
   padding: 14px 20px;
   display: flex;
@@ -629,7 +642,7 @@ body {
 }
 
 .o_modal_footer {
-  background: #F8F9FA;
+  background: #f8f9fa;
   border-top: 1px solid var(--odoo-border);
   padding: 12px 20px;
   display: flex;
@@ -646,12 +659,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #E9ECEF 0%, #DFE3E8 100%);
+  background: linear-gradient(135deg, #e9ecef 0%, #dfe3e8 100%);
   padding: 30px 16px;
 }
 
 .o_login_card {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 8px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
   border: 1px solid var(--odoo-border);
@@ -662,7 +675,7 @@ body {
 
 .o_login_header {
   background: var(--odoo-primary);
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 24px 24px 20px;
   text-align: center;
 }
@@ -680,7 +693,7 @@ body {
 .o_login_brand span.badge {
   font-size: 0.7rem;
   background: var(--odoo-teal);
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 2px 7px;
   border-radius: 4px;
   font-weight: 600;
@@ -709,19 +722,23 @@ body {
   margin-bottom: 6px;
 }
 
-.o_login_input, .o_login_select {
+.o_login_input,
+.o_login_select {
   width: 100%;
   padding: 9px 12px;
   font-size: 0.9rem;
   border: 1px solid var(--odoo-border);
   border-radius: 4px;
-  background: #FFFFFF;
+  background: #ffffff;
   color: var(--odoo-text-main);
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
-.o_login_input:focus, .o_login_select:focus {
+.o_login_input:focus,
+.o_login_select:focus {
   border-color: var(--odoo-primary);
   box-shadow: 0 0 0 3px rgba(113, 75, 103, 0.15);
 }
@@ -753,7 +770,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 8px 12px;
-  background: #F8F9FA;
+  background: #f8f9fa;
   border: 1px solid var(--odoo-border);
   border-radius: 4px;
   cursor: pointer;
@@ -772,7 +789,7 @@ body {
 .o_quick_btn_role {
   font-size: 0.7rem;
   font-weight: 700;
-  background: #E9ECEF;
+  background: #e9ecef;
   color: #495057;
   padding: 2px 6px;
   border-radius: 3px;
@@ -803,8 +820,14 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .o_app_drawer_grid {
@@ -821,7 +844,7 @@ body {
   justify-content: center;
   gap: 10px;
   padding: 16px 12px;
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid var(--odoo-border);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -844,7 +867,7 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 1.6rem;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .o_app_tile_label {
@@ -884,7 +907,7 @@ body {
 }
 
 .o_kpi_card {
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid var(--odoo-border);
   border-radius: 6px;
   padding: 16px 18px;
@@ -894,10 +917,18 @@ body {
   border-left: 4px solid var(--odoo-primary);
 }
 
-.o_kpi_card.teal { border-left-color: var(--odoo-teal); }
-.o_kpi_card.success { border-left-color: var(--odoo-success); }
-.o_kpi_card.warning { border-left-color: var(--odoo-warning); }
-.o_kpi_card.danger { border-left-color: var(--odoo-danger); }
+.o_kpi_card.teal {
+  border-left-color: var(--odoo-teal);
+}
+.o_kpi_card.success {
+  border-left-color: var(--odoo-success);
+}
+.o_kpi_card.warning {
+  border-left-color: var(--odoo-warning);
+}
+.o_kpi_card.danger {
+  border-left-color: var(--odoo-danger);
+}
 
 .o_kpi_title {
   font-size: 0.78rem;
@@ -923,9 +954,17 @@ body {
   gap: 4px;
 }
 
-.o_kpi_trend.positive { color: var(--odoo-success); font-weight: 600; }
-.o_kpi_trend.neutral { color: var(--odoo-text-muted); }
-.o_kpi_trend.negative { color: var(--odoo-danger); font-weight: 600; }
+.o_kpi_trend.positive {
+  color: var(--odoo-success);
+  font-weight: 600;
+}
+.o_kpi_trend.neutral {
+  color: var(--odoo-text-muted);
+}
+.o_kpi_trend.negative {
+  color: var(--odoo-danger);
+  font-weight: 600;
+}
 
 .o_charts_row {
   display: grid;
@@ -941,7 +980,7 @@ body {
 }
 
 .o_chart_card {
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid var(--odoo-border);
   border-radius: 6px;
   padding: 20px;
@@ -966,7 +1005,7 @@ body {
 }
 
 .o_action_card {
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid var(--odoo-border);
   border-radius: 6px;
   padding: 16px;
@@ -1014,12 +1053,12 @@ body {
 .o_list_table {
   width: 100%;
   border-collapse: collapse;
-  background: #FFFFFF;
+  background: #ffffff;
   font-size: 0.85rem;
 }
 
 .o_list_table th {
-  background: #F8F9FA;
+  background: #f8f9fa;
   padding: 10px 14px;
   text-align: left;
   font-weight: 700;
@@ -1038,7 +1077,7 @@ body {
 }
 
 .o_list_table tr:hover td {
-  background: #F8F9FA;
+  background: #f8f9fa;
   cursor: pointer;
 }
 
@@ -1051,10 +1090,22 @@ body {
   text-transform: uppercase;
 }
 
-.o_status_paid { background: #D1E7DD; color: #0F5132; }
-.o_status_posted { background: #CFE2FF; color: #084298; }
-.o_status_overdue { background: #F8D7DA; color: #842029; }
-.o_status_draft { background: #E2E3E5; color: #41464B; }
+.o_status_paid {
+  background: #d1e7dd;
+  color: #0f5132;
+}
+.o_status_posted {
+  background: #cfe2ff;
+  color: #084298;
+}
+.o_status_overdue {
+  background: #f8d7da;
+  color: #842029;
+}
+.o_status_draft {
+  background: #e2e3e5;
+  color: #41464b;
+}
 
 /* ==========================================================================
    13. SETTINGS & SYSTEM ENGINE VIEW
@@ -1066,7 +1117,7 @@ body {
 }
 
 .o_settings_card {
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid var(--odoo-border);
   border-radius: 6px;
   padding: 24px;
@@ -1121,7 +1172,7 @@ body {
   border-radius: 20px;
   cursor: pointer;
   font-size: 0.82rem;
-  color: #FFFFFF;
+  color: #ffffff;
   transition: background 0.15s ease;
   position: relative;
 }
@@ -1135,7 +1186,7 @@ body {
   height: 22px;
   border-radius: 50%;
   background: var(--odoo-teal);
-  color: #FFFFFF;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1147,7 +1198,7 @@ body {
   position: absolute;
   top: 36px;
   right: 0;
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid var(--odoo-border);
   border-radius: 6px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
@@ -1173,11 +1224,299 @@ body {
 }
 
 .o_user_menu_item:hover {
-  background: #F8F9FA;
+  background: #f8f9fa;
   color: var(--odoo-primary);
 }
 
 .o_user_menu_divider {
   height: 1px;
   background: var(--odoo-border);
+}
+
+/* Finance integration and responsive fixes, retaining the existing purple theme. */
+[hidden] {
+  display: none !important;
+}
+#workspace-message {
+  position: sticky;
+  top: 0;
+  z-index: 3000;
+  background: #fff4d5;
+  color: #574016;
+  padding: 12px 20px;
+  border-bottom: 1px solid #e2c875;
+}
+.record-link {
+  border: 0;
+  background: transparent;
+  color: var(--odoo-primary);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+}
+.record-link:hover {
+  text-decoration: underline;
+}
+.record-pager {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  flex-wrap: wrap;
+}
+.finance-summary {
+  font-weight: 600;
+  padding: 14px 0;
+  color: var(--odoo-primary);
+}
+.report-definition {
+  font-size: 0.8rem;
+  color: var(--odoo-text-muted);
+  margin-bottom: 18px;
+  max-width: 950px;
+  line-height: 1.6;
+}
+.invoice-extras {
+  padding: 18px 0;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+#payment-error {
+  color: #b42318;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.o_kanban_record {
+  text-align: left;
+  font: inherit;
+  width: 100%;
+}
+.o_chart_card,
+.o_form_sheet,
+.o_inner_group {
+  min-width: 0;
+}
+.o_kpi_value {
+  overflow-wrap: anywhere;
+}
+#odoo-billing-log {
+  white-space: pre-wrap;
+}
+@media (max-width: 900px) {
+  .o_main_navbar {
+    height: auto;
+    min-height: 56px;
+    flex-wrap: wrap;
+  }
+  .o_navbar_apps {
+    flex-wrap: wrap;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .o_navbar_menu {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  .o_control_panel,
+  .o_dashboard_header,
+  .o_form_statusbar,
+  .o_statusbar_buttons {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .o_kpi_grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .o_charts_row,
+  .o_group,
+  .o_settings_grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .o_view_container {
+    overflow-x: auto;
+  }
+  .o_form_sheet {
+    padding: 16px;
+    min-width: 0;
+  }
+  .o_actions_row {
+    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .o_modal_dialog {
+    max-width: calc(100vw - 24px);
+    margin: 12px;
+  }
+  .o_kanban_view {
+    overflow-x: auto;
+  }
+  .o_dashboard_container {
+    padding: 12px;
+  }
+  .o_list_table,
+  .o_table {
+    font-size: 0.8rem;
+  }
+  #view-billing > div > div {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+@media (max-width: 480px) {
+  .o_kpi_grid {
+    grid-template-columns: 1fr;
+  }
+  .o_chart_card {
+    padding: 12px;
+  }
+  .o_kpi_value {
+    font-size: 1.7rem;
+  }
+  .o_navbar_menu {
+    width: 100%;
+  }
+  .o_user_pill {
+    padding: 6px;
+  }
+}
+
+@media (min-width: 901px) {
+  .o_kpi_grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .o_main_navbar {
+    padding: 10px;
+    gap: 10px;
+  }
+  .o_navbar_apps {
+    width: 100%;
+  }
+  .o_navbar_menu {
+    width: 100%;
+  }
+  .o_nav_tab {
+    white-space: nowrap;
+  }
+  .o_searchview {
+    min-width: 0;
+    width: 100%;
+  }
+  .o_dashboard_header > div {
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+  .o_charts_row {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .o_control_panel {
+    width: 100%;
+    padding: 12px;
+  }
+  .o_cp_actions {
+    flex-wrap: wrap;
+    min-width: 0;
+    width: 100%;
+  }
+  .o_search_box {
+    width: 100%;
+    order: 3;
+  }
+  .o_content {
+    padding: 12px;
+  }
+  .o_view_container {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .o_chart_card {
+    overflow-x: auto;
+  }
+  .o_main_navbar {
+    max-width: 100vw;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    overflow-x: hidden;
+  }
+  .o_charts_row {
+    min-width: 0;
+  }
+  .o_dashboard_container {
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+.auth-full {
+  width: 100%;
+  margin: 14px 0;
+}
+.auth-links {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.auth-hint {
+  font-size: 0.8rem;
+  color: var(--odoo-text-muted);
+  margin: 10px 0;
+  line-height: 1.6;
+}
+.auth-message {
+  color: var(--odoo-primary);
+  line-height: 1.5;
+  margin-bottom: 12px;
+  overflow-wrap: anywhere;
+}
+.o_login_input {
+  margin-bottom: 12px;
+}
+.identity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  align-items: end;
+  margin: 18px 0;
+}
+.identity-grid label {
+  display: grid;
+  gap: 8px;
+}
+#view-settings .o_chart_card {
+  margin-bottom: 18px;
+  line-height: 1.7;
+}
+#view-settings form {
+  max-width: 100%;
+  margin: 18px 0;
+}
+#view-settings label {
+  display: block;
+}
+#view-settings .o_field_input {
+  margin: 8px 0;
+  max-width: 400px;
+}
+#factor-enrollment {
+  padding: 18px;
+  border: 1px solid var(--odoo-border);
+  border-radius: 8px;
+  max-width: 500px;
+}
+#factor-key {
+  overflow-wrap: anywhere;
+}
+#portal-methods {
+  margin-top: 24px;
 }

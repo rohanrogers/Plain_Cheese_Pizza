@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: brightloop
+      POSTGRES_PASSWORD: brightloop
+      POSTGRES_DB: brightloop
+    ports: ["127.0.0.1:5433:5432"]
+    volumes: ["brightloop_data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U brightloop"]
+      interval: 3s
+      retries: 15
+  mail:
+    image: axllent/mailpit:v1.27
+    ports: ["127.0.0.1:1025:1025", "127.0.0.1:8025:8025"]
+volumes:
+  brightloop_data:
