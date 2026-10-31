@@ -1,5 +1,5 @@
 // Odoo 17/18 Enterprise Subscriptions Controller
-const API_BASE = "http://127.0.0.1:8001/api";
+const API_BASE = "http://localhost:5000/api";
 
 let isMockMode = false;
 let currentSubscription = null;
@@ -377,22 +377,112 @@ function toggleUserMenu(e) {
 }
 
 function quickLogin(type) {
+  const emailInput = document.getElementById("login-email");
+  const passInput = document.getElementById("login-password");
   if (type === "admin") {
-    currentUser = { name: "Marc Demo", role: "Administrator", email: "admin@brightloop.com", avatar: "MD" };
-    loginSuccess("dashboard");
+    if (emailInput) emailInput.value = "admin@brightloop.io";
+    if (passInput) passInput.value = "Admin@12345!";
+    handleManualLogin();
   } else if (type === "billing") {
-    currentUser = { name: "Sarah Connor", role: "Billing Manager", email: "billing@brightloop.com", avatar: "SC" };
-    loginSuccess("invoices");
+    if (emailInput) emailInput.value = "staff@brightloop.io";
+    if (passInput) passInput.value = "Staff@12345!";
+    handleManualLogin();
   } else if (type === "customer") {
-    currentUser = { name: "Aaron Alex Mathew", role: "ClientCorp International", email: "aaron@clientcorp.com", avatar: "CC" };
-    loginSuccess("portal");
+    if (emailInput) emailInput.value = "cust@company.com";
+    if (passInput) passInput.value = "Customer@12345!";
+    handleManualLogin();
   }
 }
 
-function handleManualLogin() {
-  const email = document.getElementById("login-email").value || "admin@brightloop.com";
-  currentUser = { name: "Marc Demo", role: "Administrator", email: email, avatar: "MD" };
-  loginSuccess("dashboard");
+async function handleManualLogin() {
+  const emailInput = document.getElementById("login-email");
+  const passInput = document.getElementById("login-password");
+  const errDiv = document.getElementById("login-error-msg");
+  const email = emailInput ? emailInput.value.trim() : "admin@brightloop.io";
+  const password = passInput ? passInput.value : "";
+
+  if (errDiv) errDiv.style.display = "none";
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Authentication failed");
+
+    if (data.require2FA) {
+      const modal = document.getElementById("odoo-2fa-modal");
+      const qrCont = document.getElementById("odoo-2fa-qr-container");
+      const qrImg = document.getElementById("odoo-2fa-qr-img");
+      if (modal) modal.style.display = "block";
+      if (data.qrCode && qrImg && qrCont) {
+        qrImg.src = data.qrCode;
+        qrCont.style.display = "block";
+      }
+      console.log("2FA OTP required for:", data.email);
+    } else {
+      currentUser = {
+        name: email.split("@")[0].toUpperCase(),
+        role: email.includes("admin") ? "Administrator" : email.includes("staff") ? "Billing Lead" : "Customer",
+        email: email,
+        avatar: email.substring(0, 2).toUpperCase()
+      };
+      loginSuccess("dashboard");
+    }
+  } catch (err) {
+    if (errDiv) {
+      errDiv.textContent = err.message;
+      errDiv.style.display = "block";
+    } else {
+      alert(err.message);
+    }
+  }
+}
+
+async function handleVerify2FALogin() {
+  const tokenInput = document.getElementById("login-otp-token");
+  const errDiv = document.getElementById("login-error-msg");
+  const token = tokenInput ? tokenInput.value.trim() : "";
+
+  if (!token || token.length !== 6) {
+    alert("Please enter a valid 6-digit OTP code.");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/verify-2fa`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ token })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "2FA verification failed");
+
+    const u = data.user;
+    currentUser = {
+      name: u.full_name || u.email,
+      role: u.role === "ADMIN" ? "Administrator" : u.role === "STAFF" ? "Billing Operations" : "Customer",
+      email: u.email,
+      avatar: (u.full_name ? u.full_name.substring(0, 2) : u.email.substring(0, 2)).toUpperCase()
+    };
+
+    const modal = document.getElementById("odoo-2fa-modal");
+    if (modal) modal.style.display = "none";
+
+    if (u.role === "CUSTOMER") {
+      loginSuccess("portal");
+    } else if (u.role === "STAFF") {
+      loginSuccess("invoices");
+    } else {
+      loginSuccess("dashboard");
+    }
+  } catch (err) {
+    alert(err.message);
+  }
 }
 
 function loginSuccess(targetView) {
@@ -404,7 +494,10 @@ function loginSuccess(targetView) {
   navigateTo(targetView);
 }
 
-function logoutUser() {
+async function logoutUser() {
+  try {
+    await fetch(`${API_BASE}/auth/logout`, { method: "POST", credentials: "include" });
+  } catch (e) {}
   const menu = document.getElementById("o-user-menu");
   if (menu) menu.classList.remove("show");
   navigateTo("login");

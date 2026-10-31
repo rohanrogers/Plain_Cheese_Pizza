@@ -159,17 +159,39 @@
 
           <div class="o_login_group">
             <label class="o_login_label">Email Address</label>
-            <input type="email" id="login-email" class="o_login_input" placeholder="admin@brightloop.com" value="admin@brightloop.com">
+            <input type="email" id="login-email" class="o_login_input" placeholder="admin@brightloop.io" value="admin@brightloop.io">
           </div>
 
           <div class="o_login_group">
             <label class="o_login_label">Password</label>
-            <input type="password" id="login-password" class="o_login_input" value="••••••••••••">
+            <input type="password" id="login-password" class="o_login_input" placeholder="Password" value="Admin@12345!">
           </div>
 
-          <button class="btn btn-primary" style="width: 100%; padding: 10px; font-size: 0.95rem; margin-top: 8px;" onclick="handleManualLogin()">
-            Log in to Odoo
+          <div id="login-error-msg" style="display: none; color: #dc2626; font-size: 0.8rem; margin-top: 6px; padding: 6px 10px; background: #fee2e2; border-radius: 4px; border: 1px solid #f87171;"></div>
+
+          <button id="btn-login-submit" class="btn btn-primary" style="width: 100%; padding: 10px; font-size: 0.95rem; margin-top: 8px;" onclick="handleManualLogin()">
+            Log in with 2FA Protection
           </button>
+
+          <!-- 2FA OTP MODAL / POPUP OVERLAY -->
+          <div id="odoo-2fa-modal" style="display: none; margin-top: 14px; padding: 14px; background: #F8F9FA; border: 1px solid var(--odoo-border); border-radius: 8px;">
+            <div style="font-weight: 700; font-size: 0.9rem; color: var(--odoo-primary); margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+              <span>🔐</span> Two-Factor Authentication (2FA)
+            </div>
+            <div style="font-size: 0.75rem; color: var(--odoo-text-muted); margin-bottom: 8px;">
+              6-digit OTP code dispatched. Enter from Authenticator app or email:
+            </div>
+            <div id="odoo-2fa-qr-container" style="text-align: center; margin-bottom: 8px; display: none;">
+              <img id="odoo-2fa-qr-img" style="max-width: 130px; border-radius: 6px; border: 1px solid var(--odoo-border); margin: 0 auto;" alt="2FA QR Code" />
+              <div style="font-size: 0.7rem; color: var(--odoo-text-muted); margin-top: 4px;">Google Authenticator / Authy</div>
+            </div>
+            <div class="o_login_group" style="margin-bottom: 8px;">
+              <input type="text" id="login-otp-token" maxlength="6" class="o_login_input" placeholder="123456" style="text-align: center; letter-spacing: 4px; font-weight: 800; font-size: 1.2rem;">
+            </div>
+            <button class="btn btn-teal" style="width: 100%; padding: 8px; font-weight: 700;" onclick="handleVerify2FALogin()">
+              Verify 2FA &amp; Open Portal
+            </button>
+          </div>
 
           <!-- Quick One-Click Demo Profiles for Evaluators / Hackathon Judges -->
           <div class="o_quick_login_section">
