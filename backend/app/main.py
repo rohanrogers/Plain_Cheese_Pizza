@@ -51,6 +51,15 @@ from .billing import amounts, period_date
 load_dotenv()
 ROOT = Path(__file__).resolve().parents[2]
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./brightloop.db")
+if DATABASE_URL.startswith("postgresql://") and not DATABASE_URL.startswith("postgresql+"):
+    try:
+        import psycopg2
+    except ImportError:
+        try:
+            import psycopg
+            DATABASE_URL = "postgresql+psycopg://" + DATABASE_URL[len("postgresql://"):]
+        except ImportError:
+            pass
 engine = create_engine(
     DATABASE_URL,
     connect_args={"check_same_thread": False, "timeout": 30}
