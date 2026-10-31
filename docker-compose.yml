@@ -1,0 +1,62 @@
+version: '3.9'
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Brightloop IAM — Docker Compose (local dev / CI smoke test)
+# Services: iam-backend, iam-frontend
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── Backend IAM Service ───────────────────────────────────────────────────
+  iam-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        NODE_ENV: development
+    container_name: brightloop-iam-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+      - SESSION_SECRET=local_dev_secret_must_be_32_chars_min
+      - OTP_EXPIRY_MINUTES=5
+    volumes:
+      # Persist SQLite database across container restarts
+      - iam_data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:5000/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - brightloop-net
+
+  # ── Frontend React Portal ─────────────────────────────────────────────────
+  iam-frontend:
+    build:
+      context: ./iam-react-portal
+      dockerfile: Dockerfile
+    container_name: brightloop-iam-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      iam-backend:
+        condition: service_healthy
+    networks:
+      - brightloop-net
+
+# ── Volumes ──────────────────────────────────────────────────────────────────
+volumes:
+  iam_data:
+    driver: local
+
+# ── Networks ─────────────────────────────────────────────────────────────────
+networks:
+  brightloop-net:
+    driver: bridge
+

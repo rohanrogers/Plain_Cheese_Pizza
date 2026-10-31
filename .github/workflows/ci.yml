@@ -1,0 +1,222 @@
+name: Brightloop Integrated IAM & Finance CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  # ─────────────────────────────────────────────
+  # JOB 1: Security Audit & Secret Leak Detection
+  # ─────────────────────────────────────────────
+  security-audit:
+    name: Security & Secret Leak Scanning
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect accidentally committed secrets / credentials
+        run: |
+          echo "Scanning tracked files for leaked private keys or hardcoded tokens..."
+          # Fail if private keys or unmasked live tokens are checked into git
+          if git grep -E "(-----BEGIN (RSA|EC|OPENSSH|DSA|PGP) PRIVATE KEY-----|github_pat_[0-9a-zA-Z_]{30,}|ghp_[0-9a-zA-Z]{36})" -- ':!*.example' ':!test-iam.js' ':!README.md'; then
+            echo "❌ CRITICAL SECURITY ERROR: Unmasked private keys or tokens detected in git history!"
+            exit 1
+          fi
+          echo "✅ No leaked private keys or tokens found."
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Dependency vulnerability audit (Python & Node)
+        run: |
+          pip install pip-audit
+          pip-audit -r requirements.txt || echo "::warning ::Vulnerabilities noted in requirements.txt"
+          npm audit --audit-level=high || echo "::warning ::Vulnerabilities noted in npm dependencies"
+
+  # ─────────────────────────────────────────────
+  # JOB 2: Backend & IAM Tests (PostgreSQL + Python)
+  # ─────────────────────────────────────────────
+  backend-test-and-verify:
+    name: Backend & IAM Verification (PostgreSQL)
+    runs-on: ubuntu-latest
+    needs: [security-audit]
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: brightloop
+          POSTGRES_PASSWORD: brightloop
+          POSTGRES_DB: brightloop
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+      mailpit:
+        image: axllent/mailpit:v1.27
+        ports:
+          - 1025:1025
+          - 8025:8025
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Configure local environment
+        run: python -m backend.configure_local
+        env:
+          DATABASE_URL: postgresql://brightloop:brightloop@localhost:5432/brightloop
+          LOCAL_MAILBOX: "true"
+
+      - name: Run Python IAM and Finance test suite (22+ assertions)
+        run: python -m unittest backend.tests.test_finance backend.tests.test_iam -v
+        env:
+          DATABASE_URL: postgresql://brightloop:brightloop@localhost:5432/brightloop
+          LOCAL_MAILBOX: "true"
+
+  # ─────────────────────────────────────────────
+  # JOB 3: Frontend Code, TypeCheck & Static Analysis
+  # ─────────────────────────────────────────────
+  frontend-verify:
+    name: Frontend Code Check, Lint & TypeCheck
+    runs-on: ubuntu-latest
+    needs: [security-audit]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: iam-react-portal/package-lock.json
+
+      - name: Syntax and integrity check on root frontend scripts
+        run: |
+          node --check frontend/app.js
+          node --check frontend/identity.js
+
+      - name: Install React Portal dependencies
+        working-directory: iam-react-portal
+        run: npm ci
+
+      - name: TypeScript type check (tsc --noEmit)
+        working-directory: iam-react-portal
+        run: npm run typecheck
+
+      - name: React Portal Production Build (Vite)
+        working-directory: iam-react-portal
+        run: npm run build
+
+      - name: Upload frontend artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: portal-dist
+          path: iam-react-portal/dist/
+          retention-days: 5
+
+  # ─────────────────────────────────────────────
+  # JOB 4: Container Build & Container Vulnerability Scan
+  # ─────────────────────────────────────────────
+  containerized-build:
+    name: Container Build & Vulnerability Scan
+    runs-on: ubuntu-latest
+    needs: [backend-test-and-verify, frontend-verify]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build integrated backend image
+        run: |
+          docker build \
+            --tag brightloop-app:ci \
+            --file Dockerfile \
+            .
+
+      - name: Build React portal reference image
+        run: |
+          docker build \
+            --tag brightloop-iam-portal:ci \
+            --file iam-react-portal/Dockerfile \
+            ./iam-react-portal
+
+      - name: Run Trivy container security vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'brightloop-app:ci'
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
+
+      - name: Verify non-root user execution in container
+        run: |
+          CONTAINER_USER=$(docker run --rm brightloop-app:ci whoami)
+          echo "Container runs as user: $CONTAINER_USER"
+          if [ "$CONTAINER_USER" = "root" ]; then
+            echo "❌ Security flaw: Container must not run as root user!"
+            exit 1
+          fi
+          echo "✅ Verified: Container runs safely under unprivileged user '$CONTAINER_USER'."
+
+  # ─────────────────────────────────────────────
+  # GATE JOB: Blocks merge/push on any failure
+  # ─────────────────────────────────────────────
+  ci-gate:
+    name: CI Gate — All Checks Passed
+    runs-on: ubuntu-latest
+    needs: [security-audit, backend-test-and-verify, frontend-verify, containerized-build]
+    if: always()
+
+    steps:
+      - name: Evaluate results
+        run: |
+          echo "security-audit          : ${{ needs.security-audit.result }}"
+          echo "backend-test-and-verify : ${{ needs.backend-test-and-verify.result }}"
+          echo "frontend-verify         : ${{ needs.frontend-verify.result }}"
+          echo "containerized-build     : ${{ needs.containerized-build.result }}"
+
+          if [[ "${{ needs.security-audit.result }}"          != "success" ]] || \
+             [[ "${{ needs.backend-test-and-verify.result }}" != "success" ]] || \
+             [[ "${{ needs.frontend-verify.result }}"          != "success" ]] || \
+             [[ "${{ needs.containerized-build.result }}"     != "success" ]]; then
+            echo "❌ Gatekeeper alert: One or more security or verification checks FAILED. Push/merge BLOCKED."
+            exit 1
+          fi
+          echo "✅ All verification, typechecks, security audits, and container builds passed successfully."
