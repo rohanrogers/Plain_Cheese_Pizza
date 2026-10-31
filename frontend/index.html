@@ -861,74 +861,132 @@
       </div>
       <!-- VIEW 2: ODOO FORM VIEW SHEET (.o_form_sheet) -->
       <div class="o_view_container" id="view-form" style="display: none">
+        <button
+          class="btn btn-secondary"
+          hidden=""
+          id="customer-back-to-portal"
+          onclick="navigateTo('portal')"
+        >
+          Back to my subscriptions
+        </button>
         <div class="o_chart_card" hidden="" id="quotation-builder">
-          <h3>New quotation</h3>
+          <h3 id="quote-heading">New quotation</h3>
+          <p class="auth-hint" id="quote-context">
+            Choose a template or add products. Prices are saved with the
+            quotation.
+          </p>
           <form
-            class="identity-grid"
+            id="quote-form"
             onsubmit="event.preventDefault();saveQuotation()"
           >
-            <label for="quote-customer"
-              >Customer<select
-                class="o_field_input"
-                id="quote-customer"
-                required=""
-              ></select></label
-            ><label for="quote-plan"
-              >Plan<select
-                class="o_field_input"
-                id="quote-plan"
-                required=""
-              ></select></label
-            ><label for="quote-template"
-              >Template (optional)<select
-                class="o_field_input"
-                id="quote-template"
+            <div class="identity-grid">
+              <label for="quote-customer"
+                >Customer<select
+                  class="o_field_input"
+                  id="quote-customer"
+                  required=""
+                ></select></label
+              ><label for="quote-plan"
+                >Plan<select
+                  class="o_field_input"
+                  id="quote-plan"
+                  required=""
+                ></select></label
+              ><label for="quote-template"
+                >Start from template<select
+                  class="o_field_input"
+                  id="quote-template"
+                  onchange="applyQuotationTemplate()"
+                >
+                  <option value="">No template</option>
+                </select></label
+              ><label for="quote-start"
+                >Start date<input
+                  class="o_field_input"
+                  id="quote-start"
+                  required=""
+                  type="date"
+                  value="" /></label
+              ><label for="quote-expiry"
+                >Expiry date (optional)<input
+                  class="o_field_input"
+                  id="quote-expiry"
+                  type="date"
+                  value="" /></label
+              ><label for="quote-payment-days"
+                >Payment due after (days)<input
+                  class="o_field_input"
+                  id="quote-payment-days"
+                  max="365"
+                  min="0"
+                  required=""
+                  type="number"
+                  value="14" /></label
+              ><label for="quote-validity"
+                >Quotation validity (days)<input
+                  class="o_field_input"
+                  id="quote-validity"
+                  max="365"
+                  min="1"
+                  required=""
+                  type="number"
+                  value="7" /></label
+              ><label for="quote-coupon"
+                >Coupon (optional)<input
+                  class="o_field_input"
+                  id="quote-coupon"
+                  list="quote-coupons"
+                  maxlength="120"
+                  type="text"
+                  value="" /></label
+              ><datalist id="quote-coupons"></datalist>
+            </div>
+            <div class="table-scroll">
+              <table class="o_table quote-lines-table">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Variant</th>
+                    <th>Quantity</th>
+                    <th>Unit price</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="quote-lines"></tbody>
+              </table>
+            </div>
+            <div class="form-actions">
+              <button
+                class="btn btn-secondary"
+                onclick="addQuoteLine()"
+                type="button"
               >
-                <option value="">No template</option>
-              </select></label
-            ><label for="quote-product"
-              >Product<select
-                class="o_field_input"
-                id="quote-product"
-                onchange="populateQuoteVariants()"
-              ></select></label
-            ><label for="quote-variant"
-              >Variant<select
-                class="o_field_input"
-                id="quote-variant"
-              ></select></label
-            ><label for="quote-quantity"
-              >Quantity<input
-                class="o_field_input"
-                id="quote-quantity"
-                max="100000"
-                min="1"
-                required=""
-                type="number"
-                value="1" /></label
-            ><label for="quote-start"
-              >Start<input
-                class="o_field_input"
-                id="quote-start"
-                required=""
-                type="date" /></label
-            ><label for="quote-validity"
-              >Validity days<input
-                class="o_field_input"
-                id="quote-validity"
-                max="365"
-                min="1"
-                required=""
-                type="number"
-                value="7" /></label
-            ><label for="quote-coupon"
-              >Coupon (optional)<input
-                class="o_field_input"
-                id="quote-coupon"
-                maxlength="120" /></label
-            ><button class="btn btn-primary" id="quote-save">
-              Create draft
-            </button>
+                Add product line</button
+              ><button
+                class="btn btn-secondary"
+                onclick="previewQuotation()"
+                type="button"
+              >
+                Preview totals
+              </button>
+            </div>
+            <p class="finance-summary" id="quote-totals" role="status"></p>
+            <p class="auth-hint">
+              Preview uses current catalog prices, configured taxes and an
+              eligible coupon. Billing checks the rule again for each period.
+            </p>
+            <div class="form-actions">
+              <button class="btn btn-primary" id="quote-save">
+                Create draft</button
+              ><button
+                class="btn btn-secondary"
+                onclick="cancelQuotationBuilder()"
+                type="button"
+              >
+                Cancel
+              </button>
+            </div>
           </form>
           <p id="quote-error" role="alert"></p>
           <form
@@ -936,11 +994,13 @@
             onsubmit="event.preventDefault();saveQuotationTemplate()"
           >
             <label for="quote-template-name"
-              >Save current product configuration as template<input
+              >Save these product lines as a template<input
                 class="o_field_input"
                 id="quote-template-name"
                 maxlength="120"
-                required="" /></label
+                required=""
+                type="text"
+                value="" /></label
             ><button class="btn btn-secondary" id="quote-template-save">
               Save template
             </button>
@@ -950,6 +1010,13 @@
           <!-- Form View Status Bar -->
           <div class="o_form_statusbar">
             <div class="o_statusbar_buttons">
+              <button
+                class="btn btn-secondary"
+                id="subscription-edit"
+                onclick="openQuotationBuilder(currentSubscription.id)"
+              >
+                Edit quotation
+              </button>
               <button
                 class="btn btn-primary"
                 id="subscription-quote"
@@ -988,9 +1055,17 @@
                 Close</button
               ><button
                 class="btn btn-secondary"
+                id="subscription-billing"
                 onclick="navigateTo('billing')"
               >
                 Billing
+              </button>
+              <button
+                class="btn btn-secondary"
+                id="subscription-renew"
+                onclick="openRenewal()"
+              >
+                Renew
               </button>
             </div>
             <!-- Status Ribbon -->
@@ -1222,6 +1297,35 @@
             creating the draft; billing revalidates it each period.
           </p>
         </div>
+        <form
+          class="o_chart_card identity-grid"
+          hidden=""
+          id="renewal-form"
+          onsubmit="event.preventDefault();renewSubscription()"
+        >
+          <h3>Renew subscription</h3>
+          <p>
+            Renewal keeps the agreed prices. Paused or closed gaps are not
+            billed retroactively.
+          </p>
+          <label for="renewal-expiry"
+            >New expiry date<input
+              class="o_field_input"
+              id="renewal-expiry"
+              required=""
+              type="date"
+              value="" /></label
+          ><button class="btn btn-primary" id="renewal-save">
+            Confirm renewal</button
+          ><button
+            class="btn btn-secondary"
+            onclick="closeRenewal()"
+            type="button"
+          >
+            Cancel
+          </button>
+          <p id="renewal-error" role="alert"></p>
+        </form>
       </div>
       <!-- VIEW 3: ODOO BATCH BILLING ACTION WIZARD -->
       <div class="o_view_container" id="view-billing" style="display: none">
@@ -2048,6 +2152,274 @@
         </div>
       </div>
       <div class="o_view_container" id="view-settings" style="display: none">
+        <div class="o_chart_card" hidden="" id="admin-configuration">
+          <h2>Plans, taxes &amp; promotions</h2>
+          <p>
+            Changes apply to new quotations and future billing. Issued invoices
+            and confirmed contract prices stay frozen.
+          </p>
+          <div
+            aria-label="Financial configuration"
+            class="configuration-tabs"
+            role="tablist"
+          >
+            <button
+              aria-controls="config-plan"
+              class="btn btn-secondary"
+              id="config-tab-plan"
+              onclick="showConfigurationTab('plan')"
+              role="tab"
+              type="button"
+            >
+              Plans</button
+            ><button
+              aria-controls="config-tax"
+              class="btn btn-secondary"
+              id="config-tab-tax"
+              onclick="showConfigurationTab('tax')"
+              role="tab"
+              type="button"
+            >
+              Taxes</button
+            ><button
+              aria-controls="config-discount"
+              class="btn btn-secondary"
+              id="config-tab-discount"
+              onclick="showConfigurationTab('discount')"
+              role="tab"
+              type="button"
+            >
+              Discounts
+            </button>
+          </div>
+          <p id="configuration-error" role="alert"></p>
+          <section class="configuration-section" id="config-plan">
+            <h3>Plans</h3>
+            <p class="auth-hint" id="plan-editing">Create a new plan.</p>
+            <form
+              class="identity-grid"
+              id="plan-form"
+              onsubmit="event.preventDefault();saveConfiguration('plan')"
+            >
+              <input id="plan-id" type="hidden" /><label for="plan-name"
+                >Plan name<input
+                  class="o_field_input"
+                  id="plan-name"
+                  maxlength="120"
+                  required=""
+                  type="text"
+                  value="" /></label
+              ><label for="plan-price"
+                >Base fee (₹)<input
+                  class="o_field_input"
+                  id="plan-price"
+                  min="0"
+                  required=""
+                  step="0.01"
+                  type="number"
+                  value="0.00" /></label
+              ><label for="plan-interval"
+                >Billing frequency<select
+                  class="o_field_input"
+                  id="plan-interval"
+                >
+                  <option value="DAILY">Daily</option>
+                  <option value="WEEKLY">Weekly</option>
+                  <option value="MONTHLY">Monthly</option>
+                  <option value="YEARLY">Yearly</option>
+                </select></label
+              ><label for="plan-count"
+                >Every N periods<input
+                  class="o_field_input"
+                  id="plan-count"
+                  max="120"
+                  min="1"
+                  required=""
+                  type="number"
+                  value="1" /></label
+              ><label for="plan-min-quantity"
+                >Minimum units<input
+                  class="o_field_input"
+                  id="plan-min-quantity"
+                  max="100000"
+                  min="1"
+                  required=""
+                  type="number"
+                  value="1" /></label
+              ><label for="plan-from"
+                >Available from<input
+                  class="o_field_input"
+                  id="plan-from"
+                  type="date"
+                  value="" /></label
+              ><label for="plan-until"
+                >Available until<input
+                  class="o_field_input"
+                  id="plan-until"
+                  type="date"
+                  value="" /></label
+              ><label class="check-field"
+                ><input checked="" id="plan-auto-close" type="checkbox" />Close
+                automatically at term end</label
+              ><label class="check-field"
+                ><input checked="" id="plan-allow-close" type="checkbox" />Allow
+                early closure</label
+              ><label class="check-field"
+                ><input checked="" id="plan-allow-pause" type="checkbox" />Allow
+                pause / resume</label
+              ><label class="check-field"
+                ><input checked="" id="plan-allow-renew" type="checkbox" />Allow
+                renewal</label
+              >
+              <div class="form-actions">
+                <button class="btn btn-primary" id="plan-save">Save plan</button
+                ><button
+                  class="btn btn-secondary"
+                  onclick="resetConfiguration('plan')"
+                  type="button"
+                >
+                  New / clear
+                </button>
+              </div>
+            </form>
+            <p id="plan-result" role="status"></p>
+            <div class="table-scroll" id="plan-records"></div>
+          </section>
+          <section class="configuration-section" id="config-tax">
+            <h3>Taxes</h3>
+            <p class="auth-hint" id="tax-editing">Create a new tax.</p>
+            <form
+              class="identity-grid"
+              id="tax-form"
+              onsubmit="event.preventDefault();saveConfiguration('tax')"
+            >
+              <input id="tax-id" type="hidden" /><label for="tax-name"
+                >Tax name<input
+                  class="o_field_input"
+                  id="tax-name"
+                  maxlength="120"
+                  required=""
+                  type="text"
+                  value="" /></label
+              ><label for="tax-rate"
+                >Tax rate (%)<input
+                  class="o_field_input"
+                  id="tax-rate"
+                  max="100"
+                  min="0"
+                  required=""
+                  step="0.01"
+                  type="number"
+                  value="18.00"
+              /></label>
+              <div class="form-actions">
+                <button class="btn btn-primary" id="tax-save">Save tax</button
+                ><button
+                  class="btn btn-secondary"
+                  onclick="resetConfiguration('tax')"
+                  type="button"
+                >
+                  New / clear
+                </button>
+              </div>
+            </form>
+            <p id="tax-result" role="status"></p>
+            <div class="table-scroll" id="tax-records"></div>
+          </section>
+          <section class="configuration-section" id="config-discount">
+            <h3>Discount rules</h3>
+            <p class="auth-hint" id="discount-editing">
+              Create a new discount.
+            </p>
+            <form
+              class="identity-grid"
+              id="discount-form"
+              onsubmit="event.preventDefault();saveConfiguration('discount')"
+            >
+              <input id="discount-id" type="hidden" /><label for="discount-name"
+                >Coupon code<input
+                  class="o_field_input"
+                  id="discount-name"
+                  maxlength="120"
+                  required=""
+                  type="text"
+                  value="" /></label
+              ><label for="discount-kind"
+                >Discount type<select class="o_field_input" id="discount-kind">
+                  <option value="PERCENT">Percentage</option>
+                  <option value="FIXED">Fixed amount (₹)</option>
+                </select></label
+              ><label for="discount-value"
+                >Value (% or ₹)<input
+                  class="o_field_input"
+                  id="discount-value"
+                  min="0.01"
+                  required=""
+                  step="0.01"
+                  type="number"
+                  value="10" /></label
+              ><label for="discount-min-amount"
+                >Minimum spend (₹)<input
+                  class="o_field_input"
+                  id="discount-min-amount"
+                  min="0"
+                  required=""
+                  step="0.01"
+                  type="number"
+                  value="0.00" /></label
+              ><label for="discount-min-quantity"
+                >Minimum product units<input
+                  class="o_field_input"
+                  id="discount-min-quantity"
+                  max="100000"
+                  min="1"
+                  required=""
+                  type="number"
+                  value="1" /></label
+              ><label for="discount-start"
+                >Starts on<input
+                  class="o_field_input"
+                  id="discount-start"
+                  required=""
+                  type="date"
+                  value="" /></label
+              ><label for="discount-end"
+                >Ends on<input
+                  class="o_field_input"
+                  id="discount-end"
+                  required=""
+                  type="date"
+                  value="" /></label
+              ><label for="discount-max-uses"
+                >Maximum uses<input
+                  class="o_field_input"
+                  id="discount-max-uses"
+                  max="1000000"
+                  min="1"
+                  required=""
+                  type="number"
+                  value="100" /></label
+              ><label for="discount-product"
+                >Applies to<select class="o_field_input" id="discount-product">
+                  <option value="">Whole subscription</option>
+                </select></label
+              >
+              <div class="form-actions">
+                <button class="btn btn-primary" id="discount-save">
+                  Save discount</button
+                ><button
+                  class="btn btn-secondary"
+                  onclick="resetConfiguration('discount')"
+                  type="button"
+                >
+                  New / clear
+                </button>
+              </div>
+            </form>
+            <p id="discount-result" role="status"></p>
+            <div class="table-scroll" id="discount-records"></div>
+          </section>
+        </div>
         <div class="o_chart_card">
           <h2>Account &amp; access</h2>
           <div id="security-account"></div>
@@ -2297,7 +2669,9 @@
     >
       <div class="o_modal_card">
         <div class="o_modal_header">
-          <h3 class="o_modal_title">➕ Create Product Template</h3>
+          <h3 class="o_modal_title" id="product-editor-title">
+            ➕ Create Product Template
+          </h3>
           <button class="o_toast_close" onclick="closeCreateProductModal()">
             ✕
           </button>
@@ -2305,7 +2679,7 @@
         <div class="o_modal_body">
           <div class="o_field_row" style="margin-bottom: 12px">
             <label class="o_form_label" for="prod-new-name">Product Name</label>
-            <input
+            <input id="product-edit-id" type="hidden" /><input
               class="o_field_input"
               id="prod-new-name"
               placeholder="e.g. Brightloop Enterprise Cloud Suite"
@@ -2325,6 +2699,10 @@
             <label class="o_form_label" for="prod-new-tax">Tax rule</label
             ><select class="o_field_input" id="prod-new-tax"></select>
           </div>
+          <label class="check-field"
+            ><input checked="" id="product-active" type="checkbox" />Available
+            for new quotations</label
+          >
           <div
             style="
               display: grid;
@@ -2420,6 +2798,7 @@
             </div>
           </div>
         </div>
+        <p id="product-error" role="alert"></p>
         <div class="o_modal_footer">
           <button class="btn btn-secondary" onclick="closeCreateProductModal()">
             Discard
@@ -2501,5 +2880,6 @@
       </div>
     </div>
     <script src="catalog.js"></script>
+    <script src="configuration.js"></script>
   </body>
 </html>

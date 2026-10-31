@@ -24,6 +24,9 @@ Chart.js and its license are vendored under frontend/vendor; there is no fronten
 
 - Validated signup, two-step sign-in, optional authenticator enrollment, single-device sessions and working email password reset.
 - Admin staff provisioning, server-enforced Admin/Staff/Customer permissions, and customer-only subscriptions/invoices/payment preferences.
+- **Admin configuration:** create/edit billing plans, tax rates, and fixed/percentage discount rules under Settings; edit or archive products under Products & Pricing. Staff cannot change core configuration.
+- **Quotation editor:** up to 50 product lines, variants, editable templates, expiry dates, payment terms, coupon/tax preview, and guarded editing before confirmation.
+- **Customer self-service:** open an owned subscription and confirm, pause/resume, close, or renew when its state and plan policy permit. Renewal skips paused/closed gaps instead of billing those periods retroactively.
 - Billing preview/execution, missed-period catch-up, line taxes/discounts, invoice snapshots, period de-duplication, confirmation/cancellation/print/email.
 - Partial/full manual payments with balance validation, unique references and an audit ledger.
 - Live MRR/ARR estimates, invoice/collection/receivable totals, aging, pagination and PostgreSQL monthly invoice summaries.
@@ -43,7 +46,7 @@ npm run test:iam
 .venv/bin/python -m unittest backend.tests.test_modules_2_3_5 -v
 ```
 
-All PostgreSQL tests use a disposable schema and preserve the application data. `npm test` runs 40 checks, including frontend/controller contracts and the catalog integration regressions. The backend test suite covers authentication/security regressions, permissions, billing correctness, dynamic product variants, quotation templates, price freezing guarantees, discount validation rules, concurrent retries, rollback and reporting. See IAM_INTEGRATION.md for definitions, migration behavior and validation details.
+All PostgreSQL tests use a disposable schema and preserve the application data. `npm test` runs 48 checks, including frontend/controller contracts and the catalog integration regressions. The backend test suite covers authentication/security regressions, permissions, billing correctness, dynamic product variants, quotation templates, price freezing guarantees, discount validation rules, concurrent retries, rollback and reporting. See IAM_INTEGRATION.md for definitions, migration behavior and validation details.
 
 ## Container option
 
@@ -67,6 +70,14 @@ Financial amounts are integer paise; tax/percentage rates use basis points. MRR 
 
 Fresh tables are created on startup. IAM's data migration revokes legacy password-only sessions once and preserves finance records. Existing-table schema changes require explicit migrations. .env, encryption keys, databases, dependencies, caches, logs and verification screenshots are ignored. .env.example is a shareable template.
 
-The quotation screen creates one configured product line or uses a saved template; APIs accept up to 50 lines. Catalog creation, variants, template saving, lifecycle actions, and coupon preview use the shared authenticated APIs. Plan/tax/discount rule administration remains available through the Admin APIs; a dedicated configuration UI is still future work. Saved-contract coupon previews use frozen contract prices, and invoice billing revalidates eligibility for each period.
+The quotation screen supports up to 50 editable product lines or an editable saved template, expiry dates, payment terms, preview totals, and guarded draft/quotation editing. Settings includes Admin plan, tax, and discount creation/editing. Products support editing and archival. Customers can open their own subscriptions and use permitted confirmation, pause/resume, closure, and renewal controls. All actions use shared authenticated APIs. Saved-contract coupon previews use frozen contract prices, and invoice billing revalidates eligibility for each period.
 
 The original Node/React IAM prototype is retained for reference; backend/server.js deliberately refuses to launch it. Use the supported entry point above.
+
+## Verification and known limits
+
+The acceptance rehearsal covers plan/tax/discount setup → multi-line quotation → activation → billing and duplicate retry → invoice confirmation → partial/final payment → reconciled reporting. The performance test uses an isolated dataset of 5,000 subscriptions, 5,000 invoices and a 500-subscription billing batch. On the recorded local run, the batch committed in about 1.41 seconds and the measured read APIs stayed below 0.21 seconds. These are local API measurements, not a guarantee for every browser, network, or deployment.
+
+See [the release handoff and verified security review](LOCAL_RELEASE_HANDOFF.md) for the complete evidence, limitations, future features and demo checklist. Security hardening still includes an explicit verified SMTP TLS context and a deployment-appropriate CSP, Referrer-Policy, Permissions-Policy and HTTPS/HSTS configuration. The review distinguishes active app findings from the unused React reference portal. Do not treat the local demo configuration or a passing CI run as a production security certification.
+
+The removed `DEMO_SCRIPT.md` is not restored by this release; its revert remains in the repository history.

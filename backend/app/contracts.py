@@ -168,8 +168,15 @@ class TemplateInput(Payload):
 class TemplateSpawnInput(Payload):
     customer_id: str
     starts_on: date | None = None
+    expires_on: date | None = None
     payment_days: int = Field(default=14, ge=0, le=365)
     discount_id: str | None = None
+
+    @model_validator(mode="after")
+    def dates(self):
+        if self.expires_on and self.expires_on < (self.starts_on or date.today()):
+            raise ValueError("Expiry precedes start")
+        return self
 
 
 class SubscriptionInput(Payload):
@@ -209,12 +216,13 @@ class DiscountValidateInput(Payload):
     total_qty: int | None = Field(default=None, ge=1, le=100000)
     lines: list[LineInput] = Field(default_factory=list, max_length=50)
     subscription_id: str | None = None
+    plan_id: str | None = None
     target_date: date | None = None
     customer_id: str | None = None
 
     @model_validator(mode="after")
     def normalize_qty(self):
-        if self.subscription_id and (self.lines or self.subtotal):
+        if self.subscription_id and (self.lines or self.subtotal or self.plan_id):
             raise ValueError("Choose a saved subscription or proposed lines, not both")
         if self.total_qty is not None and self.item_quantity == 1:
             self.item_quantity = self.total_qty
