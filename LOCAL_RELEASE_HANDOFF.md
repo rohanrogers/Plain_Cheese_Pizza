@@ -27,19 +27,21 @@ Dataset: **5,000 subscriptions, 5,000 initial invoices, and a 500-subscription b
 
 | Operation | Maximum measured local time |
 | --- | ---: |
-| Dashboard | 201.53 ms |
-| Filtered dashboard | 172.19 ms |
-| Subscription list / search / last page | 32.12 ms |
-| Invoice list / search / last page | 16.20 ms |
-| Subscription / invoice detail | 7.68 ms |
-| Invoice print | 3.76 ms |
-| Catalog | 5.23 ms |
-| 500-subscription billing preview | 19.69 ms |
-| 500-subscription billing commit | 1410.68 ms |
-| Repeated billing run | 14.02 ms; zero duplicate invoices |
-| Customer portal's three API reads combined | 71.63 ms |
+| Dashboard | 129.93 ms |
+| Filtered dashboard | 144.04 ms |
+| Subscription list / search / last page | 17.81 ms |
+| Invoice list / search / last page | 17.14 ms |
+| Subscription / invoice detail | 5.29 ms |
+| Invoice print | 3.14 ms |
+| Catalog | 4.72 ms |
+| 500-subscription billing preview | 18.23 ms |
+| 500-subscription billing commit | 109.77 ms |
+| Repeated billing run | 9.40 ms; zero duplicate invoices |
+| Customer portal's three API reads combined | 60.36 ms |
 
 These measure authenticated HTTP requests through the local test client, not full browser rendering, a remote network, or production hardware. They support the under-two-second API target for this dataset; they are not a universal performance guarantee. Raw measurements: ignored `test-results/completion-performance.json`.
+
+The first release CI run correctly rejected a 2.13-second billing batch. The repair skips monthly revenue-summary rebuilds when an affected statement contains only draft/cancelled invoices. Statement transition tables preserve issued-invoice insert/update/delete handling and transactional rollback. The two-second performance assertion remains enabled. The table above records the successful local rerun after that repair.
 
 ## Teammate security report: verified findings
 

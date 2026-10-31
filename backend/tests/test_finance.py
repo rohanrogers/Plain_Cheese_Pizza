@@ -462,6 +462,7 @@ class FinanceTests(DatabaseCase):
         self.run_bill(date(2026, 1, 31))
         id = self.invoice()["id"]
         self.assertEqual(self.client.get("/api/dashboard").json()["revenue_trend"], [])
+
         self.confirm(id)
         d = self.client.get("/api/dashboard").json()
         self.assertEqual(d["trend_source"], "monthly_summary")
@@ -487,6 +488,17 @@ class FinanceTests(DatabaseCase):
             json={"action": "CANCEL", "note": "Correction"},
         )
         self.assertEqual(self.client.get("/api/dashboard").json()["revenue_trend"], [])
+
+        # Direct/bulk database maintenance must keep the DELETE transition
+        # table path consistent too, not only API confirmation/cancellation.
+        with SessionLocal.begin() as db:
+            invoice = db.get(Invoice, id)
+            invoice.state = "CONFIRMED"
+            db.flush()
+            self.assertEqual(db.query(InvoiceMonthlySummary).one().net, 10000)
+            db.delete(invoice)
+            db.flush()
+            self.assertEqual(db.query(InvoiceMonthlySummary).count(), 0)
 
     def test_5000_record_dashboard_and_pagination(self):
         day = date.today()

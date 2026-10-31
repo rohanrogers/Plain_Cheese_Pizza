@@ -76,7 +76,7 @@ The original Node/React IAM prototype is retained for reference; backend/server.
 
 ## Verification and known limits
 
-The acceptance rehearsal covers plan/tax/discount setup → multi-line quotation → activation → billing and duplicate retry → invoice confirmation → partial/final payment → reconciled reporting. The performance test uses an isolated dataset of 5,000 subscriptions, 5,000 invoices and a 500-subscription billing batch. On the recorded local run, the batch committed in about 1.41 seconds and the measured read APIs stayed below 0.21 seconds. These are local API measurements, not a guarantee for every browser, network, or deployment.
+The acceptance rehearsal covers plan/tax/discount setup → multi-line quotation → activation → billing and duplicate retry → invoice confirmation → partial/final payment → reconciled reporting. The performance test uses an isolated dataset of 5,000 subscriptions, 5,000 invoices and a 500-subscription billing batch. On the recorded local run, the batch committed in about 0.11 seconds and the measured read APIs stayed below 0.15 seconds. These are local API measurements, not a guarantee for every browser, network, or deployment.
 
 See [the release handoff and verified security review](LOCAL_RELEASE_HANDOFF.md) for the complete evidence, limitations, future features and demo checklist. Security hardening still includes an explicit verified SMTP TLS context and a deployment-appropriate CSP, Referrer-Policy, Permissions-Policy and HTTPS/HSTS configuration. The review distinguishes active app findings from the unused React reference portal. Do not treat the local demo configuration or a passing CI run as a production security certification.
 
