@@ -1,3 +1,4 @@
+from decimal import Decimal
 from datetime import date
 from typing import Annotated, Literal
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
@@ -81,9 +82,13 @@ class ProductInput(Payload):
     kind: Literal["SOFTWARE", "SERVICE", "ADDON", "GOODS"] = "SOFTWARE"
     type: str | None = None
     price: Money = 0
-    sales_price: float | None = None
+    sales_price: Decimal | None = Field(
+        default=None, ge=0, le=1_000_000_000, decimal_places=2, allow_inf_nan=False
+    )
     cost: Money = 0
-    cost_price: float | None = None
+    cost_price: Decimal | None = Field(
+        default=None, ge=0, le=1_000_000_000, decimal_places=2, allow_inf_nan=False
+    )
     notes: str = Field(default="", max_length=2000)
     tax_id: str | None = None
     active: bool = True
@@ -92,9 +97,14 @@ class ProductInput(Payload):
     @model_validator(mode="after")
     def normalize_prices(self):
         if self.sales_price is not None and self.price == 0:
-            self.price = int(round(self.sales_price * 100))
+            self.price = int(self.sales_price * 100)
         if self.cost_price is not None and self.cost == 0:
-            self.cost = int(round(self.cost_price * 100))
+            self.cost = int(self.cost_price * 100)
+        if self.type:
+            kind = self.type.upper()
+            if kind not in {"SOFTWARE", "SERVICE", "ADDON", "GOODS"}:
+                raise ValueError("Invalid product type")
+            self.kind = kind
         return self
 
 
@@ -156,7 +166,7 @@ class TemplateInput(Payload):
 
 
 class TemplateSpawnInput(Payload):
-    customer_id: str | None = None
+    customer_id: str
     starts_on: date | None = None
     payment_days: int = Field(default=14, ge=0, le=365)
     discount_id: str | None = None
@@ -194,14 +204,18 @@ class Transition(Payload):
 
 class DiscountValidateInput(Payload):
     code: str = Field(min_length=1, max_length=120)
-    subtotal: int = Field(ge=0)
+    subtotal: Money = 0
     item_quantity: int = Field(default=1, ge=1)
-    total_qty: int | None = None
+    total_qty: int | None = Field(default=None, ge=1, le=100000)
+    lines: list[LineInput] = Field(default_factory=list, max_length=50)
+    subscription_id: str | None = None
     target_date: date | None = None
     customer_id: str | None = None
 
     @model_validator(mode="after")
     def normalize_qty(self):
+        if self.subscription_id and (self.lines or self.subtotal):
+            raise ValueError("Choose a saved subscription or proposed lines, not both")
         if self.total_qty is not None and self.item_quantity == 1:
             self.item_quantity = self.total_qty
         return self

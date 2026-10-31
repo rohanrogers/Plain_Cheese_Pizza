@@ -3,11 +3,11 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "check": "node --check frontend/app.js && node --check frontend/identity.js",
+    "check": "node --check frontend/app.js && node --check frontend/identity.js && node --check frontend/catalog.js",
     "vendor": "node scripts/vendor-chart.mjs",
     "dev": ".venv/bin/python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 3000",
     "test:iam": "node test-iam.js",
-    "test": ".venv/bin/python -m unittest backend.tests.test_finance backend.tests.test_iam -v"
+    "test": ".venv/bin/python -m unittest backend.tests.test_finance backend.tests.test_iam backend.tests.test_modules_2_3_5 backend.tests.test_regressions backend.tests.test_frontend_contract -v"
   },
   "dependencies": {
     "chart.js": "4.4.8"

@@ -11,6 +11,21 @@ services:
       test: ["CMD-SHELL", "pg_isready -U brightloop"]
       interval: 3s
       retries: 15
+  app:
+    profiles: ["app"]
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://brightloop:brightloop@db:5432/brightloop
+      SMTP_HOST: mail
+      SMTP_PORT: 1025
+      FRONTEND_URL: http://127.0.0.1:3000
+    ports: ["127.0.0.1:3000:3000"]
+    depends_on:
+      db:
+        condition: service_healthy
+      mail:
+        condition: service_started
   mail:
     image: axllent/mailpit:v1.27
     ports: ["127.0.0.1:1025:1025", "127.0.0.1:8025:8025"]
