@@ -59,19 +59,43 @@ class TaxInput(Payload):
 
 
 class VariantInput(Payload):
-    name: Name
+    name: str = Field(default="", max_length=120)
+    attribute_name: str | None = None
+    attribute_value: str | None = None
     modifier: Money = 0
+    price_modifier: Money | None = None
+
+    @model_validator(mode="after")
+    def normalize_fields(self):
+        if self.attribute_name and self.attribute_value and not self.name:
+            self.name = f"{self.attribute_name}: {self.attribute_value}"
+        elif not self.name:
+            self.name = "Standard"
+        if self.price_modifier is not None:
+            self.modifier = self.price_modifier
+        return self
 
 
 class ProductInput(Payload):
     name: Name
     kind: Literal["SOFTWARE", "SERVICE", "ADDON", "GOODS"] = "SOFTWARE"
-    price: Money
+    type: str | None = None
+    price: Money = 0
+    sales_price: float | None = None
     cost: Money = 0
+    cost_price: float | None = None
     notes: str = Field(default="", max_length=2000)
     tax_id: str | None = None
     active: bool = True
     variants: list[VariantInput] = Field(default_factory=list, max_length=30)
+
+    @model_validator(mode="after")
+    def normalize_prices(self):
+        if self.sales_price is not None and self.price == 0:
+            self.price = int(round(self.sales_price * 100))
+        if self.cost_price is not None and self.cost == 0:
+            self.cost = int(round(self.cost_price * 100))
+        return self
 
 
 class PlanInput(Payload):
@@ -131,6 +155,13 @@ class TemplateInput(Payload):
     lines: list[LineInput] = Field(min_length=1, max_length=50)
 
 
+class TemplateSpawnInput(Payload):
+    customer_id: str | None = None
+    starts_on: date | None = None
+    payment_days: int = Field(default=14, ge=0, le=365)
+    discount_id: str | None = None
+
+
 class SubscriptionInput(Payload):
     customer_id: str
     plan_id: str
@@ -149,8 +180,31 @@ class SubscriptionInput(Payload):
 
 
 class Transition(Payload):
-    action: Literal["QUOTE", "CONFIRM", "ACTIVATE", "PAUSE", "RESUME", "CLOSE", "RENEW"]
+    action: str = Field(min_length=1, max_length=20)
     expires_on: date | None = None
+
+    @field_validator("action")
+    def normalize_action(cls, v):
+        action_clean = v.upper().strip()
+        allowed = {"QUOTE", "CONFIRM", "ACTIVATE", "PAUSE", "RESUME", "CLOSE", "RENEW"}
+        if action_clean not in allowed:
+            raise ValueError(f"Action must be one of {allowed}")
+        return action_clean
+
+
+class DiscountValidateInput(Payload):
+    code: str = Field(min_length=1, max_length=120)
+    subtotal: int = Field(ge=0)
+    item_quantity: int = Field(default=1, ge=1)
+    total_qty: int | None = None
+    target_date: date | None = None
+    customer_id: str | None = None
+
+    @model_validator(mode="after")
+    def normalize_qty(self):
+        if self.total_qty is not None and self.item_quantity == 1:
+            self.item_quantity = self.total_qty
+        return self
 
 
 class BillingInput(Payload):
