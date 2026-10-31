@@ -1,0 +1,528 @@
+[
+  {
+    "id": 1,
+    "title": "Tinkerbluds - Cultivated Land Validation Platform",
+    "tagline": "Instant Plot Validation & Crop Suitability Service with Satellite Intelligence",
+    "description": "Tinkerbluds is an automated, API‑ready platform designed to validate farmer‑submitted plot polygons against real satellite imagery and environmental data to determine if:\n1. The plot physically exists\n2. It is genuine agricultural land\n3. The claimed crop is plausible for that location\n\nIt integrates multiple data sources and analytical components:\n•Google Earth Engine to fetch Sentinel‑2 imagery\n•ESA WorldCover land‑classification to check cropland coverage\n•NDVI (vegetation index) analysis for active vegetation\n•Open‑Meteo weather + soil moisture data\n•A REST API + interactive dashboard to make results easily accessible\n•Supabase for persistent farmer & plot storage\n\nUsers upload a KML polygon defining a farm plot. The service then:\n•Parses and georeferences the polygon\n•Downloads or samples the relevant satellite tile automatically\n•Runs land classification and NDVI analysis\n•Computes cultivated area vs total plot area\n•Scores and decides PASS / REVIEW / FAIL based on threshold logic\n•Optionally analyzes crop suitability based on recent weather and soil moisture conditions\n•Stores validated plots and alerts in the database\n•Presents supporting evidence layers (satellite & NDVI thumbnails, land‐class charts, weather tables)\n\nThis system is built for automation, scalability, auditability, and explainability which is crucial for reducing fraud and incorrect submissions across diverse agricultural contexts.",
+    "teamName": "tinkerbluds",
+    "college": "CUSAT,RSET",
+    "problemStatement": "Automated Plot Validation and Ownership Plausibility",
+    "github": "https://github.com/Shaan-Shoukath/Tinkerbluds",
+    "video": "https://youtu.be/lmnmKAbwiO4",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/bde6252a-9b81-4f23-ad0f-459e6a3fd14b/screenshot_0_1771734513643.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/bde6252a-9b81-4f23-ad0f-459e6a3fd14b/screenshot_1_1771734514810.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/bde6252a-9b81-4f23-ad0f-459e6a3fd14b/screenshot_2_1771734516287.jpg"
+    ],
+    "track": "kireap"
+  },
+  {
+    "id": 2,
+    "title": "AI-Powered Farm Management & Decision Support System",
+    "tagline": "This project proposes an AI-powered farm management assistant that uses Retrieval-Augmented Generation (RAG)",
+    "description": "Project Description: CropIntel\nCropIntel is a next-generation Agricultural Intelligence Platform that leverages Local Large Language Models (LLMs) and hyper-local data fusion to empower farmers and merchants. By bridging the gap between raw data and actionable insights, CropIntel provides a \"digital brain\" for the modern farm, ensuring food security and economic stability through AI-driven decision-making.\n\n The Core Innovation: RAG-Powered Intelligence\nUnlike standard agricultural apps, CropIntel utilizes Retrieval-Augmented Generation (RAG). It connects a local Gemma2:2b model (via Ollama) directly to a real-time database of over 1,100 market price records. This allows farmers to ask natural language questions—like \"Is it a good time to sell my wheat in Delhi?\"—and receive answers backed by current market statistics, regional trends, and historical price anomalies.\n\nImpact Goal\nCropIntel aims to transform agriculture from a reactive industry into a predictive one. By providing 500m-resolution weather data and real-time market transparency, the platform reduces crop waste, optimizes resource usage, and stabilizes the agricultural economy.",
+    "teamName": "Stardust Crusaders",
+    "college": "St Aloysius (Deemed to be University)",
+    "problemStatement": "AI-Powered Farm Management & Decision Support System",
+    "github": "https://github.com/Alston2006/CropIntel",
+    "video": "https://youtu.be/wW4c1d0cIY0?si=JLyYulasOPDZ-AdY",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/e979cb47-8892-4d01-88b8-665e65eb06b2/screenshot_0_1771733666957.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/e979cb47-8892-4d01-88b8-665e65eb06b2/screenshot_1_1771733667791.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/e979cb47-8892-4d01-88b8-665e65eb06b2/screenshot_2_1771733668413.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/e979cb47-8892-4d01-88b8-665e65eb06b2/screenshot_3_1771733669103.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/e979cb47-8892-4d01-88b8-665e65eb06b2/screenshot_4_1771733669712.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/e979cb47-8892-4d01-88b8-665e65eb06b2/screenshot_5_1771733670387.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/e979cb47-8892-4d01-88b8-665e65eb06b2/screenshot_6_1771733670989.jpeg"
+    ],
+    "track": "software"
+  },
+  {
+    "id": 3,
+    "title": "Secure.sol",
+    "tagline": "Protector of Smart Contracts, Savior of Developers",
+    "description": "Secure.sol is a smart contract  security platform designed to help developers identify vulnerabilities in their smart contracts before deploying them to real blockchain networks. Smart contracts control large amounts of digital assets, and even a small mistake in the code can lead to severe financial losses.It addresses the problem by providing a safe environment where developers can simulate real-world attacks and analyze contract security.\n\nThe platform allows users to upload their smart contracts, which are then compiled and deployed on a local blockchain environment using Hardhat. Running the system locally ensures that all attack simulations are performed in a completely isolated and safe environment, meaning no real assets or live blockchain networks are affected\n\nOnce the contract is deployed locally, the system automatically executes multiple attack scripts that replicate common smart contract vulnerabilities. These simulated attacks include scenarios such as reentrancy attacks, access control vulnerabilities, integer overflows, input validation flaws. Each attack script interacts with the deployed contract exactly the way a real attacker would, allowing the system to test whether the contract is vulnerable.",
+    "teamName": "HackWaters",
+    "college": "Cochin University College of Engineering Kuttanad,CUSAT",
+    "problemStatement": "Security Issues in Smart Contract unchecked leading to Millions in losses.",
+    "github": "https://github.com/Noel9907/secure-sol",
+    "video": "https://youtu.be/MKiGrbRsF44?si=TTYwOkmvACOtA42T",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/d904b4a2-4198-4862-afad-38558e5cabaa/screenshot_0_1771735308709.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/d904b4a2-4198-4862-afad-38558e5cabaa/screenshot_1_1771735309710.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/d904b4a2-4198-4862-afad-38558e5cabaa/screenshot_2_1771735310507.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/d904b4a2-4198-4862-afad-38558e5cabaa/screenshot_3_1771735311202.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/d904b4a2-4198-4862-afad-38558e5cabaa/screenshot_4_1771735311915.png"
+    ],
+    "track": "software"
+  },
+  {
+    "id": 4,
+    "title": "RiskRank",
+    "tagline": "Prioritize What Breaks the Business",
+    "description": "Abstract\n\nRiskRank is a business-first vulnerability prioritization engine designed to address the growing problem of alert fatigue and ineffective vulnerability triage in modern security operations. While existing security tools generate thousands of alerts and rely heavily on static CVSS severity scores, they lack business context, leading teams to focus on low-impact issues while critical vulnerabilities remain unpatched.\n\nRiskRank transforms traditional vulnerability management by analyzing security findings through a business-impact lens. The system ingests outputs from SAST and DAST tools, enriches them with contextual data such as asset criticality and exposure level, and applies AI-driven prioritization to rank vulnerabilities based on their potential operational, financial, and reputational impact. It also translates technical risks into clear, actionable business insights, enabling faster and more strategic remediation decisions.\n\nBy reducing alert noise and accelerating the identification of high-impact threats, RiskRank helps organizations align security efforts with business priorities. The platform integrates seamlessly into existing DevSecOps workflows via CLI and CI/CD pipelines, ensuring minimal disruption while maximizing risk visibility and response efficiency.",
+    "teamName": "Samurai",
+    "college": "APJ abdul kalam technological university",
+    "problemStatement": "Developer-Friendly Security",
+    "github": "https://github.com/orgs/make-a-ton-samurai/repositories",
+    "video": "https://youtu.be/4C8BS3kJTek?si=L2PglnKbQI6Z2Dcg",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/29562236-9025-4a17-bf85-998ec7b87ecd/screenshot_0_1771734316871.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/29562236-9025-4a17-bf85-998ec7b87ecd/screenshot_1_1771734317983.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/29562236-9025-4a17-bf85-998ec7b87ecd/screenshot_2_1771734318747.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/29562236-9025-4a17-bf85-998ec7b87ecd/screenshot_3_1771734319411.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/29562236-9025-4a17-bf85-998ec7b87ecd/screenshot_4_1771734320115.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/29562236-9025-4a17-bf85-998ec7b87ecd/screenshot_5_1771734320913.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/29562236-9025-4a17-bf85-998ec7b87ecd/screenshot_6_1771734321762.png"
+    ],
+    "track": "kireap"
+  },
+  {
+    "id": 5,
+    "title": "Traq",
+    "tagline": "Know before you go",
+    "description": "Traq – Intelligent Crowd & Ticket Analytics System for Railways\nProject Overview\n\nTraq is a smart railway monitoring and digital ticket validation system designed specifically for high-population railway networks like India. The system measures real-time passenger density inside general compartments and automatically detects ticketless passengers without requiring QR scanning, RFID tapping, or manual verification.\n\nTraq integrates RF sensing, Bluetooth Low Energy (BLE), WiFi communication, and cloud analytics using InfluxDB to create a scalable railway intelligence platform.\n\n1. Real-Time Passenger Density Detection\n\nEach train bogie is equipped with:\n\nRF8318 module for human presence density estimation\n\nBluetooth scanning\n\nWiFi device detection\n\nWiFi connectivity for cloud transmission\n\nThe RF module estimates the total number of people inside a compartment. Bluetooth and WiFi scanning help correlate device presence for improved accuracy.\n\nThe processed data is transmitted to the backend and stored in InfluxDB as time-series data.\n\nThe system provides:\n\nOccupancy percentage\n\nOvercrowding alerts\n\nPeak-time pattern analysis\n\nHistorical density trends\n\nThis allows railway authorities to monitor congestion in real time and optimize operations.\n\n2. RailCard – Zero-Interaction Smart Ticket Identity\n\nTraq introduces a device called RailCard.\n\nRailCard is:\n\nBuilt using nRF52833 (ultra-low-power BLE SoC)\n\nVery small in size\n\nLong battery life\n\nAssigned a permanent unique ID (similar to Aadhaar concept)\n\nEach RailCard has a unique digital identity stored in the backend database.\n\nWhen a passenger books a ticket through the app:\n\nThe ticket is digitally mapped to the RailCard’s unique ID.\n\nNo QR code is generated.\n\nNo physical ticket is required.\n\nNo tapping or scanning is needed.\n\nAfter booking, the passenger does not need to perform any additional step.\n\n3. Automatic Ticket Verification Inside Train\n\nEach train bogie contains multiple nRF52833-based BLE receivers.\n\nWhen a passenger enters:\n\nThe RailCard broadcasts its unique BLE ID.\n\nBogie receivers detect all RailCards inside the compartment.\n\nThe backend verifies whether each ID has a valid ticket.\n\nThe number of verified tickets inside that bogie is calculated in real time.\n\nThis process is fully automatic and requires no human interaction.\n\n4. Ticketless Passenger Detection Logic\n\nTraq determines ticketless passengers using a simple and scalable formula:\n\nTicketless Passengers =\nTotal People in Bogie − Total Verified RailCards\n\nWhere:\n\nTotal People is estimated using RF density sensing.\n\nTotal Verified RailCards are counted using BLE detection and backend validation.\n\nExample:\n\nIf 300 people are detected in a bogie\nand only 250 valid RailCards are verified,\n\nThen 50 passengers are likely traveling without valid tickets.\n\nThis allows:\n\nReal-time ticketless estimation\n\nTargeted inspections\n\nReduced manpower dependency\n\nData-driven enforcement strategies\n\n5. Why QR and RFID Systems Are Difficult to Implement in India\n\nIndia has extremely high railway passenger density, especially in general compartments.\n\nQR-based systems:\n\nRequire manual scanning\n\nCreate long queues\n\nSlow passenger movement\n\nAre impractical for unreserved compartments\n\nCause congestion during peak hours\n\nRFID gate-based systems:\n\nRequire physical entry gates\n\nInvolve massive infrastructure costs\n\nAre difficult to deploy on open railway platforms\n\nCannot handle extreme rush conditions\n\nIn high-density environments, gate-based or scan-based systems create bottlenecks and safety risks.\n\n6. Why RailCard Is the Solution\n\nRailCard removes all friction.\n\nNo scanning\n\nNo tapping\n\nNo queues\n\nNo physical verification\n\nNo additional step after booking\n\nPassengers simply enter the train. The system automatically detects and verifies them.\n\nThis makes Traq scalable to millions of daily passengers.\n\n7. Application Ecosystem\nPublic Application\n\nBook tickets linked to RailCard\n\nView real-time crowd density per compartment\n\nCheck live train status\n\nChoose less crowded bogies\n\nRailway Authority Dashboard\n\nMonitor compartment occupancy\n\nView ticketless passenger estimates\n\nAccess historical crowd analytics\n\nAnalyze peak congestion patterns\n\n8. Backend & Data System\n\nData transmitted via WiFi\n\nStored in InfluxDB (time-series database)\n\nEnables real-time analytics\n\nProvides density trends and predictive insights\n\nTraq is not just a ticket system.\nIt is a railway intelligence and crowd analytics platform designed for large-scale, high-density public transportation systems.",
+    "teamName": "Parallax",
+    "college": "School of Engineering CUSAT",
+    "problemStatement": "Crowd management and ticket validation in railway",
+    "github": "https://github.com/Sangeeth62880/Traq.git",
+    "video": "https://youtu.be/cb7obwuuN-Q",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f566e079-aab8-4420-b472-9c01cbbad053/screenshot_0_1771734360307.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f566e079-aab8-4420-b472-9c01cbbad053/screenshot_1_1771734360896.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f566e079-aab8-4420-b472-9c01cbbad053/screenshot_2_1771734361348.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f566e079-aab8-4420-b472-9c01cbbad053/screenshot_3_1771734361974.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f566e079-aab8-4420-b472-9c01cbbad053/screenshot_4_1771734362478.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f566e079-aab8-4420-b472-9c01cbbad053/screenshot_5_1771734363011.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f566e079-aab8-4420-b472-9c01cbbad053/screenshot_6_1771734363564.png"
+    ],
+    "track": "hardware"
+  },
+  {
+    "id": 6,
+    "title": "Cusatify",
+    "tagline": "Digital Solutions for Real Campus Problems",
+    "description": "📘 CUSATIFY\n\nA Unified Digital Platform for Students and Faculty\n\n\n---\n\n📌 Project Overview\n\nCUSATIFY is a centralized digital platform designed to streamline academic and campus-related activities for both students and faculty.\n\nThe system integrates:\n\nLibrary Seat Management\n\nAttendance Tracking\n\nAcademic Notes Sharing\n\nAssignment & Event Notifications\n\nTimetable Management\n\nStudy Resources\n\nFaculty Administrative Controls\n\n\nThe goal is to digitize and centralize campus operations into a single smart ecosystem.\n\n\n---\n\n🎓 STUDENT PORTAL – Detailed Features\n\n\n---\n\n1️⃣ Library Seat Management System\n\nPurpose\n\nTo prevent seat blocking and ensure fair library usage.\n\nHow It Works\n\nStudent enters library.\nScans QR code placed at library entrance.\nApp verifies location/library ID.\nDisplays real-time available seats.\nStudent selects a seat.\nTimer starts for selected time slot.\n\nOn expiry:\n\nAutomatic checkout.\nSeat becomes available again.\n\nAdditional Capabilities\n\nManual checkout before timer ends.\nSeat booking logs stored in database.\nFaculty can access logs.\n\n\n\n\n2️⃣ Attendance Management\n\nTwo Methods:\n\nMethod A – Faculty Direct Marking\n\nFaculty opens attendance panel.\nSelects subject & semester.\nMarks present/absent manually.\n\n\nMethod B – QR-Based Attendance\n\nFaculty generates QR code in class.\nStudents scan QR within limited time.\nAttendance auto-recorded.\n\n\nBenefits\n\nReduces proxy attendance.\nMaintains digital record.\nReal-time attendance percentage tracking.\n\n\n\n3️⃣ Notes Section\n\nFeatures\n\nFaculty upload subject notes.\n\nStudents can:\n\nView notes\nDownload notes\nAccess semester-wise content\n\n\nOrganization\n\nDepartment-based\nSemester-based\nSubject-based\n\n\n4️⃣ Campus Event Notifications\n\nStudents Receive:\n\nEvent announcements\nWorkshop notifications\nCultural program alerts\nImportant university circulars\n\n\nFaculty Can:\n\nCreate events\nEdit events\nSet event deadlines\nAttach details\n\n\n\n5️⃣ Assignment Notifications\n\nStudents\n\nView upcoming assignments\nCheck submission deadlines\nGet reminder notifications\n\nFaculty\n\nCreate assignments\nSet due dates\nAttach instructions\nMonitor submission status (future scope)\n\n\n\n6️⃣ Library Logs (Faculty Access)\n\nFaculty can:\n\nView which students used library\nSee:\nCheck-in time\nCheck-out time\nDuration\nTrack usage patterns,Monitor discipline issues-future modifications\n\n\n\n7️⃣ Timetable Module\n\nStudents\nView semester timetable\nSee:\nSubject\nFaculty name\nTime slot\nClassroom\n\n\n\nFaculty\n\nView teaching schedule\nSee assigned semesters & subjects---\n\n8️⃣ Study Resources Section\n\nCentralized academic resource hub:\nSyllabus\nPrevious year question papers\nReference materials\nExternal learning links\nDepartment materials\n\n\n\n---\n\n👨‍🏫 FACULTY PORTAL – Detailed Features\n\n\n---\n\n🔐 Faculty Login Information\n\nFaculty login requires:\n\nName\nFaculty ID\nDepartment\nSubjects teaching\nSemester assigned\n\n\n\n---\n\nFaculty Capabilities\n\n1️⃣ Attendance Control\nMark attendance directly\nGenerate QR for attendance\nView attendance reports\n\n\n2️⃣ Library Log Monitoring\n\nAccess student library usage\nView duration logs\n\n\n3️⃣ Event Creation\n\nCreate campus events\nAssign target departments/semesters\nSchedule event dates\nSend notifications to students\n\n\n4���⃣ Assignment Management\n\nCreate assignments\nAdd deadlines\nPost instructions\nMonitor submissions (future scope)\n\n\n\n---\n\n🏗️ System Architecture (Conceptual)\n\nUsers → Flutter App → Firebase Authentication\n→ Cloud Firestore Database\n→ Real-Time Data Sync\n→ Role-Based Access Control\n\n\n---\n\n🔒 Security Features\n\nRole-based login (Student / Faculty)\n\nDepartment-based data access\n\nFirestore rules for permission control\n\nSession-based authentication\n\nBackend-controlled timer logic\n\n\n\n📊 Database Structure (Conceptual)\n\nCollections may include:\n\nattendance\n\nevents\n\nfaculty\n\nlibrarySessions\n\nstudents\n\n\n\n---\n\n🚀 Impact of the System\n\nDigitizes campus management\n\nReduces manual paperwork\n\nPrevents seat misuse\n\nImproves transparency\n\nCentralizes student information\n\nSaves administrative time\n\n\n\n---\n\n🔮 Future Scope\n\nSeat Management  Using cameras instead of QR\n\nAdmin Dashboard\n\nAnalytics & Reports\n\nPush Notifications\n\nNFC / Bluetooth validation\n\nMulti-campus scalability\n\nAI-based usage analytics",
+    "teamName": "freshers.exe",
+    "college": "School of engineering,Cusat",
+    "problemStatement": "CUSAT students currently navigate a fragmented academic experience, manually checking library seat availability, tracking book due dates, and monitoring attendance across different platforms or physical logs. During high-pressure exam seasons, this lack of a unified system leads to \"seat-squatting\" in libraries, forgotten book renewals resulting in fines, and the constant anxiety of falling below the required attendance percentage.",
+    "github": "https://github.com/uditya22-flux/cusatify",
+    "video": "",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/fdcb4a53-f902-456f-8274-5c78697c2bba/screenshot_0_1771734375436.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/fdcb4a53-f902-456f-8274-5c78697c2bba/screenshot_1_1771734375963.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/fdcb4a53-f902-456f-8274-5c78697c2bba/screenshot_2_1771734376465.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/fdcb4a53-f902-456f-8274-5c78697c2bba/screenshot_3_1771734376884.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/fdcb4a53-f902-456f-8274-5c78697c2bba/screenshot_4_1771734377392.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/fdcb4a53-f902-456f-8274-5c78697c2bba/screenshot_5_1771734377731.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/fdcb4a53-f902-456f-8274-5c78697c2bba/screenshot_6_1771734378308.jpeg"
+    ],
+    "track": "software"
+  },
+  {
+    "id": 7,
+    "title": "Trust Score Engine",
+    "tagline": "Trust Score Engine for Real-World Data",
+    "description": "TrustLayer is a domain-agnostic statistical trust engine that dynamically assigns confidence scores to incoming data streams.\n\nInstead of relying on machine learning black boxes, TrustLayer uses explainable statistical methods to:\n\nDetect anomalies in real time\n\nMeasure cross-source agreement\n\nTrack long-term reliability of each source\n\nAutomatically classify sources as Trusted, Monitor, or Isolate\n\nProvide clear reasoning for every decision\n\nThe system ensures that downstream applications use only statistically validated, historically reliable data.\n\n🧠 How It Works\n\nTrustLayer evaluates each data source using three core layers:\n\n1️⃣ Rolling Anomaly Detection\n\nUses a rolling window (size 5)\n\nComputes Z-score to measure statistical deviation\n\nValues beyond ±2.5 standard deviations are flagged\n\nConverts deviation into a smooth anomaly score (0–1)\n\n2️⃣ Cross-Source Consensus\n\nComputes the median across sources at each timestamp\n\nMeasures deviation from peer agreement\n\nAssigns a consensus score (0–1)\n\nPenalizes sources that diverge significantly\n\n3️⃣ Historical Trust (Adaptive Memory)\n\nUses exponential smoothing:\n\ntrust = 0.8 × old + 0.2 × performance\n\nTrust builds gradually when behavior is consistent\n\nTrust erodes when anomalies or disagreements persist\n\n📊 Final Trust Score\n\nEach source receives a final trust score:\n\n0.4 × Historical Trust\n\n0.3 × (1 − Anomaly Score)\n\n0.3 × Consensus Score\n\nClassification:\n\n✅ ≥ 0.75 → Trusted\n\n⚠️ 0.40–0.75 → Monitor\n\n🚨 < 0.40 → Isolate\n\nThe engine also recommends:\n\nThe most reliable source\n\nThe statistically safest value\n\n🧪 Validation & Testing\n\nThe system was stress-tested using deterministic scenarios:\n\nNormal behavior\n\nSingle source failure\n\nCollusion between weak sources\n\nGradual drift\n\nFull system chaos\n\nRecovery after isolation\n\nEach scenario validates the robustness of anomaly detection, consensus logic, and historical trust adaptation.\n\nAdditionally, a Live API mode streams real Bitcoin price data and simulates adversarial disturbances to demonstrate real-time adaptability.\n\n🎯 Key Features\n\nFully explainable statistical engine (no ML)\n\nReal-time streaming support\n\nCSV dataset ingestion\n\nMulti-source simulation\n\nAutomatic anomaly detection\n\nDynamic reliability scoring\n\nTransparent reasoning panel\n\nRanking and recommendation system\n\nDomain-agnostic architecture\n\n🌍 Real-World Applications\n\nTrustLayer can be applied in:\n\nFinancial data validation\n\nIoT sensor networks\n\nWeather data aggregation\n\nHealthcare monitoring systems\n\nSupply chain data verification\n\nAPI reliability monitoring\n\nAny system where data trust determines decision quality.\n\n🏁 Conclusion\n\nTrustLayer transforms raw multi-source data into quantified, explainable trust decisions. By combining statistical anomaly detection, peer consensus, and adaptive reliability tracking, it ensures that automated systems operate on trustworthy information without requiring constant human verification.\n\nIn environments where incorrect data can lead to critical failures, TrustLayer provides a structured, transparent framework for automated trust management.",
+    "teamName": "Codequest",
+    "college": "Cochin University of science and technology",
+    "problemStatement": "Trust Score Engine for Real-World Data",
+    "github": "https://github.com/vishnupvenmany/trustscore",
+    "video": "https://youtu.be/JgA558YwoVk",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/e46afc71-b701-4896-a9dd-4dadf2c7a71a/screenshot_0_1771734805194.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/e46afc71-b701-4896-a9dd-4dadf2c7a71a/screenshot_1_1771734805856.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/e46afc71-b701-4896-a9dd-4dadf2c7a71a/screenshot_2_1771734806441.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/e46afc71-b701-4896-a9dd-4dadf2c7a71a/screenshot_3_1771734806952.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/e46afc71-b701-4896-a9dd-4dadf2c7a71a/screenshot_4_1771734807497.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/e46afc71-b701-4896-a9dd-4dadf2c7a71a/screenshot_5_1771734807993.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/e46afc71-b701-4896-a9dd-4dadf2c7a71a/screenshot_6_1771734808532.png"
+    ],
+    "track": "software"
+  },
+  {
+    "id": 8,
+    "title": "COG AI",
+    "tagline": "COG AI - EARLY DEMENTIA DETECTOR",
+    "description": "Cog.ai is a multilingual, AI-powered mobile/web application designed to screen for early signs of dementia using speech analysis, simple cognitive games, behavioral tracking, and facial pattern observations. It uses cloud-based machine learning models along with lightweight on-device processing to work even in low-connectivity regions. The tool generates a personalized risk score and suggests clinical referrals for high-risk users. It features a clinician dashboard, making it useful for hospitals, NGOs, and old-age homes. This solution is affordable, scalable, and user-friendly for rural and urban settings.",
+    "teamName": "EQUINOX",
+    "college": "SAHRDAYA COLLEGE OF ENGINEERING AND TECHNOLOGY",
+    "problemStatement": "COG AI - EARLY DEMENTIA DETECTOR",
+    "github": "https://github.com/anugrahks19/Cog-AI-main",
+    "video": "https://youtu.be/8uuwnBZ5ia8",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/3cf93676-2b09-40d7-ab6c-cd847324a256/screenshot_0_1771736323317.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/3cf93676-2b09-40d7-ab6c-cd847324a256/screenshot_1_1771736324010.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/3cf93676-2b09-40d7-ab6c-cd847324a256/screenshot_2_1771736324958.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/3cf93676-2b09-40d7-ab6c-cd847324a256/screenshot_3_1771736325486.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/3cf93676-2b09-40d7-ab6c-cd847324a256/screenshot_4_1771736326047.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/3cf93676-2b09-40d7-ab6c-cd847324a256/screenshot_5_1771736326703.png"
+    ],
+    "track": "software"
+  },
+  {
+    "id": 9,
+    "title": "Mudra",
+    "tagline": "Turning Motion into Meaning — Real-Time Gesture Intelligence.",
+    "description": "A multi-purpose wearable input device that combines EMG and IMU signals to recognize gestures in real time. By fusing muscle activity and motion data, our system achieves more robust and accurate gesture recognition compared to camera-based systems. The predictions are streamed instantly to a live interface via WebSockets, enabling low-latency, privacy-friendly, and hardware-efficient human–computer interaction.",
+    "teamName": "Yukti",
+    "college": "Nehru Arts and Science College",
+    "problemStatement": "Current human-computer interaction methods rely heavily on manual interaction, limiting mobility, accessibility, and seamless control in modern digital environments",
+    "github": "https://github.com/Ranger-NF/Mudra",
+    "video": "https://youtu.be/22E3ZvSfUuE",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/b5860656-dc18-4533-982a-c60fd37d2991/screenshot_0_1771734558972.jpeg"
+    ],
+    "track": "hardware"
+  },
+  {
+    "id": 10,
+    "title": "STVE - Sensor Trust Verification Engine",
+    "tagline": "A time-series data analysis engine that scores, validates, and filters agricultural sensor data based on real-world behavior.",
+    "description": "STVE (Sensor Trust Verification Engine) is a sensor trust verification system designed for precision agriculture, where large networks of soil sensors directly influence automated irrigation and fertilization decisions. These sensors often suffer from silent failures such as frozen readings, calibration drift, sudden spikes, or complete data loss, which can lead to incorrect actions and resource waste. STVE addresses this problem by ensuring that only reliable sensor data is trusted and used for automation.\n\nThe system works as an intelligent trust layer between sensors and decision-making systems. Sensor readings such as soil moisture, temperature, electrical conductivity, and pH are continuously ingested and stored as time-series data. Each new reading triggers an immediate evaluation of sensor behavior, allowing the system to detect faults in near real time.\n\nSTVE analyzes temporal patterns in sensor data to identify abnormal behavior, including static values, sudden spikes, and gradual drift. It also compares readings across nearby sensors within the same zone to distinguish faulty sensors from genuine field-level events like rainfall or irrigation. Physical plausibility checks further ensure that readings fall within realistic environmental limits.\n\nBased on these analyses, STVE assigns each sensor a dynamic trust score and classifies it as healthy, warning, or anomalous. When a sensor becomes anomalous, the system automatically generates a maintenance ticket and presents the issue through a real-time dashboard. By filtering out unreliable data and enabling rapid maintenance, STVE improves decision accuracy, reduces resource waste, and increases the reliability of automated agricultural systems.",
+    "teamName": "Nexus",
+    "college": "Govt. Model Engineering College",
+    "problemStatement": "Trust Score Engine for Real-World Data",
+    "github": "https://github.com/HashimCodeDev/STVE",
+    "video": "https://drive.google.com/file/d/1lcxJ9gV8EYVFe8XHUktqadJ79G14YciO/view?usp=drive_link",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/44f2c818-a3f5-4d3d-ba89-63b02fb58c19/screenshot_0_1771734659589.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/44f2c818-a3f5-4d3d-ba89-63b02fb58c19/screenshot_1_1771734668050.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/44f2c818-a3f5-4d3d-ba89-63b02fb58c19/screenshot_2_1771734670457.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/44f2c818-a3f5-4d3d-ba89-63b02fb58c19/screenshot_3_1771734671651.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/44f2c818-a3f5-4d3d-ba89-63b02fb58c19/screenshot_4_1771734673066.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/44f2c818-a3f5-4d3d-ba89-63b02fb58c19/screenshot_5_1771734674659.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/44f2c818-a3f5-4d3d-ba89-63b02fb58c19/screenshot_6_1771734675639.jpeg"
+    ],
+    "track": "kireap"
+  },
+  {
+    "id": 11,
+    "title": "HealStack AI",
+    "tagline": "Autonomus  Ai instance  response and sandbox validation platform",
+    "description": "This project is an autonomous self-healing platform that monitors microservice clusters to detect, diagnose, and resolve infrastructure failures in real-time. When a crash occurs, the system orchestrates multiple AI models to \"reason\" through logs and source code, identifying root causes that traditional monitoring tools would miss. Every proposed fix is automatically validated within an isolated sandbox environment to ensure safety before being presented to a human operator for one-click approval. The centralized dashboard provides a rich visual timeline of incidents, integrated chat for collaborative analysis, and multi-session persistence for tracking long-term system health. Ultimately, it transforms passive observability into a proactive \"safe-to-fail\" ecosystem that significantly reduces downtime and operational burden.",
+    "teamName": "BitCode",
+    "college": "CUSAT",
+    "problemStatement": "Self-Healing Data Pipeline Framework",
+    "github": "https://github.com/benadictjacob/Adaptive-routing-algorithm",
+    "video": "https://youtu.be/pX3vMn0YWp8",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/3c1ff3d4-7546-4225-8a9b-680e5704aa57/screenshot_0_1771735479431.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/3c1ff3d4-7546-4225-8a9b-680e5704aa57/screenshot_1_1771735481606.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/3c1ff3d4-7546-4225-8a9b-680e5704aa57/screenshot_2_1771735483593.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/3c1ff3d4-7546-4225-8a9b-680e5704aa57/screenshot_3_1771735484262.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/3c1ff3d4-7546-4225-8a9b-680e5704aa57/screenshot_4_1771735485175.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/3c1ff3d4-7546-4225-8a9b-680e5704aa57/screenshot_5_1771735486831.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/3c1ff3d4-7546-4225-8a9b-680e5704aa57/screenshot_6_1771735488399.png"
+    ],
+    "track": "kireap"
+  },
+  {
+    "id": 12,
+    "title": "An AI Voice Assistant Application Optimised For Local Farmers",
+    "tagline": "Krishi Mithra",
+    "description": "Smart Krishi Mitra is an AI-powered agricultural assistant designed for rural farmers in low-connectivity areas. It features a multilingual voice assistant that provides accessible, localized agronomic advice. The platform generates dynamic, AI-driven farmland sustainability reports and precision action schedules by analyzing real-time weather and crop data",
+    "teamName": "HackOverflow",
+    "college": "Amrita Vishwa Vidyapeetham",
+    "problemStatement": "AI-Powered Voice Assistant for Farmers",
+    "github": "https://github.com/devangdileep/make-a-ton.git",
+    "video": "https://youtube.com/shorts/TmNVQ9vevCs?si=o-lG9ivOHZvZcu-z",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f9888725-f014-4e90-a012-e51bc7fef4ea/screenshot_0_1771735397802.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f9888725-f014-4e90-a012-e51bc7fef4ea/screenshot_1_1771735399170.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f9888725-f014-4e90-a012-e51bc7fef4ea/screenshot_2_1771735400081.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f9888725-f014-4e90-a012-e51bc7fef4ea/screenshot_3_1771735400902.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f9888725-f014-4e90-a012-e51bc7fef4ea/screenshot_4_1771735402044.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f9888725-f014-4e90-a012-e51bc7fef4ea/screenshot_5_1771735403061.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f9888725-f014-4e90-a012-e51bc7fef4ea/screenshot_6_1771735403892.jpg"
+    ],
+    "track": "kireap"
+  },
+  {
+    "id": 13,
+    "title": "VigilX: Smart Anti-Sleep Safety System for Drivers",
+    "tagline": "Smarter Sensing. Safer Driving.",
+    "description": "Our project is a smart helmet-based safety system that doesn’t just monitor the driver, it protects them. Using an eye blink sensor and head movement tracking, the system detects early signs of drowsiness in real time. But instead of blindly trusting raw data, we built a Trust Score Engine that continuously evaluates how reliable each sensor reading is. If a sensor becomes noisy or inconsistent, its influence is reduced automatically, ensuring smarter and more accurate fatigue detection.\n\nIf drowsiness is detected, the helmet immediately triggers vibration and sound alerts to wake the driver. In case of a severe impact, the built-in crash detection system identifies abnormal acceleration patterns and activates emergency protocols.\n\nThe helmet connects to our mobile app via Bluetooth, enabling instant SOS alerts with location details to emergency contacts. So whether it’s preventing an accident or responding to one, our system acts as an intelligent, confidence-driven safety companion.\n\nIn short:\nIt watches. It evaluates. It reacts. And when needed — it calls for help.",
+    "teamName": "Ton Kanakkinu Byte",
+    "college": "College of Engineering Trivandrum",
+    "problemStatement": "Trust Score Engine for Real-World Data",
+    "github": "https://github.com/Meegitty/VigilX",
+    "video": "https://youtu.be/uLXb6wsypCk?si=rAECbspeE4T8QT9M",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/c0d62949-4636-437b-aa03-fd5fc4f61c7e/screenshot_0_1771735542511.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/c0d62949-4636-437b-aa03-fd5fc4f61c7e/screenshot_1_1771735543392.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/c0d62949-4636-437b-aa03-fd5fc4f61c7e/screenshot_2_1771735544221.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/c0d62949-4636-437b-aa03-fd5fc4f61c7e/screenshot_3_1771735544972.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/c0d62949-4636-437b-aa03-fd5fc4f61c7e/screenshot_4_1771735545737.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/c0d62949-4636-437b-aa03-fd5fc4f61c7e/screenshot_5_1771735546485.jpeg"
+    ],
+    "track": "kireap"
+  },
+  {
+    "id": 14,
+    "title": "OPTIMA – Optimization Protocol for Traffic Intelligence & Management Architecture",
+    "tagline": "A Swarm-Based AI Traffic System for Real-Time Adaptive Signal Optimization",
+    "description": "OPTIMA is an intelligent, swarm-based traffic management system designed to replace static fixed-time signal systems with real-time adaptive control. The system integrates AI-powered cameras, magnetometers, and acoustic sensors to monitor vehicle density and detect emergency vehicles at each junction. Data is processed locally using edge computing and shared with neighboring intersections through mesh networking to enable coordinated traffic flow.\n\nThe swarm optimization engine dynamically adjusts green signal durations based on real-time traffic density, waiting time, and inter-junction flow conditions. In emergency scenarios, the system automatically overrides normal operation to create an instant green corridor, ensuring rapid and uninterrupted passage for ambulances, fire engines, and police vehicles. A built-in hardware watchdog ensures fail-safe operation during sensor or network failures.\n\nBy combining multi-sensor fusion, decentralized swarm intelligence, and predictive traffic coordination, OPTIMA reduces congestion, minimizes fuel wastage, lowers emissions, improves emergency response time, and enhances overall urban mobility efficiency.",
+    "teamName": "Binary.exe",
+    "college": "AMRITA VISWA VIDYAPEETHAM , NAGERCOIL",
+    "problemStatement": "OPTIMA - Optimization Protocol for Traffic Intelligence & Management Architecture",
+    "github": "https://github.com/Adhwu/Optima",
+    "video": "https://youtu.be/odmx0Ed020o",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/56b0b5f5-95a2-4e17-910a-477b70b52316/screenshot_0_1771735639083.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/56b0b5f5-95a2-4e17-910a-477b70b52316/screenshot_1_1771735640525.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/56b0b5f5-95a2-4e17-910a-477b70b52316/screenshot_2_1771735641375.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/56b0b5f5-95a2-4e17-910a-477b70b52316/screenshot_3_1771735642100.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/56b0b5f5-95a2-4e17-910a-477b70b52316/screenshot_4_1771735642653.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/56b0b5f5-95a2-4e17-910a-477b70b52316/screenshot_5_1771735643347.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/56b0b5f5-95a2-4e17-910a-477b70b52316/screenshot_6_1771735644089.jpeg"
+    ],
+    "track": "software"
+  },
+  {
+    "id": 15,
+    "title": "PCO-US",
+    "tagline": "Multi‑Signal Ovulation Intelligence System for PCOD/PCOS Patients",
+    "description": "PCO‑US is a multi-signal ovulation intelligence system designed to improve menstrual phase detection and ovulation prediction for women, especially those with irregular cycles or PCOS.\n\nTraditional ovulation tracking methods rely heavily on calendar prediction or single-signal tracking such as LH strips. However, women with hormonal imbalances often experience inconsistent LH surges, irregular cycles, or stress-driven fluctuations that reduce prediction accuracy.\n\nPCO‑US solves this by integrating:\n\n• Heart Rate (HR)\n• Heart Rate Variability (HRV)\n• Skin Temperature\n• Movement detection (for signal filtering)\n• Optional LH strip image analysis\n\nThe system collects real-time physiological data using an ESP32-based wearable sensor device. Nightly readings are averaged to generate a personal baseline over the first three days. On subsequent days, deviations from this baseline are analyzed.\n\nAn AI‑lite rule-based inference engine evaluates:\n\n• Temperature elevation\n• HRV suppression\n• Heart rate elevation\n• Stress impact\n• LH strip ratio (via OpenCV image processing)\n\nThese signals are combined to classify the user’s reproductive phase into:\n\n• Baseline Establishing\n• Pre‑Ovulatory\n• Ovulation Approaching\n• Ovulatory Pattern\n• Anovulatory Pattern\n\nThe system also generates a confidence score and provides explainable indicators (e.g., “Mild HRV drop detected” or “LH borderline — rising”).\n\nThis multi-signal approach increases robustness compared to single-parameter tracking and is particularly valuable for women with PCOS, stress-induced irregularity, or long cycle gaps.\n\nPCO‑US demonstrates how affordable hardware, physiological analytics, and explainable AI logic can be combined to create an accessible reproductive health intelligence platform.",
+    "teamName": "Optimus Prime",
+    "college": "Muthoot Institute of Technology and Science",
+    "problemStatement": "Women with PCOS lack a reliable, personalized, and explainable system to accurately detect ovulation and identify anovulatory cycles using multi-physiological signals.",
+    "github": "https://github.com/JoanneKoshy/PCOUS",
+    "video": "https://youtube.com/shorts/3g-hfvnyONI?si=GN4F4PbKuwX2ZbCg",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/81442abe-db4b-4851-9e1f-e982d6fe3d8d/screenshot_0_1771735819008.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/81442abe-db4b-4851-9e1f-e982d6fe3d8d/screenshot_1_1771735820116.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/81442abe-db4b-4851-9e1f-e982d6fe3d8d/screenshot_2_1771735820954.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/81442abe-db4b-4851-9e1f-e982d6fe3d8d/screenshot_3_1771735821728.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/81442abe-db4b-4851-9e1f-e982d6fe3d8d/screenshot_4_1771735822481.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/81442abe-db4b-4851-9e1f-e982d6fe3d8d/screenshot_5_1771735823182.png"
+    ],
+    "track": "hardware"
+  },
+  {
+    "id": 16,
+    "title": "KOLPAY",
+    "tagline": "Payments are digital, but purchase details are disconnected from the payment.",
+    "description": "Paper receipts are inconvenient to store and mobile number–based digital billing is privacy-invasive and restricted under India’s DPDP Act 2023, creating a need for a scalable, privacy-preserving digital billing alternative.Consumers are required to retain physical bills for returns, warranties, and expense tracking. Storing these receipts long-term is inconvenient and unreliable. Some retailers send digital bills via SMS, but this requires customers to share their phone numbers.\n\nUnder the Digital Personal Data Protection (DPDP) Act 2023, retailers cannot mandate collection of mobile numbers as a condition for billing or service. Customers must have a genuine option to refuse without loss of service. This limits the scalability of phone number–based digital billing systems.\n\nAt the same time, UPI QR codes are already widely used for payments. These codes currently encode payment parameters such as merchant ID and amount (e.g., upi://merchant@bank?amount=100). There is an opportunity to extend this mechanism by embedding structured bill metadata directly into the QR payload.\n\nIf item-level bill data were included in the QR code, consumers could scan and pay as usual while simultaneously capturing a structured digital receipt. This would eliminate paper bills, avoid mandatory phone number collection, and create a searchable expense history without manual entry or screenshots.",
+    "teamName": "Kolon",
+    "college": "Christ College of Engineering",
+    "problemStatement": "Paper receipts are inconvenient to store and mobile number–based digital billing is privacy-invasive and restricted under India’s DPDP Act 2023, creating a need for a scalable, privacy-preserving digital billing alternative.",
+    "github": "https://github.com/Bharath-Krishna-AB/ledger",
+    "video": "https://youtu.be/-nWLorhYpRg",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/d31d4286-f35e-40f4-9a68-ad4d6f302ce5/screenshot_0_1771735947223.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/d31d4286-f35e-40f4-9a68-ad4d6f302ce5/screenshot_1_1771735949072.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/d31d4286-f35e-40f4-9a68-ad4d6f302ce5/screenshot_2_1771735949789.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/d31d4286-f35e-40f4-9a68-ad4d6f302ce5/screenshot_3_1771735951760.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/d31d4286-f35e-40f4-9a68-ad4d6f302ce5/screenshot_4_1771735953002.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/d31d4286-f35e-40f4-9a68-ad4d6f302ce5/screenshot_5_1771735954635.jpg"
+    ],
+    "track": "software"
+  },
+  {
+    "id": 17,
+    "title": "Wiki Cusat",
+    "tagline": "Unified Knowledge for a Smarter Campus.",
+    "description": "Navigating university ecosystems often presents a fragmented experience for students, researchers, and faculty seeking accurate institutional information. CUSAT Knowledge Nexus addresses this critical information silo by providing a centralized, AI-driven platform that aggregates department data, academic procedures, and campus resources into an accessible, structured wiki format.\n\nAt the core of the platform is an intelligent conversational agent powered by advanced generative AI, which instantly retrieves relevant university data to answer complex student queries. The system features a robust, hierarchical wiki architecture with an intuitive search engine, enabling seamless exploration of campus knowledge. Institutional administrators benefit from secure access controls, allowing them to effectively manage, curate, and update platform content in real-time.\n\nEngineered for high availability and concurrent usage, the platform utilizes a decoupled architecture separating the modern frontend from the high-performance Python backend. This scalable infrastructure ensures rapid query resolution during peak university enrollment periods and provides a foundational template that can be readily adapted and deployed across other educational institutions seeking to modernize their digital campus experience.",
+    "teamName": "Nexus Connect",
+    "college": "School of Engineering , CUSAT",
+    "problemStatement": "Wiki cusat",
+    "github": "https://github.com/philip-thomas-12/Wiki-Cusat/tree/main",
+    "video": "https://youtu.be/qut30BQ0e8s",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/1bf90e62-07a0-4b26-ab96-bd62157d60a4/screenshot_0_1771736192212.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/1bf90e62-07a0-4b26-ab96-bd62157d60a4/screenshot_1_1771736192986.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/1bf90e62-07a0-4b26-ab96-bd62157d60a4/screenshot_2_1771736194195.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/1bf90e62-07a0-4b26-ab96-bd62157d60a4/screenshot_3_1771736195699.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/1bf90e62-07a0-4b26-ab96-bd62157d60a4/screenshot_4_1771736196922.png"
+    ],
+    "track": "software"
+  },
+  {
+    "id": 18,
+    "title": "NEUROMOTION: AI ASSISTIVE REHABILITATION",
+    "tagline": "Personalized Hybrid Mobile AI Therapist at your service!",
+    "description": "NeuroMotion is a hybrid rehabilitation platform designed to assist stroke survivors in performing upper-limb physiotherapy exercises accurately and consistently outside clinical environments. The system integrates wearable motion sensing, computer vision, and adaptive AI coaching to deliver real-time movement evaluation and personalized therapy recommendations.\nStroke recovery heavily depends on repetitive, correct arm movements. However, once patients leave hospital-based supervision, many perform exercises incorrectly, develop compensatory patterns, or discontinue therapy due to lack of guidance. NeuroMotion addresses this gap by acting as a home-based intelligent rehabilitation coach that augments physiotherapy rather than replacing it.\nCore Objective\nTo provide accurate, privacy-conscious, and adaptive rehabilitation guidance that improves exercise correctness, increases adherence, and reduces long-term disability risk in stroke survivors.\nSystem Architecture\n1. Wearable Hardware Layer\nThe patient wears a lightweight sling-based device embedded with multiple MPU6050 inertial measurement units (IMUs) placed along the arm:\nWrist sensor — tracks fine motion and rotation\nMid-arm sensor — measures elbow angle\nUpper-arm sensor — detects compensation and shoulder involvement\nAn ESP32 microcontroller collects motion data in real time.\nThe sling stabilizes the arm and ensures consistent sensor placement during physiotherapy sessions.\n2. Sensor Fusion & Motion Analysis\nThe system uses hybrid sensor fusion:\nIMU sensors provide orientation, angular velocity, and 3D motion tracking\nComputer vision provides periodic spatial reference and posture validation\nIMUs are precise for depth (Z-axis) tracking but suffer from long-term drift.\nComputer vision recalibrates drift and detects full-body compensation movements.\nThis hybrid approach improves long-duration tracking accuracy compared to standalone IMU or vision systems.\n3. AI Rehabilitation Intelligence\nThe AI layer performs:\nJoint angle computation\nRange-of-motion analysis\nSmoothness evaluation\nRepetition consistency tracking\nCompensation detection\nThe system compares user movement against predefined physiotherapy templates stored in a structured exercise database.\nMovement quality—not just activity—is evaluated.\n4. Personalized Therapy Engine\nUsers log into the NeuroMotion web platform built with Flask (backend) and HTML/CSS/JavaScript (frontend).\nPatients can upload medical documents (discharge summaries, prescriptions).\nAI processes these inputs to determine:\nSeverity of condition\nAffected limb\nSuitable exercise category\nBased on session performance data, the system adapts:\nExercise difficulty\nRepetition count\nIntensity level\nRecovery progression goals\n5. Real-Time AI Voice Coaching\nThe system integrates text-to-speech synthesis for guided rehabilitation sessions.\nThe AI:\nInstructs exercise steps\nCorrects improper posture\nEncourages consistent pacing\nAdvises when calibration is needed\nThis provides a personalized and interactive rehabilitation experience rather than passive monitoring.\nData Flow\nUser logs in\nMedical data uploaded and processed\nPersonalized exercise plan generated\nUser starts session wearing sling\nIMU + vision capture movement\nSensor fusion evaluates movement quality\nAI provides real-time voice and haptic feedback\nSession performance stored\nAdaptive recommendations updated\nPrivacy & Ethical Design\nPrimary tracking uses wearable sensors\nComputer vision is session-based and not continuously recording\nNo facial recognition\nNo unnecessary video storage\nMinimal data retention\nUser-controlled data access\nNeuroMotion is designed to enhance rehabilitation without compromising patient dignity.\nSocietal Relevance\nStroke is a leading cause of long-term disability globally. Many patients lack continuous physiotherapy access due to cost and geographic limitations. Improper home-based exercises can delay recovery and reinforce incorrect neural patterns.\nNeuroMotion bridges the gap between hospital-based rehabilitation and independent recovery by providing:\nAffordable assistive technology\nContinuous home-based feedback\nScalable rehabilitation support\nReduced dependency on frequent clinical visits\nUniqueness of the System\nHybrid sensor fusion (IMU + computer vision)\nRehabilitation-specific motion quality scoring\nAdaptive AI-guided therapy progression\nPrivacy-preserving architecture\nIntegrated hardware + software + AI ecosystem\nUnlike generic fitness trackers or object-detection systems, NeuroMotion evaluates rehabilitation quality and recovery progression rather than merely detecting motion",
+    "teamName": "KAIZEN",
+    "college": "Mar Athanasius College of Engineering Kothamangalam",
+    "problemStatement": "Stroke is one of the leading causes of long-term disability worldwide, leaving millions of survivors with impaired upper-limb motor function. Effective recovery requires repetitive, structured rehabilitation exercises performed with correct posture, joint alignment, and controlled movement. However, once patients leave hospital-based physiotherapy, they often lack continuous supervision and real-time feedback. As a result, many perform exercises incorrectly, develop compensatory movement patterns, or discontinue therapy altogether, significantly slowing recovery and increasing long-term disability risk. Existing solutions such as generic exercise videos, fitness trackers, or camera-based monitoring systems either fail to provide movement-quality analysis or raise concerns related to cost, complexity, and privacy. There is a critical need for an accessible, accurate, and privacy-conscious rehabilitation support system that can guide patients during home-based therapy while maintaining clinical relevance.",
+    "github": "https://github.com/alfi30-bat/kaizen-robotics",
+    "video": "https://drive.google.com/file/d/1oOOY_zcKOkIAKqe7W6J_-_ZIVBc-aT36/view?usp=drivesdk",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f231d9d9-4aed-4b03-b6e2-c930a49271b5/screenshot_0_1771736669723.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f231d9d9-4aed-4b03-b6e2-c930a49271b5/screenshot_1_1771736689467.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f231d9d9-4aed-4b03-b6e2-c930a49271b5/screenshot_2_1771736704381.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f231d9d9-4aed-4b03-b6e2-c930a49271b5/screenshot_3_1771736727042.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/f231d9d9-4aed-4b03-b6e2-c930a49271b5/screenshot_4_1771736746693.jpg"
+    ],
+    "track": "hardware"
+  },
+  {
+    "id": 19,
+    "title": "Ravana",
+    "tagline": "Democratizing Compute via the Browser",
+    "description": "The \"Hardware Gap\" often prevents students and independent creators from accessing high-fidelity 3D visuals due to the extreme computational demands of professional rendering. While traditional distributed systems exist, they typically require local software installations and complex network configurations. Ravana is a zero-install, browser-based compute farm. It utilizes a master-worker architecture to parse GLTF-exported Blender scenes, distribute intensive tile-based rendering tasks to mobile devices via WebGL, and stitch the results into a final high-resolution output. This approach demonstrates that a powerful rendering cluster can be formed instantly using the collective power of the devices already in our pockets.",
+    "teamName": "BlueSteel",
+    "college": "Model Engineering College Thrikkakara",
+    "problemStatement": "Democratizing Compute via the Browser",
+    "github": "github.com/simonknowsstuff/ravana",
+    "video": "https://youtu.be/fAY8AfY40Nw",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/7405faeb-381b-4bc3-8c30-a12826fe94c3/screenshot_0_1771736209606.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/7405faeb-381b-4bc3-8c30-a12826fe94c3/screenshot_1_1771736214876.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/7405faeb-381b-4bc3-8c30-a12826fe94c3/screenshot_2_1771736216897.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/7405faeb-381b-4bc3-8c30-a12826fe94c3/screenshot_3_1771736219689.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/7405faeb-381b-4bc3-8c30-a12826fe94c3/screenshot_4_1771736221185.png"
+    ],
+    "track": "software"
+  },
+  {
+    "id": 20,
+    "title": "DEFENDER",
+    "tagline": "Smart Intrusion Detection System",
+    "description": "DEFENDER is a smart web-based monitoring system designed to detect, track, and manage animal intrusion or movement through a centralized dashboard. It works by collecting detection data from connected monitoring devices, sending the data to a backend server where it is processed, stored, and analyzed, and then displaying real-time detections, alerts, and device status through an interactive web interface. The system automatically generates alerts when specific events are detected, allowing users to monitor activities, manage devices, and adjust system settings efficiently from one platform. The main problem it solves is the lack of intelligent, centralized monitoring for wildlife or intrusion detection, which often leads to delayed responses and manual supervision; DEFENDER provides an automated, real-time solution that improves safety, monitoring efficiency, and decision-making.",
+    "teamName": "Sarvam IoT",
+    "college": "CUSAT",
+    "problemStatement": "Open-field agriculture faces significant crop losses due to wild animal intrusions, necessitating an automated, real-time detection and deterrent system that can reliably identify species and notify farmers across diverse environmental conditions.",
+    "github": "https://github.com/Meenakshimkumar/DEFENDER-WEBSITE",
+    "video": "https://youtu.be/w5ID6pMG7Xk?si=ygMgU42DXx-RH4p-",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/2c29df7d-6f85-467a-880d-78d7ef50ea08/screenshot_0_1771736265010.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/2c29df7d-6f85-467a-880d-78d7ef50ea08/screenshot_1_1771736266639.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/2c29df7d-6f85-467a-880d-78d7ef50ea08/screenshot_2_1771736267520.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/2c29df7d-6f85-467a-880d-78d7ef50ea08/screenshot_3_1771736268295.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/2c29df7d-6f85-467a-880d-78d7ef50ea08/screenshot_4_1771736269289.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/2c29df7d-6f85-467a-880d-78d7ef50ea08/screenshot_5_1771736269888.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/2c29df7d-6f85-467a-880d-78d7ef50ea08/screenshot_6_1771736640005.png"
+    ],
+    "track": "hardware"
+  },
+  {
+    "id": 21,
+    "title": "SaveSense",
+    "tagline": "Make Sense of your Saves",
+    "description": "People save hundreds of Instagram reels, YouTube videos, tweets, Reddit posts, and articles every month, but almost never come back to them. These “saved” items silently overflow across platforms and lose their value because current systems treat them as static bookmarks instead of meaningful signals.\n\nOur idea is to build an AI-powered personal intent dashboard where users can send any content using native share buttons (or paste links/text), and the system intelligently understands why it was saved. The AI analyzes the content to extract topics, dates, events, deadlines, sales, and recurring interests, and then actively surfaces what matters at the right time.\n\nFor example, if a reel mentions an upcoming event, it gets pinned until the event date. If multiple videos or posts relate to researching a product, the app infers buying intent. Time-sensitive or actionable content is highlighted, while irrelevant items can be dismissed. The goal is not to store content, but to convert scattered saves into timely reminders, insights, and actions—reducing digital clutter and helping users act on their intent instead of forgetting it.",
+    "teamName": "SaveSense",
+    "college": "SOE CUSAT",
+    "problemStatement": "People frequently save content from platforms like Instagram, YouTube, Reddit, and websites with the intention of revisiting it later, but most of these saved items are never accessed again. Over time, these saves accumulate across multiple platforms without context, prioritization, or reminders, creating digital clutter and information overload. Since existing systems treat saved content as static bookmarks rather than indicators of user intent, the original purpose behind saving is lost, resulting in a growing gap between intention and action.",
+    "github": "https://github.com/roqcodes/SaveSense",
+    "video": "https://youtube.com/shorts/FzTnYIWYrUM?si=nVuNfRPj2H6LzebM",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/603fba73-24cf-4b21-805e-ba430ff416ed/screenshot_0_1771736285496.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/603fba73-24cf-4b21-805e-ba430ff416ed/screenshot_1_1771736286276.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/603fba73-24cf-4b21-805e-ba430ff416ed/screenshot_2_1771736286930.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/603fba73-24cf-4b21-805e-ba430ff416ed/screenshot_3_1771736287579.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/603fba73-24cf-4b21-805e-ba430ff416ed/screenshot_4_1771736288193.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/603fba73-24cf-4b21-805e-ba430ff416ed/screenshot_5_1771736288717.jpg"
+    ],
+    "track": "software"
+  },
+  {
+    "id": 22,
+    "title": "Ready Classified Coconuts",
+    "tagline": "\"Precision Grading for the Perfect Coconut — Where AI meets Hardware.\"",
+    "description": "The **Coconut Quality Checker** is a professional-grade industrial tool designed to standardize and accelerate the coconut grading process. By integrating high-speed hardware sensors with advanced computer vision and Generative AI, the system removes human subjectivity from quality control. It features a unique \"throw-and-detect\" workflow: simply place or throw a coconut onto the scale, and the system instantly captures dimensions, weight, and internal water level while performing a 360° visual health check for defects like mold, cracks, or holes.",
+    "teamName": "Local Host",
+    "college": "College Of Engineering Trivandrum",
+    "problemStatement": "Automated Coconut classification in industries",
+    "github": "https://github.com/saad-latheef/ready-classified-coconut",
+    "video": "https://youtu.be/yKDovAzjHCs",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/c5bf65c7-2a87-469d-94a1-0ee728609b5c/screenshot_0_1771736270462.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/c5bf65c7-2a87-469d-94a1-0ee728609b5c/screenshot_1_1771736271858.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/c5bf65c7-2a87-469d-94a1-0ee728609b5c/screenshot_2_1771736272888.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/c5bf65c7-2a87-469d-94a1-0ee728609b5c/screenshot_3_1771736273579.png"
+    ],
+    "track": "hardware"
+  },
+  {
+    "id": 23,
+    "title": "IGNIS",
+    "tagline": "Geospatial Validation for Agricultural Integrity",
+    "description": "What This Project Does:\nThe Agri Plot Validation System is an automated, explainable agricultural fraud-detection and validation engine that verifies whether:\nA submitted polygon represents a real agricultural land parcel.\n\n1.Crop is geometrically valid\n2.The land is actively used for agriculture.\n3.The claimed crop is climatically and environmentally plausible.\n4.The final decision can be audited and explained transparently.\n5.The system outputs a structured decision:\n PASS\n REVIEW\n FAIL\nAlong with detailed module-level evidence and confidence scores.\n\n\n What Problem It Solves:\nThis system addresses major issues in agricultural subsidy and claim validation systems:\n1️⃣ Fraudulent Land Claims\nFarmers may submit:\nNon-agricultural land\nResidential/urban land\nForest or wasteland\nRandom fake coordinates\n\n\n2️⃣ Duplicate or Overlapping Claims\nMultiple individuals may claim the same land parcel.\n\n\n3️⃣ Crop Mismatch Fraud\nA farmer may claim:\nRice in desert areas\nWheat in tropical coastal regions\nCrops not suitable for local climate\n\n\n4️⃣ Lack of Explainability\nTraditional automated systems provide binary outputs without evidence.\n This system produces transparent, auditable explanations.\n\n\nAgri Plot Validation System – How It Works:\n Validation Pipeline (Step-by-Step)\n1️⃣ Geometry Validation\nVerifies polygon structure (valid shape, no self-intersections).\nChecks area is realistic.\nConfirms the plot lies on actual land.\nFilters out fake or suspicious shapes.\n\n\n2️⃣ Vegetation Check (NDVI – Sentinel-2)\nUses satellite imagery to detect vegetation presence.\nComputes NDVI score.\nRejects plots with insufficient vegetation.\n\n\n3️⃣ Land-Use Classification (Dynamic World)\nConfirms the area is classified as cropland.\nUses yearly majority classification for stability.\nPrevents forest/urban land from being claimed as farmland.\n\n\n4️⃣ Crop Plausibility Check\nUses climate data (NASA POWER).\nUses elevation data (SRTM).\nMatches conditions with crop requirements.\nReduces score if crop is unsuitable for location.\n\n\nDecision Engine:\nEach module produces a confidence score (0–1).\nWeighted scoring system combines all evidence.\nFinal outcome:\n PASS\n REVIEW\n FAIL\n\n Explainability:\nReturns module-wise scores.\nProvides plain-language reasoning.\nTransparent and audit-ready.",
+    "teamName": "Ignis",
+    "college": "School of Engineering,CUSAT",
+    "problemStatement": "Automated Plot Validation and Ownership Plausibility",
+    "github": "https://github.com/Catherin-j/AgroHunt",
+    "video": "https://youtu.be/CJOvpyeTbpk",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/06e93167-250c-4ab3-bce8-3ca36114ad14/screenshot_0_1771736605015.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/06e93167-250c-4ab3-bce8-3ca36114ad14/screenshot_1_1771736608602.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/06e93167-250c-4ab3-bce8-3ca36114ad14/screenshot_2_1771736616720.jpeg"
+    ],
+    "track": "kireap"
+  },
+  {
+    "id": 24,
+    "title": "TRNDO",
+    "tagline": "read the pulse",
+    "description": "Indian SMEs and D2C brands collect tons of customer chats and orders on WhatsApp every day, but they have no easy way to turn that real-time data into trending Instagram posts. They waste hours guessing trends, spend heavily on designers, and see low engagement because their content doesn’t connect back to actual sales.\nOur simple all-in-one AI platform fixes this completely: it reads your WhatsApp conversations, predicts the next hot trends, instantly creates beautiful brand-matching images and ready-to-post Instagram content in seconds, and sends customers straight back to WhatsApp to buy with UPI — giving you higher engagement, more sales, and up to 60% lower content costs with zero extra work.",
+    "teamName": "Powerpuff Girls",
+    "college": "Christ College of Engineering, Irinjalakuda",
+    "problemStatement": "The Local Retail \"Blind Spot\"",
+    "github": "https://github.com/A56-A5/make-a-ton",
+    "video": "https://youtu.be/jEw8Ch5t3EU",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/eb4b334e-ba32-4286-adf8-acbca2586694/screenshot_0_1771736621087.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/eb4b334e-ba32-4286-adf8-acbca2586694/screenshot_1_1771736621601.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/eb4b334e-ba32-4286-adf8-acbca2586694/screenshot_2_1771736622151.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/eb4b334e-ba32-4286-adf8-acbca2586694/screenshot_3_1771736622680.jpeg"
+    ],
+    "track": "software"
+  },
+  {
+    "id": 25,
+    "title": "QuantumRoute",
+    "tagline": "Finding the optimal route quantamastically!",
+    "description": "Project Description\nQuantum-Hybrid Delivery Route Optimizer is a full-stack web application that solves the Travelling Salesman Problem (TSP) for last-mile delivery logistics. Users place delivery locations on an interactive map and the system computes the optimal route using a choice of classical, quantum, or hybrid solvers.\n\nThe application features an interactive Leaflet.js map where users can click to add delivery stops, place road blocks to model street closures, and define weather zones (rain/lightning) that penalize or block routes through affected areas. A real-time delivery driver animation (top-down scooter with bearing rotation) visualizes the computed route on the map.\n\nRoute computation uses real-world road distances via the OSRM (Open Source Routing Machine) Table & Route APIs, with Haversine straight-line fallback. A preprocessing pipeline applies logistics modifiers — traffic congestion, rush hour multipliers, road type preferences, fuel efficiency, delivery priority, road blocks, and weather zones — to the distance matrix before solving.\n\nThe solver suite includes:\n\nNearest Neighbor — O(n²) greedy heuristic for fast approximation at any scale.\nHeld-Karp — O(n²·2ⁿ) exact bitmask DP solver, feasible for up to ~18–20 locations.\nHybrid Quantum-Classical (QHK) — Three-phase approach: (1) QAOA quantum exploration via IBM Quantum for globally-aware initial tour, (2) sliding-window Held-Karp refinement for local optimality, (3) 2-opt local search polish. Scales beyond the pure-quantum limit (~10 qubits) by using quantum only for exploration.\nCompare Mode — Runs Held-Karp and Nearest Neighbor simultaneously, reporting both results side-by-side.\nRoad block avoidance uses multi-phase OSRM-based detection: route geometry checking (50m radius), distance table analysis, and straight-line fallback, with a penalty multiplier approach (100×) instead of hard-blocking. Visualization routes through blocks by requesting OSRM alternative routes and computing scaled detour waypoints.\n\nThe UI features a warm cream/muted orange theme with the Nunito font, dark borders, bouncy micro-interactions, a collapsible sidebar with drag-to-reorder locations, an algorithm picker modal, fuel cost estimation, and a quantum overlay with circuit visualization metrics.",
+    "teamName": "StrawHats",
+    "college": "SOE,CUSAT",
+    "problemStatement": "Quantum Optimal Delivery Path Optimization",
+    "github": "https://github.com/GowrishankarSMenon/makeaton",
+    "video": "https://youtu.be/ocuBvLr5HCk",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/56bce6fc-90c1-480a-bc21-2c485db00bf2/screenshot_0_1771736506305.jpg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/56bce6fc-90c1-480a-bc21-2c485db00bf2/screenshot_1_1771736507118.jpg"
+    ],
+    "track": "kireap"
+  },
+  {
+    "id": 26,
+    "title": "Clinical Action and Response Engine",
+    "tagline": "A plug-and-play ecosystem for predictive, secure, consent-driven healthcare(short)",
+    "description": "1. The Problem: Subir and the \"Plastic Cover\" Predicament\nMeet Subir, a true Malayali living in Kochi. He loves his beef fry, his porotta, and unfortunately, his cholesterol is competing with the humidity levels.\n\nOne afternoon, Subir feels a sharp pain in his chest. He panics. His family rushes him to the hospital through the glorious bumper-to-bumper traffic. But when he finally reaches the reception, gasping for breath, he faces the Final Boss: The Receptionist Chechi.\n\nShe asks the dreaded question: “Sir, where is your file? The one in the yellow plastic cover from 2019?”\n\nSubir doesn’t know. It’s probably under his bed, or maybe his wife used it to store electricity bills. The doctor needs his last ECG, his allergies, and his medication history now. But the hospital knows nothing about him.\n\nIn a world where we have UPI for money, Subir’s life still depends on remembering to bring a plastic bag. His data is trapped in a silo, his doctors are flying blind, and every second lost is critical.\n\n2. Our Solution\nWe built C.A.R.E. to save Subir from the \"Plastic Cover\" era.\n\nC.A.R.E. is a plug-and-play ecosystem that acts as a digital nervous system for hospitals. It connects real-time patient data from sensors directly to hospital systems—securely, instantly, and without the need for a physical file.\n\n3. How It Works (Just Simple)\nReal-Time Vitals: Subir wears our custom IoT Sensor Kit (ECG attached to a microcontroller). It streams his heart data live.\n\nThe \"Emergency Bypass\" Engine:\n\nRoutine Mode: Data is buffered, hashed, and stored on our IPFS Nodes and Blockchain for a permanent record.\nEmergency Mode: If the sensor detects an arrhythmia (heart attack), the system bypasses the blockchain buffer entirely. It triggers a zero-latency \"Code Red\" alert directly on the Doctor’s Dashboard and Subir’s App.\n\nInstant Access: When Subir reaches the hospital, he doesn't fill out forms. He scans his finger on the C.A.R.E. Flutter App. The doctor instantly sees his entire medical history, verified by the blockchain.\n\n4. Key Novelty\nWe didn't just build a database; we built a fortress.\n\nA. The \"Invisible\" Upgrade (OpenEMR Injection)\n\nThe Magic: We reverse-engineered OpenEMR (a standard hospital system) and built a custom Blockchain Injection Module. We intercept data flow and route it to our IPFS nodes instead of a dusty SQL server. The doctor uses their familiar screen, but the backend is now decentralized and immutable.\n\nB. The \"Digital Handshake\" (File & Key Sharing)\nThis is our biggest breakthrough in user privacy.\n\nThe Problem: If Subir shares a file, he usually loses control of it.\n\nThe Solution (Proxy Re-Encryption): When Subir shares his \"Key\" with the doctor, he isn't giving away his password. He generates a masked session token.\n\nThe \"Revoke\" Power: The moment Subir leaves the cabin, he hits \"Revoke\" on his app. The system rotates the keys, and the doctor’s access is instantly locked. Subir owns his data, forever.\n\nIPFS Hash Matching: The system verifies the file integrity by matching the IPFS Content Hash against the blockchain record. If even one bit of the file was tampered with, the hashes won't match, and the file won't open.\n\nC. Ghost Mode Privacy (ERC-5542)\n\nWe implemented ERC-5542 (Stealth Addresses). Every time Subir’s data is logged, it uses a unique, one-time address. His medical history is verifiable on the public ledger, but his identity is mathematically invisible.\n\nD. The \"Trust Score\" Dashboard\n\nSubir’s app doesn’t just show his heart rate; it displays a live \"Chain Trust Score.\" This visualizes the integrity of the blockchain connection in real-time, giving him immediate confidence that his data is tamper-proof.\n\nE. The \"Doc in Your Pocket\" (AI Chatbot)\n\nSubir doesn’t understand complex medical graphs. He just wants to know if he can eat dinner.\n\nWe integrated an AI Health Assistant that analyzes his real-time sensor data and historical records.\n\nHow it works: Subir asks, \"Can I eat beef fry today?\" The bot checks his current BP and cholesterol levels. If they are high, it replies: \"Your pressure is 150/90, Subir. Stick to Idli and Sambhar today.\" It turns raw data into personalized lifestyle advice.\n\n5. The \"Gas Fee\" Challenge & Solution\nOne major question remains: “If every heartbeat is a transaction, won’t Subir go broke paying Ethereum Gas Fees?”\n\nWe are gonna solve this using Account Abstraction (ERC-4337).\n\nThe Problem: Subir is a patient, not a crypto trader. He doesn't have an Ethereum wallet, and he shouldn't need to buy crypto just to save his heart data.\n\nThe Solution (Paymasters): We are gonna implement ERC-4337 Paymasters. This allows the hospital (or the C.A.R.E. subscription) to act as a sponsor.\n\nWhen Subir's app sends data, the Paymaster Contract pays the gas fee on his behalf.\n\nTo Subir, the experience is 100% Gasless. He just sees a \"Data Sent\" notification, unaware that a blockchain transaction just occurred.\n\nFuture Scaling: For the backend, we are migrating to a Layer 2 Rollup (like Polygon or a dedicated Healthcare L2). This compresses thousands of medical records into a single \"proof,\" reducing the cost from dollars to fractions of a penny.\n\nConclusion\nC.A.R.E. solves the \"Data Silo\" and \"Delayed Response\" problems by turning static health records into a live, consent-driven, and actionable data stream.",
+    "teamName": "DarkLead!",
+    "college": "SRM Institute of Science and Technology",
+    "problemStatement": "Bridging Lethal Information Gaps through a Decentralized, Privacy-Preserving  Blockchain based Healthcare Ecosystem.",
+    "github": "https://github.com/DarkLead-Hub/C.A.R.E.",
+    "video": "https://youtu.be/eQdBxY_g3Qo",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/84f3b124-73ae-4191-bf58-98f4d61b79e6/screenshot_0_1771736546828.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/84f3b124-73ae-4191-bf58-98f4d61b79e6/screenshot_1_1771736547339.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/84f3b124-73ae-4191-bf58-98f4d61b79e6/screenshot_2_1771736547864.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/84f3b124-73ae-4191-bf58-98f4d61b79e6/screenshot_3_1771736548489.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/84f3b124-73ae-4191-bf58-98f4d61b79e6/screenshot_4_1771736549082.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/84f3b124-73ae-4191-bf58-98f4d61b79e6/screenshot_5_1771736549799.jpeg",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/84f3b124-73ae-4191-bf58-98f4d61b79e6/screenshot_6_1771736550421.jpeg"
+    ],
+    "track": "software"
+  },
+  {
+    "id": 27,
+    "title": "AGNI",
+    "tagline": "Adaptive Geo-secured Network for Intelligent Agriculture",
+    "description": "AGNI is a state-of-the-art precision agriculture platform designed to empower farmers, students, and researchers with AI-driven insights and advanced computer vision. It transforms raw field data into actionable intelligence, optimizing crop yields and livestock management while providing a deeply analytical view of farm health.\n\n\nWhat it Does\n\nAGNI serves as an all-in-one digital companion for modern farming. Its primary functions include:\n\nPrecision Land Analysis: Processes aerial or satellite images to calculate cultivated area, identifying exactly where crops are thriving and where the land is bare.\nStress Detection: Uses spectral analysis to find \"stress zones\" in crops, alerting farmers to nutrient deficiencies or water issues before they become visible to the naked eye.\nIntelligent Recommendations: Suggests the best crops and livestock for a specific plot based on real-time weather, geographical features, and seasonal cycles.\nPredictive Farm Intelligence: Estimates yield potential and provides soil profile insights based on regional data and historical trends.\nEducational Gateway: Offers a \"Science & Equations\" section that teaches the mathematical models (like ExG and HSV) used in the analysis.\n\n\nHow it Works (Under the Hood)\n\nAGNI operates on a high-performance FastAPI (Python) backend combined with a glassmorphism Vanilla JavaScript frontend.\n\nComputer Vision Engine:\n\nExcess Green Index (ExG): The backend uses a specialized algorithm ($2G - R - B$) to isolate chlorophyll signatures from soil and background noise.\nHSV Thresholding: It leverages the Hue-Saturation-Value color space to detect crop stress (chlorosis) by targeting specific yellow-brown spectral ranges.\nPolygon Boundary Logic: Integrated with Leaflet.js, it allows users to draw exact farm boundaries. The backend then masks the analysis strictly to that area for pinpoint accuracy.\n\nAI & Data Integration:\nGemini AI: Powers the complex \"Crop Advice\" engine, synthesizing weather data, land-use stats, and coordinates to provide natural-language farming strategies.\nWeather API: Pulls real-time agricultural metrics (humidity, wind, pressure) to adjust recommendations dynamically.\nGeo-Spatial Intelligence: Calculates elevation, rainfall estimates, and daylight hours based on the latitude and longitude of the farm plots.\n\n Problems it Solves\nTraditional farming often relies on guesswork. AGNI solves several critical challenges:\n\nInefficient Land Use: Farmers often don't know the exact percentage of their land being utilized. AGNI provides a precise Cultivated Area % to help maximize every square meter.\nLate Detection of Crop Stress: By the time a plant looks yellow, it's often too late. AGNI's Stress % metric finds early-stage issues, saving entire harvests.\nClimate & Seasonal Uncertainty: With shifting weather patterns, knowing when to sow is harder than ever. AGNI's Seasonal Context and Weather Insights provide a data-backed schedule for field work.\nLack of Access to Expert Data: Precision agriculture tech is often expensive. AGNI makes advanced computer vision and AI advice accessible through a simple web interface.\nKnowledge Gap: It bridges the gap between raw data and understanding, teaching users the \"Why\" behind the \"How\" through its Science and Intelligence tabs.\n\nTech Stack\nBackend: Python, FastAPI, OpenCV (Image Processing), NumPy (Data Science), Uvicorn.\nFrontend: HTML5/Vanilla JavaScript, CSS3 (Tailwind CSS), Font Awesome.\nMaps & GIS: Leaflet.js, OpenStreetMap, Leaflet Draw.\nAI: Gemini AI Integration for personalized agricultural strategy.",
+    "teamName": "Lakshyaas",
+    "college": "School of Engineer, CUSAT",
+    "problemStatement": "Cultivated Land Masking from Multi-Resolution Imagery",
+    "github": "https://github.com/DilshanCheerangan/agni-main",
+    "video": "",
+    "screenshots": [
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/54624e0a-db41-4d90-a470-8d12f87bb6a2/screenshot_0_1771736776526.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/54624e0a-db41-4d90-a470-8d12f87bb6a2/screenshot_1_1771736778449.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/54624e0a-db41-4d90-a470-8d12f87bb6a2/screenshot_2_1771736785384.png",
+      "https://jzmerqmazecqxqyxteeq.supabase.co/storage/v1/object/public/pics/submissions/54624e0a-db41-4d90-a470-8d12f87bb6a2/screenshot_3_1771736787226.png"
+    ],
+    "track": "kireap"
+  }
+]
