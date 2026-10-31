@@ -1,0 +1,1102 @@
+[
+  {
+    "id": 1,
+    "title": "MarketingWala",
+    "tagline": "MarketingWala offers AI-generated social posts, automatic posting, and push notifications, making social media management fast and effortless",
+    "url": "https://devpost.com/software/marketingwala",
+    "awards": [],
+    "github_links": [
+      "https://github.com/anshumanNitk/marketingwala.ai"
+    ],
+    "built_with": [
+      "amazon-web-services",
+      "cloudflare",
+      "django",
+      "godaddy",
+      "node-js",
+      "postgresql",
+      "python",
+      "react"
+    ],
+    "sections": {
+      "Inspiration": "Our inspiration came for this project when we saw a renowned company giving something very similar as a problem statement. we were very intrigued by the idea and were able to brainstorm all the possible applications and sectors where our solution can make a change.",
+      "What it does": "MarketingWala can create as well as auto execute AI generating marketing solutions.\nIt has 2 features AI Image and caption generation with scheduling and Push notification generation and execution.\n MarketingWala can produce Ai generated social media post based on product/companies information. User can give a reference image too. The app produces multiple post from which the user can select and post directly on social networking sites through our site\nWe can also generate push Notification and schedule them.",
+      "How we built it": "We built MarketingWala using Django and React, with PostgreSQL as the backend database. For AI image generation, we integrated OpenAI’s DALL·E 3. Cloudflare’s API powers both captions and push notification text.\n Some of our RESTful API endpoints are hosted on Cloudflare servers for improved performance and scalability. Additionally, we utilized Conductor for orchestration such as manage, renew OAuth 2.0 tokens and interacting with Firebase Cloud Messaging to trigger push notifications",
+      "Conductor linkes": "Renew Auth token \n https://play.orkes.io/execution/3d67949b-8e9b-11ef-b6be-323517a1f1a2 \nValid Auth token - no need to renew\n https://play.orkes.io/execution/042992d2-8e9f-11ef-85a8-ba73d777fd9d \n We used conductor to send puch notifications to FireBase Cloud messaging.\n We fetch all mobile users access tokens from get resquest \n check if the Auth2.0 tokens are expired or not \n If expired generate new token \n Send push notification with content to Firebase viw POST http v1 request",
+      "CloudFlare": "C3 for restful api hosting , @cf/meta/llama-3-8b-instruct for text generation",
+      "Challenges we ran into": "Had to figure out how to make custom task in conductors for regenrating access tokens \n Since we were interacting with multiple services we had had time maintaining the secrets and access tokens. We accidently pushed some of our access token on github public repo causing our google service account to be suspended. \n Had to change models to achieve better image generation",
+      "Accomplishments that we're proud of": "We were exposed to meta developers account for the first time and had to go through its documentation to enable Automatic posting using meta API's \n We created a bunch of complex workflow task in conductor for managing , securing and access tokens from users \n We had lot of microservices interacting with each other",
+      "What we learned": "Creating workflows. \n Hosting on Cloudflare \n how to create RestFull APIs \n Team Collaboration",
+      "What's next for MarketingWala": "we plan to expand functionalities in marketwala, from just generating to editing images, video-audio-text analysis for post generation,A/B testing and profile monitoring ,Most importantly we want to go out and let other brands use our product to see how much realistic our approach is towards expanding marketwala",
+      "Built With": "amazon-web-services cloudflare conductor django godaddy node.js openai postgresql python react restfull-api s3",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Winner \n Best Domain Name from GoDaddy Registry\n Winner \n Best AI Application Built with Cloudflare\n Winner \n Runner Up\n Winner \n Best use of Conductor\n CodePi 2024 Innovation Challenge \n Created by\n Mohammed Arfath \n anshumanNitk Upadhyay \n Like\n 5 \n 5 people like this:\n Share this project:",
+      "Updates": "Mohammed Arfath \n started this project\n &mdash;\n Oct 20, 2024 01:11 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 2,
+    "title": "Our Rupee",
+    "tagline": "Transparent Donations, Real Impact",
+    "url": "https://devpost.com/software/our-rupee",
+    "awards": [],
+    "github_links": [
+      "https://github.com/addu10/OurRupee.git"
+    ],
+    "built_with": [
+      "blockchain",
+      "css",
+      "flask",
+      "html5",
+      "javascript",
+      "python",
+      "solidity"
+    ],
+    "sections": {
+      "Inspiration": "To eliminate the dilemma the public faces as to when they transfer their hard earned money for fund donations, not knowing where it ends up. Using Blockchain, we transparent and make it available for the public to view and track these funds",
+      "What it does": "Transaparent transaction, secure and tracking available.\nWe stay as intermediators between the cause affected and the ones who are ready to help them. Donations are manually verified by our Representatives and then fund is directly allocated to the organizations we are affiliated with, not to the person in hand.",
+      "How we built it": "Using smart contracts, built a blockchain and integrated it with simple frontend yet elegant",
+      "Challenges we ran into": "integration of smart contract with front end, many loopholes in idea summation.",
+      "Accomplishments that we're proud of": "able to complete a wide scope project within 24 hrs. To be able to practically challange this ongoing system of fradulent activities.",
+      "What we learned": "More about the web3 tools that we used gave us an inspiration to build more in web3 world",
+      "What's next for Our Rupee": "Python Integrated Designs to Visualize Data, Seek governments and big organizers to work with our community\nImplementation of AI in our project to verify documents",
+      "Built With": "auth0 blockchain css ethereum flask ganache html5 javascript metamask python solidity web3",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Winner \n Best Use of Auth0\n Created by\n I have done the main backend functionalities of this project including python frameworks, as well as some webpages. Also created the workflow of the project using flask\n Adnan Sameer \n I worked on the front-end\nand helped with git\n Almas Cp \n I developed and designed the necessary web pages for our system and successfully integrated the front-end components.\n Ashbin P A \n I was responsible for the Blockchain part of the project. Developed a smart contract, deployed it on REMIX IDE. Set up a local host using Ganache and finally integrated the smart contract with the front end. \n Pretty proud of myself right now if you ask me ;)\n Advaith Pradosh \n Like\n 4 \n 4 people like this:\n Share this project:",
+      "Updates": "Adnan Sameer \n started this project\n &mdash;\n Oct 20, 2024 01:27 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 3,
+    "title": "Agent Orange: AI Team at your Fingertips",
+    "tagline": "Have a task? No team? Agent Orange is your team. No time? Late submission? Agent Orange won't let you down. Bringing back AI to the best of its potential - being human. Best of all: it's free.",
+    "url": "https://devpost.com/software/agent-orange-ai-team-at-your-fingertips",
+    "awards": [],
+    "github_links": [
+      "https://github.com/aloshdenny/agent-orange"
+    ],
+    "built_with": [
+      "node-js",
+      "python",
+      "react"
+    ],
+    "sections": {
+      "Inspiration": "We were inspired by the power of human teamwork and wondered: what if we could harness that same collaborative energy with AI? Agent Orange was born from the idea of creating a system where AI agents work together, mimicking the dynamics of a high-performing human team.",
+      "What it does": "Agent Orange assembles a team of AI agents, each with unique roles and expertise, to tackle complex problems. These agents communicate, share insights, and build upon each other's ideas, all while maintaining focus on the original task. The system then synthesizes their collective output into comprehensive, actionable solutions.",
+      "How we built it": "We developed Agent Orange using advanced language models and a custom-built framework that enables multi-agent collaboration. Key components include:\n Dynamic role assignment algorithm \n Inter-agent communication protocols \n Context retention mechanisms \n Output synthesis engine",
+      "Challenges we ran into": "Maintaining context over extended interactions \n Balancing specialization and collaboration among agents \n Ensuring coherent final outputs from diverse agent contributions \n Optimizing token usage to prevent hitting model limits",
+      "Accomplishments that we're proud of": "Created a scalable system that can handle simple queries to complex projects \n Developed a unique approach to AI collaboration that mimics human teamwork \n Achieved long-term context retention, preserving task relevance \n Designed an intuitive interface that makes advanced AI accessible to users",
+      "What we learned": "The intricacies of managing multi-agent AI systems \n Techniques for maintaining context in extended AI interactions \n Strategies for synthesizing diverse AI outputs into coherent results \n The importance of balancing AI capabilities with user needs and expectations",
+      "What's next for Agent🍊": "Expanding the range of specialized agent roles \n Implementing more advanced inter-agent learning mechanisms \n Developing industry-specific versions for fields like healthcare and finance \n Creating a user-friendly interface for custom agent team creation \n Exploring integration with other AI tools and platforms",
+      "Built With": "conductor node.js orkes python react streamlit",
+      "Try it out": "github.com \n play.orkes.io \n Submitted to\n Make-A-Ton 7.0 \n Winner \n Best Use of Streamlit\n Created by\n Worked on the agentic workflow and interface deployment\n Alosh Denny \n Anton Prince Oommen \n Like\n 2 \n 2 people like this:\n Share this project:",
+      "Updates": "Alosh Denny \n posted an update\n &mdash;\n Oct 20, 2024 01:24 AM EDT\n We're adding multimodal capabilities: Now speak directly with Agent Orange!\n Log in \n or\n sign up for Devpost \n to join the conversation.\n Alosh Denny \n started this project\n &mdash;\n Oct 20, 2024 01:19 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 4,
+    "title": "SochFacts",
+    "tagline": "Validating the AI thoughts.......",
+    "url": "https://devpost.com/software/sochfacts",
+    "awards": [],
+    "github_links": [
+      "https://github.com/NamrithaGirish/SochTech-FactChecker"
+    ],
+    "built_with": [
+      "beautiful-soup",
+      "flask",
+      "javascript",
+      "python"
+    ],
+    "sections": {
+      "Inspiration": "AI especially ChatGPT has become a strong partner in all our activities. Unfortunately this Large Language Model has the problem of hallucinating, i.e. to generate fake data. Especially when it comes to urls that the model provides. It is highly difficult for us to find out the sources from where the model took its data and differentiate the facts and valid urls. Hence to fasten our daily interactions with AI we require a better solution.",
+      "What it does": "SochFacts is a web extension that aids to validate the correctness of AI generated data. The extension takes in the prompt and output given to the AI and highlights quantity and portion of the AI generated content which are expected to be hallucinated. It also highlights all the urls in the content that are invalid or having no relation to the content. The level of similarity of URLs are also displayed alongside. In addition, the extension also lists out a few of the sources from which the generated content would have been taken.",
+      "How we built it": "The extension is built in javascript and python. Javascript handles the web extension displays and requests while python handled the machine learning and computation parts. The hallucinated portions are identified using the Ollama's Bespoke-Minicheck. Web scraping is used to find the citation and context dependency of the prompt. Each URL is chosen from the text and is checked for semantic similarity based on which it decides the relevance of the url.",
+      "Challenges we ran into": "We had difficulty to determine tools that support our aims. We also had to try different models and approaches for detecting hallucination context.",
+      "Accomplishments that we're proud of": "We are happy that we could try our best and produce a well suited web extension, which was quite different from the other projects we have done earlier.",
+      "What we learned": "We learned multiple things from hallucinations in llm models to web extension creation.",
+      "What's next for SochFacts": "We are highly interested to take this project further improving the model and possibly expecting to build a more accurate hallucination detection model.",
+      "Built With": "beautiful-soup flask javascript ollama python",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Winner \n Best Product\n Created by\n Worked on web scrapping and building extension with URL validity checker.\n Namritha Girish \n I worked on building the hallucination detection model into the extension.\n Pooja Sreenivasan \n Like\n Share this project:",
+      "Updates": "Namritha Girish \n started this project\n &mdash;\n Oct 20, 2024 01:10 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 5,
+    "title": "CusaQuest",
+    "tagline": "Forge Your Future with CusaQuest",
+    "url": "https://devpost.com/software/cusaquest",
+    "awards": [],
+    "github_links": [
+      "https://github.com/ar1701/Placement-Management-System"
+    ],
+    "built_with": [
+      "bootstrap",
+      "css3",
+      "ejs",
+      "express-js",
+      "gemini",
+      "html5",
+      "javascript",
+      "node-js"
+    ],
+    "sections": {
+      "Inspiration": "In an age where information flows faster than ever, the traditional methods of communication and updates often fall short, leading to missed opportunities and unfulfilled potential. Particularly for students navigating the complexities of career placement, relying solely on WhatsApp messages or fleeting announcements can result in critical updates slipping through the cracks.\nWe envision a transformative platform that centralizes and streamlines the flow of information, ensuring that no student is left behind. Our goal is to create a space where notifications and opportunities are readily accessible, empowering students to take charge of their career journeys. By eliminating the chaos of scattered communications, we foster a more organized and supportive environment that encourages proactive engagement and informed decision-making.",
+      "What it does": "Streamlined Communication - \n Seamless communication between students and placement coordinators. Information and notifications can be easily transmitted to students, ensuring they stay updated on important opportunities and announcements.\n Advanced ATS (Applicant Tracking System) - \nA smart, integrated ATS that focuses on student capabilities and relevant information, moving beyond traditional resume-based evaluations. Ensures a more tailored match between student skills and employer requirements, improving the chances of successful placements.\n Data-Driven Insights from Placement Trends - \nAccess to historical placement trends allows students to understand market demand and align their strategies accordingly. This feature also guides students in making informed decisions for off-campus placements based on past data and trends.\n Automated Shortlisting via Excel Data Analysis - \nStreamlines the candidate shortlisting process through automated analysis of Excel data. Saves time by eliminating manual filtering, ensuring that the most qualified candidates are efficiently shortlisted for interviews.\n 24/7 AI-Powered Support - \nA round-the-clock, AI-based support system designed to assist students with placement-related queries, application guidance, and interview preparation tips. Ensures students receive timely support and resources whenever needed.\n Customizable Test Assessments - \nAllows for the creation of tailored test assessments that meet the specific needs of companies or roles. Provides recruiters with flexibility in designing evaluation criteria, ensuring candidates are assessed on relevant skills.\n Your Feedback Matters - \nContinuous Improvement through Feedback: We believe in evolving with your needs. Share your feedback through a user-friendly system, allowing us to constantly improve the platform's experience and deliver the best possible service. Built-in feedback loop for students and recruiters post-interviews or assessments. Helps refine the placement process through continuous feedback, ensuring better preparation and performance improvements.",
+      "How we built it": "At CusaQuest, we harnessed cutting-edge technologies to create a seamless user experience. Our frontend is built with HTML, CSS, and JavaScript for an intuitive interface, while Node.js and Express.js power our backend, supported by MongoDB Atlas for robust data management. We employed Bootstrap and EJS for dynamic templating, ensuring a responsive design. Deployment was streamlined with Render for backend services and Netlify for frontend hosting. Leveraging Google tools like the Gemini API and utilizing VS Code for development, we integrated data analysis with MS Excel and third-party libraries to enhance performance, making CusaQuest a truly innovative platform.",
+      "Challenges we ran into": "Throughout the development of CusaQuest, we encountered several challenges that tested our resilience and creativity. Integrating various technologies posed compatibility issues, requiring extensive troubleshooting to ensure seamless functionality. Additionally, optimizing the user experience while managing data flow between the frontend and backend demanded careful planning and execution. We also faced hurdles in maintaining performance and scalability, especially during peak usage times, pushing us to refine our solutions and enhance our platform's robustness.",
+      "Accomplishments that we're proud of": "We take immense pride in several key accomplishments during the development of CusaQuest. First, we successfully created an intuitive and user-friendly interface that enhances student engagement and accessibility, particularly for rural learners. Our effective integration of cutting-edge technologies has resulted in a robust and scalable platform, allowing us to handle increasing user demands with ease. We also established a dynamic curriculum that adapts to industry trends, empowering students with relevant skills. Finally, our commitment to community feedback and continuous improvement has fostered a supportive learning environment, positioning CusaQuest as a valuable resource for students and educators alike.",
+      "What we learned": "During the journey of building CusaQuest, we learned valuable lessons that enriched our development process. We discovered the importance of adaptability, as navigating various technologies required us to be flexible and open to new solutions. Collaborating as a team taught us the significance of clear communication and effective project management in overcoming challenges. We also gained insights into user-centered design, emphasizing the need to prioritize the needs and preferences of our target audience. Additionally, our experience highlighted the power of continuous learning and iteration, reinforcing that feedback is crucial for improving our platform and ensuring its relevance in an ever-evolving educational landscape.",
+      "What's next for CusaQuest": "AI-Based Interview Panel Selection - \nTo ensure fairness and eliminate human bias, we will implement an AI-driven system for selecting interview panelists.This system will analyze the qualifications and experience of panelists, ensuring diverse and balanced panels for every interview round, promoting objectivity and fair assessment.\n Integration with Leading Job Portals - \nCusaQuest will explore integration with popular job platforms to provide seamless access to off-campus placement opportunities. Students will have the option to directly apply for positions through these portals, all within the CusaQuest interface.\n AI-Powered Mock Interviews - \nWe plan to introduce an AI-powered mock interview feature that simulates real interview environments, providing students with instant feedback on their performance. The system will assess not only technical skills but also soft skills like communication, body language, and confidence.\n Blockchain-Based Certificate Verification - \nIn the future, we will implement a blockchain-based system for the secure and verifiable storage of student credentials and certificates. This will streamline the verification process for recruiters and ensure the authenticity of academic records.",
+      "Built With": "api bootstrap css3 ejs express.js gemini html5 javascript mongodob msexcel netlify node.js render vscode",
+      "Try it out": "github.com \n placement-management-system-1-rdwj.onrender.com \n Submitted to\n Make-A-Ton 7.0 \n Winner \n Hack for CUSAT\n Created by\n Front-End Developer\n Ankit Pallav \n I contributed as a Frontend Devepoer, Backernd Developer and API intergration. My main focus was on to develop a fully functinal and error free backend system of the website.\n Ayush Raj \n Backend Developer, Robot Operating System (ROS), AI - ML, Embedded System \n Ishika Ishani \n Front-End Developer \n Aditi Ratnam Pandey \n Like\n 2 \n 2 people like this:\n Share this project:",
+      "Updates": "Ishika Ishani \n started this project\n &mdash;\n Oct 20, 2024 01:16 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 6,
+    "title": "BrightMinds",
+    "tagline": "Our app offers personalized learning path for dyslexic children, adapting...",
+    "url": "https://devpost.com/software/brightminds",
+    "awards": [],
+    "github_links": [],
+    "built_with": [],
+    "sections": {}
+  },
+  {
+    "id": 7,
+    "title": "CrticaLink",
+    "tagline": "From sensors to screens, ensuring ICU vigilance remotely",
+    "url": "https://devpost.com/software/crticalink",
+    "awards": [],
+    "github_links": [],
+    "built_with": [],
+    "sections": {
+      "Sorry, that page does not exist.": "But we'd love to help you find what you're looking for. Head to the homepage or discover recent hackathons .\n If you need assistance, please email us at [email&#160;protected] ."
+    }
+  },
+  {
+    "id": 8,
+    "title": "OrganEase",
+    "tagline": "In this project we are building an application which take away all",
+    "url": "https://devpost.com/software/organease",
+    "awards": [],
+    "github_links": [
+      "https://github.com/Fin-N1049/event-pro/tree/main"
+    ],
+    "built_with": [
+      "socket-io"
+    ],
+    "sections": {
+      "Built With": "mern socket.io",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n adithyan appu \n dinil kk \n Shiyas A \n Fin _N_ \n Like\n Share this project:",
+      "Updates": "adithyan appu \n started this project\n &mdash;\n Oct 20, 2024 01:27 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 9,
+    "title": "Aarunya Academy",
+    "tagline": "Bridging gaps, Building futuresEmpowering remote",
+    "url": "https://devpost.com/software/aarunya-academy",
+    "awards": [],
+    "github_links": [
+      "https://github.com/PranavkrishnaVadhyar/Algo_Avengers_Make-a-ton"
+    ],
+    "built_with": [
+      "css",
+      "html5",
+      "javascript",
+      "react"
+    ],
+    "sections": {
+      "Inspiration": "Our inspiration stems from the unique cultural and geographical context of Thanthonni Island, where communities have long been isolated from modern technological advancements. Observing their desire for growth and development motivated us to create an accessible educational platform.\n What it does \n Aarunya Academy provides tailored digital education that empowers residents of Thanthonni Island with essential skills in technology, entrepreneurship, and financial literacy, fostering socio-economic growth and community resilience.\n How we built it \n React for front end and Flask for developing a REST API. We also developed a multi agent system using LangGraph and LangChain.\n Challenges we ran into \n We encountered challenges in conducting thorough market research due to limited access to data about the community’s specific needs and preferences. Additionally, we faced obstacles such as internet connectivity issues and varying levels of digital literacy among residents, which required us to adapt our content and teaching methods continually.\n Accomplishments that we're proud of \n We successfully completed nearly 90% of the project from scratch, implementing robust back-end logic and AI agents. Notably, we developed a quiz generation and evaluation system utilizing LLM features, enhancing personalized learning experiences for users on Thantonni Island.\n What we learned \n We learned the importance of community engagement, the need for flexibility in educational approaches, and the value of creating content that resonates with local culture while addressing modern challenges.\n What's next for Aarunya Academy \n Looking ahead, we aim to expand our course offerings, strengthen industry collaborations, and explore mobile accessibility solutions to reach even more residents of Thanthonni Island and other islands, ensuring inclusive growth for all.",
+      "Built With": "css html5 javascript langchain langgraph react rest",
+      "Try it out": "github.com \n play.orkes.io \n Submitted to\n Make-A-Ton 7.0 \n Created by\n RINI SARA MARKOSE \n Deva Nanda Nair \n Adarsh Abraham Johnson \n B Pranavkrishna Vadhyar \n Like\n Share this project:",
+      "Updates": "RINI SARA MARKOSE \n started this project\n &mdash;\n Oct 20, 2024 01:23 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 10,
+    "title": "SafeSpace",
+    "tagline": "Brave together, Safe together",
+    "url": "https://devpost.com/software/safespace",
+    "awards": [],
+    "github_links": [
+      "https://github.com/l3ubbleman/deltahacks"
+    ],
+    "built_with": [],
+    "sections": {
+      "Updates": "Jennifer Shen \n started this project\n &mdash;\n Feb 15, 2015 11:57 AM EST\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 11,
+    "title": "Babylon",
+    "tagline": "Babylon is your gateway to growth—trade skills, earn credibility, and",
+    "url": "https://devpost.com/software/babylon",
+    "awards": [],
+    "github_links": [],
+    "built_with": [
+      "gamemaker"
+    ],
+    "sections": {
+      "Inspiration": "We wanted to make a simple yet fun and addicting style of gameplay, we are taking advantage of the recent boom of 8-Bit style independent games. Our vision is to make it as addicting and thrill inducing as possible.",
+      "How we built it": "We made it on GameMaker using both coding and \"drag n' drop\" functions.",
+      "Challenges we ran into": "We started on Unity but ran into many problems due to several glitches, we decided to scale-down the production to an 8-bit game.",
+      "Accomplishments that we're proud of": "Making a full playable game in 24 hours, coming up with an interesting gameplay concept.",
+      "What we learned": "We learned that sometimes it is better to go for smaller challenges to not get overwhelmed.",
+      "What's next for Babylon": "We want to remake it using the Unity engine, adding features like character customization and online play.\n Table 19 A",
+      "Built With": "gamemaker gamemaker-studio",
+      "Try it out": "drive.google.com \n Submitted to\n HackMTY 2017 \n Created by\n I brought everything together in Game Maker, tested it, and fixed any and all bugs.\n Melchor Ramos \n Made the sprites for the game, a background, the Menu Title and gave the main idea for the game and the mechanics\n Roberto de los Reyes \n I worked on concept, design, producing and a 2.5D build got future updates.\n José Otoniel Pérez Coop \n Like\n 3 \n 3 people like this:\n Share this project:",
+      "Updates": "Melchor Ramos \n started this project\n &mdash;\n Aug 27, 2017 12:24 PM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 12,
+    "title": "AisleMate",
+    "tagline": "Scan, Chat, Shop, Smart - your personal guide for every aisle.",
+    "url": "https://devpost.com/software/aislemate",
+    "awards": [],
+    "github_links": [
+      "https://github.com/Abdulrayifvp/AisleMate"
+    ],
+    "built_with": [
+      "express-js",
+      "gemini",
+      "node-js"
+    ],
+    "sections": {
+      "Built With": "express.js figma gemini node.js rag",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n I work on backend development\n Rayif Vp \n Athira Aravind \n Abhijith K C \n Adrika K A \n Like\n Share this project:",
+      "Updates": "Athira Aravind \n started this project\n &mdash;\n Oct 20, 2024 01:30 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 13,
+    "title": "Amygdala by Craynium",
+    "tagline": "Never forget anything you read ever again! AI-powered spaced-repetition",
+    "url": "https://devpost.com/software/amygdala-by-craynium",
+    "awards": [],
+    "github_links": [
+      "https://github.com/nikhilmwarrier/craynium-amygdala"
+    ],
+    "built_with": [
+      "express-js",
+      "node-js"
+    ],
+    "sections": {
+      "Inspiration": "We wanted a system to improve memory retention. We came across the concept of Spaced Repetition and Ebbinghaus's works on it. This was our primary inspiration.",
+      "What it does": "Takes any article from the web and uses AI to generate flashcards, which are designed in a way to improve memory retention.",
+      "How we built it": "Svelte, Tailwind, Node.js, Express Mozilla's readability. \n This program fetches articles with the Fetch API, parses it with Readability, and generates flashcards using an LLM — all while looking pretty!",
+      "Challenges we ran into": "The LLMs we tried did not correctly output JSON. We spent hours trying and failing to write a JSON validator until a mentor suggested that we try a bigger LLM.",
+      "Accomplishments that we're proud of": "We somehow made it all work in the end and we're extremely proud of it. Not to brag but I believe our UI design is great too!",
+      "What we learned": "How to adjust priorities to meet deadlines. Well, almost.",
+      "What's next for Amygdala by Craynium": "User accounts to provide email reminders and personalised learning.",
+      "Built With": "express.js node.js svelte",
+      "Try it out": "github.com \n amigdala.study \n Submitted to\n Make-A-Ton 7.0 \n Created by\n I worked on the whole stack.\n Nikhil M Warrier \n Nikhi Krishna S \n REBECCAMARIAMEBBY27 \n Galahad-070 \n Like\n Share this project:",
+      "Updates": "Nikhil M Warrier \n started this project\n &mdash;\n Oct 20, 2024 01:20 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 14,
+    "title": "Oratix",
+    "tagline": "Oratix: An AI Powered Customer Support Service",
+    "url": "https://devpost.com/software/oratix",
+    "awards": [],
+    "github_links": [
+      "https://github.com/1meza/StageReady"
+    ],
+    "built_with": [
+      "flask",
+      "groq",
+      "python",
+      "react"
+    ],
+    "sections": {
+      "Inspiration": "Our inspiration for this project was our personal experience of struggling to prepare for public speaking. Whether through previous hackathons, class projects, or poster presentations, we all have had trouble practicing our speeches. The anxiety of public speaking makes it difficult to want to practice with other people and has been a common obstacle preventing us from improving our speech skills. We learned that many people are too shy to seek to rehearse their speeches with others. This motivated us to create an app that provides non-judgmental feedback based on facial expressions and speech patterns, empowering individuals to practice and perfect their public speaking skills in a human-free, non-judgemental environment.",
+      "What it does": "Our project starts with a web app where the user can record their presentation in front of their camera. After their presentation concludes, a Q&amp;A takes place with hume's EVI (Empathic Voice Interface) within the context of their speech and a custom prompt. Additionally, we used Deepgram's voice platform to transcribe the user's speech. Groq then parses this speech to rate the user's speaking ability and provide feedback on what they can do to improve.",
+      "How we built it": "The frontend of our web application was created using react.js as well as shadcn, a component library. The backend of our application uses hume ai as the main technology. We use the face model in their expression measurement tool to gather values for different emotions/expressions the user exhibits in their speech. These values are then evaluated by Groq which provides a rating for the user's presentation in a friendly, yet helpful manner. The other component of our project is the Q&amp;A portion where the user is asked questions based on the topic they discussed.",
+      "Challenges we ran into": "The biggest challenge we ran into was trying to seamlessly integrate three major technologies into the project; those being hume ai, Deepgram, and Google Gemini. Learning all of these technologies on the spot was challenge enough, but finding a way to connect them all was another level of difficult. It was also a challenge testing the code as the wait times for getting output was rather slow and quickly added up, which meant we had to sparingly re-run our code.",
+      "Accomplishments that we're proud of": "We're proud of successfully integrating Hume AI and Deepgram, offering actionable feedback on both emotional expressions and speech content. Bringing together facial expression analysis and a post-speech Q&amp;A with an empathetic voice interface (EVI) is something we believe will make practicing speeches much more interactive and insightful for users.\n We're also proud of our ability to transcribe speech in real time and use Google Gemini's NLP to analyze and score it for clarity, structure, and impact. These components, working together, form the basis of a comprehensive feedback system that helps users improve their presentation skills with each use.",
+      "What we learned": "One major thing we learned was using GitHub to collaborate with backend and frontend developers simultaenously. With one teammate new to hackathons, it was crucial to learn version control for easy management of our codebase. Despite not ultimately using it, we learned about natural language processing (NLP) with Google Gemini. One more thing we learned was how to integrate an AI model into our project with hume ai's face model. This experience emphasized the critical role that emotional awareness plays in effective communication and taught us to appreciate the nuances that come with empathic interactions.",
+      "What's next for Oratix": "Moving forward, we plan to enhance our application by refining the feedback mechanism. We want to introduce real-time analysis of their face expressions as well as prosody, so they can adjust accordingly during the presentation rather than after. Another feature we want to add is combining EVI with a live avatar. This will simulate interacting with a human who might nod along or acknowledge statements from the presenter throughout their talk.",
+      "Built With": "deepgram flask groq hume-ai python react tailwind",
+      "Try it out": "github.com \n gamma.app \n Submitted to\n Cal Hacks 11.0 \n Created by\n I worked on the Backend by integrating Deepgram's speech to text functionality. I also worked on the front-end by adding features and fixing bugs.\n Isaiah Meza \n I worked on the back-end by integrating Hume's facial feedback and EVI.\n Nicholas Ferreira \n Edgar Romero \n Eugene Vuong \n Like\n 1 \n 1 person likes this:\n Share this project:",
+      "Updates": "Nicholas Ferreira \n started this project\n &mdash;\n Oct 20, 2024 01:24 PM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 15,
+    "title": "SBL-Maps",
+    "tagline": "A web-based application that provides users with an interactive",
+    "url": "https://devpost.com/software/sbl-maps",
+    "awards": [],
+    "github_links": [
+      "https://github.com/irisxvii/make-a-ton"
+    ],
+    "built_with": [
+      "html",
+      "react",
+      "typescript"
+    ],
+    "sections": {
+      "Inspiration": "Navigating large campus buildings, such as educational institutions, can often be a daunting task for students and visitors alike. Traditional navigation methods often fall short in complex environments filled with hallways, staircases, and unique room designs. This can lead to confusion, stress, and lost opportunities for engagement.",
+      "What it does": "To address this issue, we are developing a web-based application that serves as an interactive map of a campus building, enabling users to find their way to classrooms with ease. The application uses the Mappedin SDK to provide navigation, displaying clear paths to destinations while accommodating the unique layout of the building.",
+      "How we built it": "We utilized the Mappedin SDK to create an interactive mapping interface. The application integrates features that shows random comments and information related to those locations.",
+      "Challenges we ran into": "One of the main challenges we ran into was that the Mappedin SDK was a paid service, which limited our ability to implement features that allowed users to give comments effectively. Additionally, we faced obstacles in incorporating real-time navigation, as the SDK did not provide the necessary functionalities for live tracking, which is crucial for an interactive mapping experience.",
+      "What we learned": "learned working with mapping technologies and SDKs, specifically learning to work with indoor maps and navigation.",
+      "What's next for SBL-Maps": "Moving forward, we plan to expand our application by adding features such as live location tracking, and the potential for integration with other campus services to further enrich the user experience.",
+      "Built With": "html mappedin react typescript",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n Nandana Sanil \n iris mariah kurien \n happy 2024 \n Aksa Rose \n Like\n 1 \n 1 person likes this:\n Share this project:",
+      "Updates": "Nandana Sanil \n started this project\n &mdash;\n Oct 20, 2024 01:28 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 16,
+    "title": "Militant",
+    "tagline": "Militant is a state of the art robotic arm specifically designed for bomb",
+    "url": "https://devpost.com/software/militant",
+    "awards": [],
+    "github_links": [],
+    "built_with": [
+      "arduino",
+      "c"
+    ],
+    "sections": {
+      "Built With": "arduino c \n Submitted to\n Make-A-Ton 7.0 \n Created by\n Sreeram Athrij \n Alwin Albert \n Ashik Anil \n ATHULRAJ K \n Like\n Share this project:",
+      "Updates": "Sreeram Athrij \n started this project\n &mdash;\n Oct 20, 2024 01:30 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 17,
+    "title": "Snow",
+    "tagline": "Orchestrating Smart Automation: Conductor Meets LLM Power",
+    "url": "https://devpost.com/software/snow",
+    "awards": [],
+    "github_links": [],
+    "built_with": [],
+    "sections": {}
+  },
+  {
+    "id": 18,
+    "title": "MASALA - Gamified Learning To",
+    "tagline": "MASALA -Multi-disciplinaryApproachtoSkills.Actively",
+    "url": "https://devpost.com/software/masala-gamified-learning-to",
+    "awards": [],
+    "github_links": [],
+    "built_with": [],
+    "sections": {
+      "Sorry, that page does not exist.": "But we'd love to help you find what you're looking for. Head to the homepage or discover recent hackathons .\n If you need assistance, please email us at [email&#160;protected] ."
+    }
+  },
+  {
+    "id": 19,
+    "title": "Braynex",
+    "tagline": "Adapt track a personalized learning platform , which make your",
+    "url": "https://devpost.com/software/braynex",
+    "awards": [],
+    "github_links": [
+      "https://github.com/MuhammedHashimT/learning-platform"
+    ],
+    "built_with": [
+      "react",
+      "typescript"
+    ],
+    "sections": {
+      "Inspiration": "to make students dopamine on their learning , and focus on career",
+      "Built With": "react supabase typescript vite",
+      "Try it out": "learning-platform-swart.vercel.app \n github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n MUHAMMED HASHIM T \n Majid Majid \n CODING PROJECTS \n Like\n Share this project:",
+      "Updates": "MUHAMMED HASHIM T \n started this project\n &mdash;\n Oct 20, 2024 01:26 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 20,
+    "title": "SaArthi",
+    "tagline": "Empowering Abilities, Redefining Possibilities.",
+    "url": "https://devpost.com/software/saarthi",
+    "awards": [],
+    "github_links": [
+      "https://github.com/aapkasaarthi/rskresolver-extension"
+    ],
+    "built_with": [
+      "javascript",
+      "python",
+      "solidity"
+    ],
+    "sections": {
+      "Introduction": "The COVID-19 pandemic has pushed the healthcare system of each country to it’s limit. Massively fragmented healthcare systems in countries like India has been detrimental to controlling the outbreak. This opens up an opportunity to re-organize the system with modern technologies that can cope with the massive requirements of over 1.3 Billion Indians.\nOne of the primary factors that have brought about the current conditions of unequal access of proper healthcare in India are accessibility and affordability. With only 13% of the country speaking English (second to only US) online platforms need to support regional languages to function effectively. People should also be able to support those in need, who are to poor to afford healthcare for themselves. Saarthi helps creating this inclusive and accessible ecosystem.\nTrust is one of the most crucial factors in building such a multi-dimensional healthcare system. Blockchain plays into this system perfectly as it allows people to verify whether their donations went to the correct person. It allows users to preserve their relationships and data even if the site somehow vanishes as everything is on the blockchain. This helps us build an accessible and accountable healthcare system with inherent verifiability, cutting down the friction and building a socio-economically inclusive healthcare ecosystem.\n Saarthi combats these issues with a a multi-dimensional approach towards helping those in need of Financial, Medical or Computational Resources using the RSK Network.\n 1. No Language Barrier \n Saarthi can be utilized to its full capabilities natively in, Hindi, Bengali, Gujarati, Kannada, Malayalam, Punjabi, Marathi, Tamil, Telugu, Urdu, Arabic.\n 2. Ease of Accessibility \n Login using any phone number or social account making blockchain adoption easy and seamless.\nIt offers a universal Medical QR that can be used by health officials to instantly gauge and keep track of the patient's medical history.\n 3. Contributors \n Saarthi utilizes Tensorflow Distributed to create a medical computation network that lets users contribute extra processing power towards training and helping organizations in need of computational resources who can utilize saarthi to build applications on top of it, like one on the dashboard that lets you check if you should see a doctor according to your symptoms, dynamically detecting your location and shows you a button to call the loccal hospital for help.\n 4. Donators \n With Saarthi, you can contribute towards the medical expenses of those who are less fortunate and cannot afford to pay their dues, or donate towards the choice of your fund, directly, without the need for any middle man.\n 5. Campaigns \n Users can create campaigns to raise awareness for their cause and ask for donations towards their medical expenses. Campaigns help those who are underprivileged and can't afford the expenses.\n 6. Storage \n Saarthi becomes a decentralized and encrypted store for your medical records with the ability to allow approved entities like hospitals to access the reports and medical data. This further helps keep track of ongoing cases without revealing private information. All medical records stored are encrypted and can only be accessed by the owners.\nYou can also opt-in to contribute your data towards medical research, utilizing Saarthi's medical computation network to help others in need of a cure.\n 7. Reports \n Saarthi empowers whistleblowers and enables those who would like to report incidents anonymously, directly to relevant authorities. You can attach a variety of information like location and images with these reports enabling relevant authorities to take appropriate action without revealing your identity.\n 8. Decentralization. \n Saarthi is completely open source and decentralized at all layers of the stack making it easy to access and censorship-resistant. Saarthi utilizes Textile, RIF and RNS to deploy, store and serve the website. With RSK we utilize their capability to overcome the above concerns with smart contracts expanding the Bitcoin Network. RSK also accounts for scalability, thanks to the capability of processing over 400 transactions per second. Saarthi also pairs up with its RNS Resolver Extension available here to allow anyone to access Saarthi from saarthi.rsk",
+      "Built With": "3box ethereum ipfs javascript orbitdb python rif rsk solidity",
+      "Try it out": "saarthi.anudit.dev \n github.com \n hub.textile.io \n Submitted to\n Post Covid Hack 2020 \n Winner \n 2nd - Socio-Economic Incl. Track: 0.6 Bitcoin\n Created by\n Anudit Nagar \n Like\n 4 \n 4 people like this:\n Share this project:",
+      "Updates": "Anudit Nagar \n started this project\n &mdash;\n Aug 15, 2020 12:39 PM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 21,
+    "title": "DI(C)E",
+    "tagline": "\"Boost Productivity with a Smart Cube with Seamless Time",
+    "url": "https://devpost.com/software/di-c-e",
+    "awards": [],
+    "github_links": [],
+    "built_with": [
+      "c--3",
+      "firebase",
+      "flask",
+      "python"
+    ],
+    "sections": {
+      "Built With": "arduinoide c++ esp32 firebase flask python streamlit \n Submitted to\n Make-A-Ton 7.0 \n Created by\n Niranjana V P \n Like\n Share this project:",
+      "Updates": "Niranjana V P \n started this project\n &mdash;\n Oct 20, 2024 01:26 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 22,
+    "title": "AI POWERED COGNITIVE BEHAVIOUR THERAPY",
+    "tagline": "This project uses AI to deliver real-time cognitive behavioral therapy sessions tailored to individual needs. By combining conversational AI and mood-boosting activities",
+    "url": "https://devpost.com/software/ai-powered-cognitive-behaviour-therapy",
+    "awards": [],
+    "github_links": [
+      "https://github.com/GOURIKP/AI-Mental-Health"
+    ],
+    "built_with": [
+      "python"
+    ],
+    "sections": {
+      "Built With": "colab dialogpt python streamlit vscode whisper",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n 12117021 GOPIKA P S \n Jeny m Jerry \n Aiswarya Ak \n Gouri KP \n Like\n 1 \n 1 person likes this:\n Share this project:",
+      "Updates": "12117021 GOPIKA P S \n started this project\n &mdash;\n Oct 20, 2024 01:25 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 23,
+    "title": "AI Assisted Emergency Call Service",
+    "tagline": "Saving lives with every call",
+    "url": "https://devpost.com/software/ai-assisted-emergency-call-service",
+    "awards": [],
+    "github_links": [],
+    "built_with": [
+      "laravel",
+      "php",
+      "python"
+    ],
+    "sections": {
+      "Built With": "hume laravel nextjs php python \n Submitted to\n Make-A-Ton 7.0 \n Created by\n Athul Krishna \n sidharth gk \n Albin Varghese \n Rahul Abraham \n Like\n 1 \n 1 person likes this:\n Share this project:",
+      "Updates": "Athul Krishna \n started this project\n &mdash;\n Oct 20, 2024 01:20 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 24,
+    "title": "NexLearn",
+    "tagline": "Nexlearn is an AI-powered educational platform that combines interactive storytelling, a document-based chatbot, and AI prompt-to-video conversion to create a personalized learning experience.",
+    "url": "https://devpost.com/software/nexlearn",
+    "awards": [],
+    "github_links": [
+      "https://github.com/sonarosa/NexLearn/tree/main"
+    ],
+    "built_with": [
+      "flask",
+      "gemini",
+      "html",
+      "node-js",
+      "python",
+      "react"
+    ],
+    "sections": {
+      "Built With": "flask gemini html llm node.js python react",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n Front-End Developer\n Namitha Santhosh \n Sona Rosa Babloo \n Hira Mohammed K \n Lenat Thomas \n Like\n Share this project:",
+      "Updates": "Sona Rosa Babloo \n started this project\n &mdash;\n Oct 20, 2024 01:23 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 25,
+    "title": "Flickit",
+    "tagline": "Control Presentations with Hand Gestures: Seamlessly Navigate",
+    "url": "https://devpost.com/software/flickit",
+    "awards": [],
+    "github_links": [
+      "https://github.com/yangliming/flickIt"
+    ],
+    "built_with": [
+      "git",
+      "ios",
+      "mongodb",
+      "node-js"
+    ],
+    "sections": {
+      "Built With": "git ios mongodb node.js wp8.1",
+      "Try it out": "github.com \n Submitted to\n LA Hacks 2015 \n Created by\n Mobile Developer\n Victor Kwan \n Alexander Yang \n Patrick Wolf \n Tiansong Zhang \n Like\n 2 \n 2 people like this:\n Share this project:",
+      "Updates": "Alexander Yang \n started this project\n &mdash;\n Apr 05, 2015 01:04 PM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 26,
+    "title": "Waste Matter",
+    "tagline": "Project basically aims at sustainably managing waste as efficiently as",
+    "url": "https://devpost.com/software/waste-matter",
+    "awards": [],
+    "github_links": [],
+    "built_with": [
+      "android-studio",
+      "firebase"
+    ],
+    "sections": {
+      "Inspiration": "The inspiration behind Waste Matter comes from the pressing need for sustainable waste management practices. With environmental issues like waste accumulation and inefficient recycling processes becoming more prominent, we wanted to explore how technology could help reduce waste and repurpose it efficiently. By focusing on organic waste for farmers and recycling inorganic waste, we saw an opportunity to create a positive environmental impact while incentivizing user participation.",
+      "What it does": "Waste Matter is an app that enables users to categorize and manage waste more effectively. Organic waste is directed to farmers for repurposing, while inorganic waste is sent for recycling. Users can track their waste contributions, and future plans for the app include a marketplace where users can earn credits by providing waste or purchasing them. The app also envisions a gamified experience, encouraging users to participate in waste collection challenges and rewarding them for their efforts.",
+      "How we built it": "The core functionality of Waste Matter was developed as a mobile app with a focus on simplicity and sustainability. We used Firebase as the backend for user management and data storage, ensuring scalability and secure access. The app categorizes waste into organic and inorganic, with features designed to make it easy for users to engage with waste collection efforts. Although features like the marketplace and gamification are future enhancements, we designed the app to be flexible enough to integrate these later.",
+      "Challenges we ran into": "One of the key challenges was designing an intuitive yet flexible user interface that could accommodate future features like the credit-based marketplace and gamification. Ensuring that the app remains user-friendly while planning for future growth required us to carefully balance current and future functionalities. Another challenge was considering how to create an effective credit system and gamification that encourages participation without feeling gimmicky.",
+      "Accomplishments that we're proud of": "We are proud of building the foundation of Waste Matter, where the focus is on sustainable waste management through organic repurposing and recycling. The ability to create a simple and scalable solution while keeping future features like the marketplace and gamification in mind was a significant accomplishment. Additionally, we’re proud of the initial feedback from users who appreciated the focus on environmental sustainability.",
+      "What we learned": "Throughout this project, we learned a lot about the complexities of waste management and how technology can assist in making these processes more efficient. We also learned that user engagement is key to the success of such a platform, which is why features like gamification and a credit system will be valuable additions. This project taught us the importance of balancing sustainability with user incentives to create a lasting impact.",
+      "What's next for Waste Matter": "The future of Waste Matter includes adding a marketplace driven by a credit system, where users can trade or buy credits by providing waste. We also aim to implement gamification, where users can participate in challenges and earn rewards for their contributions to waste management. By enhancing user engagement through these features, we hope to further encourage sustainable practices and grow our impact on waste reduction.",
+      "Built With": "android-studio figma firebase \n Submitted to\n Make-A-Ton 7.0 \n Created by\n anjela-joseph Joseph \n Lewlin Antony \n Like\n Share this project:",
+      "Updates": "Lewlin Antony \n started this project\n &mdash;\n Oct 20, 2024 01:20 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 27,
+    "title": "Rocket",
+    "tagline": "A language learning tool for beginners who want to learn through",
+    "url": "https://devpost.com/software/rocket",
+    "awards": [],
+    "github_links": [],
+    "built_with": [
+      "javascript",
+      "swift"
+    ],
+    "sections": {
+      "Built With": "javascript swift",
+      "Try it out": "www.dropbox.com \n Submitted to\n HackMTY \n Winner \n 3rd Prize\n Created by\n Front End, UI, UX, Branding\n Patricio González \n Eduardo Iglesias \n Like\n Share this project:",
+      "Updates": "Patricio González \n started this project\n &mdash;\n Mar 22, 2015 02:06 PM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 28,
+    "title": "Savr",
+    "tagline": "#SaveAndSavour",
+    "url": "https://devpost.com/software/savr",
+    "awards": [],
+    "github_links": [
+      "https://github.com/sansidsac/SavR"
+    ],
+    "built_with": [
+      "css",
+      "express-js",
+      "html5",
+      "react"
+    ],
+    "sections": {
+      "TRACKs": "Conductor Track \n Streamlit Track \n Hack for CUSAT \n Social Impact \n GoDaddy \n www.savr.biz \n During weddings, family gatherings, and various celebrations, we couldn't help but notice the alarming amount of food being wasted. Perfectly good, edible food was either left untouched or discarded due to poor planning or simply because it was easier to throw it away. This waste was starkly contrasted by our own experiences during our college days when many of us struggled to afford decent meals and often sought out the most affordable food options just to get by.\n These two realities—on one hand, the surplus of food being wasted at events, and on the other hand, people who need food—began to weigh on us. Why should perfectly good food go to waste when there are people who could benefit from it? This question sparked a simple but powerful idea: what if we could create a platform that bridges the gap between surplus food and those in need?\n Thus, the concept of our food redistribution app was born. It’s designed to connect event organizers or food vendors (who have excess food) with distributors who can efficiently deliver it to communities or individuals facing food insecurity. Through this platform, we aim to reduce food waste while simultaneously addressing hunger. By leveraging modern technology, we’re able to match food supply with demand in a seamless, real-time manner, creating a win-win situation for both the environment and society.\n What started as a small observation during our college days has now evolved into a full-fledged solution with the potential to create real social impact. Our journey from students searching for affordable meals to innovators tackling food waste is a testament to how a simple idea, when nurtured, can transform into something that benefits the greater community.",
+      "Built With": "css express.js html5 kaggle react streamlit tailwind",
+      "Try it out": "github.com \n drive.google.com \n play.orkes.io \n Submitted to\n Make-A-Ton 7.0 \n Created by\n I worked idea generation and also on the streamlit platform that visualize the data .And also help users to understand the carbon footprints our users have reduced and the impact it have on society\n Paul Binu \n K S Sreekumar \n Dhanay J \n Ronal George \n Like\n Share this project:",
+      "Updates": "K S Sreekumar \n started this project\n &mdash;\n Oct 20, 2024 01:14 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 29,
+    "title": "PlaceMe",
+    "tagline": "A streamlined application that automates repetitive tasks related to",
+    "url": "https://devpost.com/software/placeme",
+    "awards": [],
+    "github_links": [],
+    "built_with": [
+      "evernote",
+      "facebook"
+    ],
+    "sections": {
+      "Built With": "evernote facebook",
+      "Try it out": "www.placemeapp.com \n Submitted to\n The Evernote Devcup \n Winner \n Finalist - Panel voting\n Created by\n Sam Liang \n jianming Zhou \n Like\n 1 \n 1 person likes this:\n Share this project:",
+      "Updates": "Sam Liang \n started this project\n &mdash;\n Mar 21, 2014 05:49 PM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 30,
+    "title": "Pothole hole detection and repai",
+    "tagline": "This prototype is an automated vehicle that detects and repairs",
+    "url": "https://devpost.com/software/pothole-hole-detection-and-repai",
+    "awards": [],
+    "github_links": [],
+    "built_with": [],
+    "sections": {
+      "Sorry, that page does not exist.": "But we'd love to help you find what you're looking for. Head to the homepage or discover recent hackathons .\n If you need assistance, please email us at [email&#160;protected] ."
+    }
+  },
+  {
+    "id": 31,
+    "title": "Scrapeyard",
+    "tagline": "Tracks used car prices across popular platforms and compares",
+    "url": "https://devpost.com/software/scrapeyard",
+    "awards": [],
+    "github_links": [
+      "https://github.com/amansxcalibur/scrapyard",
+      "https://github.com/chimnayajith/scrapeyard-backend",
+      "https://github.com/satvshr/Make-a-ton-predictor",
+      "https://github.com/Fuzzphorescent/streamlit-api"
+    ],
+    "built_with": [
+      "django",
+      "pandas"
+    ],
+    "sections": {
+      "Inspiration": "The used car market is overwhelming, with prices fluctuating across different platforms. It’s hard to tell whether you're getting a fair deal. Inspired by this challenge, we wanted to create a tool that not only aggregates these prices but also helps buyers make informed decisions by comparing them with fair values based on historical trends.",
+      "What it does": "Scrapeyard scrapes prices of used cars across popular online platforms, gathers historical pricing data, and computes a fair price. It allows users to view price comparisons, helping them identify whether the listed prices are in line with the market trends. Additionally, users have the option to view graphically how prices vary with varying features of a particular car type.",
+      "How we built it": "We built Scrapeyard using Python to gather and analyze the pricing data, incorporating pandas for data manipulation. The app is powered by a Streamlit interface for data visualisation, and the backend is built using Django while the frontend uses Nextjs.",
+      "Challenges we ran into": "One of the main challenges was integrating data from multiple sources, as each platform presents the car data differently. Standardizing this information into a cohesive format required substantial data cleaning. Additionally, designing an accurate pricing comparison model based on historical data required balancing between simplicity and robustness.",
+      "Built With": "django next pandas streamlit",
+      "Try it out": "github.com \n github.com \n github.com \n github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n Farzana Shajahan \n Chinmay Ajith \n Satvik Mishra \n Aman Valiyakath \n Like\n Share this project:",
+      "Updates": "Farzana Shajahan \n started this project\n &mdash;\n Oct 20, 2024 01:14 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 32,
+    "title": "Warrior App",
+    "tagline": "Predicting Tomorrow's Safety: AI-Driven Crime Forecastina",
+    "url": "https://devpost.com/software/warrior-app",
+    "awards": [],
+    "github_links": [
+      "https://github.com/Alenjoe235/MakeATon_Tinkermen.git"
+    ],
+    "built_with": [
+      "gemini",
+      "python"
+    ],
+    "sections": {
+      "Inspiration": "The inspiration for this project came from the increasing need for data-driven solutions in urban planning and public safety. I noticed that crime prediction could significantly benefit from machine learning techniques, allowing law enforcement agencies to allocate resources more effectively and proactively address potential crime hotspots. This motivated me to create a model that could analyze historical crime data and predict future incidents based on various factors such as location, time, and type of crime.",
+      "What I Learned": "Throughout the development of this project, I gained valuable insights and skills, including:\n Machine Learning Fundamentals : I deepened my understanding of machine learning concepts, particularly in natural language processing (NLP) and classification tasks. \n Transformers Library : I learned how to use the Hugging Face transformers library, which is essential for working with state-of-the-art NLP models like BERT. \n Data Preprocessing : I gained experience in data cleaning and preprocessing, which is crucial for preparing datasets for machine learning models. \n Model Training and Evaluation : I learned how to train models effectively and evaluate their performance using metrics like accuracy and classification reports. \n Error Handling : I improved my skills in debugging and error handling, particularly when dealing with module imports and package dependencies.",
+      "How I Built My Project": "Step 1: Planning \n I started by outlining the key features I wanted in my crime prediction model. This included:\n Data ingestion and preprocessing \n Model training using historical crime data \n Prediction capabilities based on user input \n Step 2: Setting Up the Environment \n I set up a virtual environment using venv to manage dependencies. This ensured that my project had a clean and isolated environment.\n python -m venv myenv\nsource myenv/bin/activate # On Windows, use `myenv\\Scripts\\activate`\npip install -r requirements.txt\n Step 3: Data Collection and Preprocessing \n I collected historical crime data and began preprocessing it. This involved cleaning the data, handling missing values, and encoding categorical variables. I also created a custom dataset class to facilitate loading the data into the model.\n Step 4: Model Development \n I implemented a BERT-based model for crime type classification. The model was trained using the transformers library, which provided pre-trained models and tokenizers. The training process involved:\n Splitting the data into training and validation sets \n Initializing the BERT tokenizer and model \n Defining a training loop to optimize the model's parameters \n Step 5: Evaluation \n After training the model, I evaluated its performance using a classification report, which provided insights into precision, recall, and F1-score for each class. This helped me understand how well the model was performing and where improvements were needed.\n Step 6: Prediction Functionality \n I implemented a prediction function that allows users to input city, location, and time to receive predictions about potential crime types. This function leverages the trained model to provide real-time insights.\n Step 7: Containerization (Optional) \n To ensure consistent deployment, I considered containerizing the application using Docker. This would allow the model to run in any environment without dependency issues.",
+      "Challenges Faced": "Module Import Errors : I encountered a ModuleNotFoundError for the transformers library, which required me to ensure that all dependencies were correctly installed in my virtual environment. This was resolved by installing the necessary packages using pip. \n pip install transformers torch\n Data Quality Issues : The historical crime data had inconsistencies and missing values, which required extensive cleaning and preprocessing. This taught me the importance of data quality in machine learning projects.\n Model Overfitting : During training, I noticed that the model was overfitting to the training data. I addressed this by implementing techniques such as dropout and early stopping.\n Time Management : Balancing this project with other commitments was challenging. I learned to set realistic goals and break the project into smaller, manageable tasks.",
+      "Implementation of Orkes Conductor": "In addition to the core machine learning components, I integrated Orkes Conductor into this project to manage and orchestrate the workflow. Orkes Conductor, a cloud-native workflow orchestration platform, helped streamline our data processing and model prediction pipeline. Here's how I implemented it:\n Step 1: Setting Up Orkes Conductor \n Account Creation : I signed up for an Orkes Conductor account and set up a new project in their cloud console.\n API Key Generation : Generated API keys for authentication with the Conductor server.\n SDK Installation : Installed the Orkes Conductor Python SDK:\n pip install conductor-python\n Step 2: Defining Workflows \n I created a main workflow for our crime prediction process:\n Data Ingestion Task : Retrieves the latest crime data from our database. \n Data Preprocessing Task : Cleans and prepares the data for the model. \n Model Prediction Task : Runs the crime prediction model on the prepared data. \n Result Storage Task : Stores the prediction results back in the database. \n Here's a simplified example of how I defined this workflow:\n from conductor.client.workflow import WorkflowBuilder\nworkflow = WorkflowBuilder(\n name=\"crime_prediction_workflow\",\n version=1,\n description=\"Workflow for crime prediction model\"\n)\nworkflow.add_task(name=\"data_ingestion\", task_reference_name=\"ingest_data\")\nworkflow.add_task(name=\"data_preprocessing\", task_reference_name=\"preprocess_data\")\nworkflow.add_task(name=\"model_prediction\", task_reference_name=\"predict\")\nworkflow.add_task(name=\"result_storage\", task_reference_name=\"store_results\")\nworkflow_def = workflow.to_workflow_def()\n Step 3: Implementing Tasks \n For each task in the workflow, I implemented a corresponding Python function. Here's an example of the model prediction task:\n from conductor.client.worker.worker_task import worker_task\n@worker_task(task_definition_name=\"model_prediction\")\ndef predict_crime(input_data):\n # Load the trained model\n model = load_model()\n # Perform prediction\n predictions = model.predict(input_data)\n return {\"predictions\": predictions.tolist()}\n Step 4: Running Workers \n To execute these tasks, I set up worker processes that listen for task assignments from the Conductor server:\n from conductor.client.automator.task_handler import TaskHandler\ntask_handler = TaskHandler(\n workers=[predict_crime],\n url=\"https://play.orkes.io/api\",\n api_key=YOUR_API_KEY,\n api_secret=YOUR_API_SECRET\n)\ntask_handler.start_processes()\n Step 5: Triggering Workflows \n I implemented a function to trigger the workflow on a schedule or based on certain events:\n from conductor.client.orkes_clients import OrkesClients\nfrom conductor.client.workflow.conductor_workflow import ConductorWorkflow\ndef run_prediction_workflow():\n orkes_client = OrkesClients(\n server_api_url=\"https://play.orkes.io/api\",\n api_key=YOUR_API_KEY,\n api_secret=YOUR_API_SECRET\n )\n workflow = ConductorWorkflow(\n name=\"crime_prediction_workflow\",\n version=1,\n client=orkes_client\n )\n workflow_instance = workflow.execute()\n return workflow_instance.workflow_id\n# Trigger the workflow\nworkflow_id = run_prediction_workflow()\nprint(f\"Workflow started with ID: {workflow_id}\")\n Benefits of Using Orkes Conductor \n Scalability : Orkes Conductor allowed me to easily scale our workflow as the data volume increased. \n Visibility : The Conductor UI provided clear visibility into the workflow execution, making it easier to monitor and debug. \n Error Handling : Conductor's built-in retry mechanisms and error handling improved the robustness of our pipeline. \n Decoupling : By separating the workflow logic from task implementation, I achieved better modularity in the codebase. \n Challenges and Solutions \n Learning Curve : Initially, understanding Conductor's concepts took some time. I overcame this by thoroughly studying their documentation and examples. \n Task Granularity : Deciding on the right level of task granularity was challenging. I iteratively refined our workflow, breaking down larger tasks when they became too complex. \n State Management : Managing state between tasks required careful consideration. I used Conductor's built-in payload management features to pass data between tasks effectively.",
+      "Conclusion": "Building this crime prediction model was a rewarding experience that taught me a lot about machine learning, data preprocessing, and model evaluation. I am excited to continue improving the model and exploring new features that can enhance its predictive capabilities. This project not only addressed a significant societal issue but also provided me with valuable skills that I can apply in future endeavors.\n Integrating Orkes Conductor into our crime prediction project significantly improved its scalability, reliability, and maintainability. It allowed me to focus on implementing the core machine learning logic while offloading the complexity of workflow management to a robust, cloud-native platform. This experience has not only enhanced this particular project but also provided me with valuable skills in workflow orchestration that I can apply to future data science and machine learning projects.",
+      "Built With": "ai conductor flet gemini llm orkes python transformers",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n I worked on the implementation of AI features in this app. Also I developed the patrol bot that's integrated in the app.\n Shravan Nander Pandala \n UI/UX Designer | AI/ML Enthusiast | Front-End Developer \n Aadith Tom Skaria \n Alen Joe Benny \n Like\n 2 \n 2 people like this:\n Share this project:",
+      "Updates": "Aadith Tom Skaria \n started this project\n &mdash;\n Oct 20, 2024 01:14 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 33,
+    "title": "GoodWillShare",
+    "tagline": "Our platform serves as a vital link connecting surplus food from hotels",
+    "url": "https://devpost.com/software/goodwillshare",
+    "awards": [],
+    "github_links": [
+      "https://github.com/Akshay-C-A/GoodWillShare"
+    ],
+    "built_with": [
+      "firebase",
+      "flutter"
+    ],
+    "sections": {
+      "Inspiration": "Poor people with hungry stomaches",
+      "What it does": "Our platform serves as a vital link connecting surplus food from hotels and events with\nNGO . Through an intuitive app interface, generous donors can effortlessly showcase available\nfood items, complete with detailed expiry information. Meanwhile, NGO's gain seamless access\nto a diverse array of offerings, and organic harvester’s get even expired items find purpose\nthrough innovative organic waste management techniques like BSF farming that enrich local\nagriculture.To encourage a culture of giving, donors receive rewards when their contributions are\nordered which can be redeemed in various ways,providing a powerful incentive for increased\nparticipation. Our streamlined approach not only simplifies the donation process but also\naddresses the larger issue of food waste. By facilitating the repurposing of expired products using\ntechniques like BSF farming, we indirectly support the growth of other communities while\nfostering a sustainable and environmentally conscious food distribution system. In essence, our\nplatform strives to create a positive impact that extends beyond charity, benefiting both\ncommunities and the planet.",
+      "How we built it": "We built it using flutter and firebase",
+      "Challenges we ran into": "Most of the challenges were faced during the integration and the authenticity of the users",
+      "Accomplishments that we're proud of": "Built the project proposed so far",
+      "What we learned": "To collaborate and innovate as a team.",
+      "Built With": "firebase flutter",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n Kennith Joseph \n Akshay C.A \n Amiya Hidayathulla \n Melby Mariam \n Like\n 1 \n 1 person likes this:\n Share this project:",
+      "Updates": "Kennith Joseph \n started this project\n &mdash;\n Oct 20, 2024 01:13 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 34,
+    "title": "ResGrid",
+    "tagline": "Stay ahead of emergencies with our disaster alert website!",
+    "url": "https://devpost.com/software/resgrid",
+    "awards": [],
+    "github_links": [
+      "https://github.com/NarayanaSabari/ResGrid"
+    ],
+    "built_with": [
+      "docker",
+      "kubernetes",
+      "python",
+      "react"
+    ],
+    "sections": {
+      "Inspiration": "The increasing frequency of natural disasters inspired us to create a platform that helps communities stay informed and safe. We wanted to develop a system that ensures timely alerts and actionable responses, minimizing the impact of disasters on human lives.",
+      "What it does": "ResGrid collects information from users about various types of disasters, including their severity and description. It analyzes the input and, based on the severity, sends out tailored alerts to keep people informed and prepared for the appropriate response.",
+      "How we built it": "We developed ResGrid using a robust backend to collect and process disaster data, integrated with real-time alert systems. We employed machine learning algorithms to assess severity and provide appropriate responses. The frontend is designed to be user-friendly, allowing easy input of disaster details.",
+      "Challenges we ran into": "One of the major challenges was building an accurate severity analysis system that could quickly and reliably evaluate disaster information. Ensuring that alerts were sent in real time and without delay was also critical, requiring optimization of our backend processes.",
+      "Accomplishments that we're proud of": "We’re proud of building an efficient, scalable platform that can handle various disaster scenarios while providing real-time alerts. Our disaster severity analysis feature is a key accomplishment, ensuring users receive accurate and timely information.",
+      "What we learned": "Through this project, we learned the importance of integrating real-time data analysis and optimization for fast response systems. We also gained valuable experience in user interface design, ensuring ease of use during high-pressure situations.",
+      "What's next for ResGrid": "Next, we plan to expand ResGrid’s capabilities by incorporating predictive analytics and integrating more disaster types. We aim to collaborate with local governments and agencies for more widespread adoption and coverage, ensuring more lives are protected globally.",
+      "Built With": "conductor docker kubernetes python react",
+      "Try it out": "github.com \n docs.google.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n Guru Vedhanth \n Like\n Share this project:",
+      "Updates": "Guru Vedhanth \n started this project\n &mdash;\n Oct 20, 2024 01:13 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 35,
+    "title": "Gajanav",
+    "tagline": "Empowering seamless answers with AI-driven database query assistance",
+    "url": "https://devpost.com/software/gajanav",
+    "awards": [],
+    "github_links": [
+      "https://github.com/AB7zz/chatwithnosql"
+    ],
+    "built_with": [
+      "flask",
+      "python",
+      "react"
+    ],
+    "sections": {
+      "Inspiration": "The inspiration behind this project stems from the need to make data-driven decision-making more accessible across an organization. In many companies, valuable data is often scattered across different databases, making it challenging for non-technical users to extract insights. We wanted to create a solution that empowers anyone in the organization to interact with data through a simple chat-based interface, regardless of the data's format or source. By combining the power of natural language processing (NLP) and vector-based search, we sought to make data insights as accessible as asking a question",
+      "What it does": "Our project is a chat-based interaction tool that allows users to retrieve insights from both structured and unstructured data stored in a centralized data warehouse. Users can submit natural language queries to the system, which:\n Retrieves relevant data from a data warehouse built on top of various company databases.\nConverts the data into vector embeddings for efficient similarity comparison.\nStores these embeddings in a vector database, allowing for rapid retrieval based on similarity measures.\nComputes cosine similarity between the user's query and stored data embeddings to find the closest match.\nGenerates an augmented response using Retrieval-Augmented Generation (RAG) techniques, enriching the answer with context and additional information.",
+      "How we built it": "Frontend: We used ReactJS to create an interactive and user-friendly chat interface. The interface allows users to input queries and receive responses in real time.\nBackend: The backend, built with Python, handles data retrieval, processing, and embedding. It also integrates with the vector database and performs similarity searches.\nData Warehouse Integration: The data warehouse consolidates data from various databases within the company, serving as the central data source for the tool.\nVector Embedding: We converted both structured and unstructured data into vector embeddings to facilitate efficient similarity searches.\nVector Database: The vector embeddings were stored in a vector database, making it easier to perform fast similarity comparisons.\nCosine Similarity &amp; RAG: We used cosine similarity to find the most relevant data points and employed Retrieval-Augmented Generation (RAG) to create detailed responses.\nMIS (Management Information System): The data retrieval is driven by an MIS approach to ensure that all insights are consistent and aligned with the organization's data standards.",
+      "Challenges we ran into": "Handling Diverse Data Types: Combining structured and unstructured data in a single system posed challenges in terms of data integration and consistency.\nOptimizing Embedding Performance: Converting large datasets into vector embeddings while maintaining performance was difficult, requiring fine-tuning of embedding models.",
+      "Accomplishments that we're proud of": "Building a Functional Prototype: We successfully built a working tool that demonstrates the full data retrieval and response generation pipeline.\nIntegrating RAG for Augmented Responses: Using Retrieval-Augmented Generation allowed us to generate high-quality, contextually rich responses that go beyond simple keyword matching.",
+      "What we learned": "Importance of Data Quality: We learned that the quality of the retrieved data has a direct impact on the accuracy of the generated responses. Data cleaning and preprocessing are crucial steps.\nEffective Use of Embeddings: The choice of embedding models can significantly affect retrieval accuracy. Experimenting with different models helped us understand their strengths and limitations.",
+      "What's next for Gajanav": "Visual Representation of Data: Incorporating visualizations to present data insights more intuitively, such as charts, graphs, and dashboards, allowing users to better understand trends and patterns.\nEnhanced NLP Capabilities: We plan to integrate more advanced NLP models to improve the accuracy and relevance of responses.",
+      "Built With": "flask pycon python react",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n Ivine Joju \n AB7zz C V \n Dhanush P K \n Dheeraj Dileep \n Like\n Share this project:",
+      "Updates": "Ivine Joju \n started this project\n &mdash;\n Oct 20, 2024 01:12 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 36,
+    "title": "Pet-paw",
+    "tagline": "We have developed a comprehensive platform for pet",
+    "url": "https://devpost.com/software/pet-paw",
+    "awards": [],
+    "github_links": [
+      "https://github.com/anandaramr/petpaw"
+    ],
+    "built_with": [
+      "express-js",
+      "node-js",
+      "react"
+    ],
+    "sections": {
+      "Built With": "express.js node.js react",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n Pranav A Viswam \n JoyceKMathew \n sajan ks \n Anandaram R \n Like\n 3 \n 3 people like this:\n Share this project:",
+      "Updates": "JoyceKMathew \n posted an update\n &mdash;\n Oct 20, 2024 01:22 AM EDT\n wow\n Log in \n or\n sign up for Devpost \n to join the conversation.\n Pranav A Viswam \n started this project\n &mdash;\n Oct 20, 2024 01:12 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 37,
+    "title": "Questoria",
+    "tagline": "Questoria is an interactive skill development platform which",
+    "url": "https://devpost.com/software/questoria",
+    "awards": [],
+    "github_links": [
+      "https://github.com/GITLucagena/lg.git"
+    ],
+    "built_with": [
+      "css",
+      "firebase",
+      "html",
+      "javascript",
+      "react"
+    ],
+    "sections": {
+      "Built With": "css firebase html javascript react",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n ek hadhi \n Muhammed Swafvan \n shanu cv \n Like\n 2 \n 2 people like this:\n Share this project:",
+      "Updates": "ek hadhi \n started this project\n &mdash;\n Oct 20, 2024 01:12 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 38,
+    "title": "Trudo - True Donation",
+    "tagline": "Trudo: Your Kindness, Their Hope",
+    "url": "https://devpost.com/software/trudo-true-donation",
+    "awards": [],
+    "github_links": [
+      "https://github.com/lie-fde/Make-A-Ton"
+    ],
+    "built_with": [
+      "blockchain",
+      "firebase",
+      "react"
+    ],
+    "sections": {
+      "Inspiration": "After the Wayanad landslide, we wanted to help by donating to a fundraiser that turned out to be a scam, leading us to realize how vulnerable even the best intentions can be in fundraising. This experience inspired the creation of Trudo.",
+      "What it does": "Trudo rewards individuals for their good deeds with unique NFTs that serve as proof of their contributions. These NFTs can be purchased, owned, and resold, allowing users to support fundraising efforts while potentially increasing their value.",
+      "How we built it": "We created Trudo using React to build a user-friendly interface. To ensure transparency and security, we used blockchain technology and Web3, allowing users to easily manage their NFTs and contribute to fundraising efforts. For the backend, we turned to Firebase.",
+      "Challenges we ran into": "We faced challenges related to version differences and package complexities, which made it tricky to integrate various libraries and frameworks. We also encountered compatibility issues with blockchain technology, which let to problems in the smart contracts and Web3 integrations.",
+      "Accomplishments that we're proud of": "We’re have successfully integrated NFTs into Trudo, allowing users to earn and trade unique digital assets for their good deeds while ensuring that donations reach their intended causes. Our interface has made it easy for individuals to engage with the platform and we built a robust backend infrastructure using Firebase.",
+      "What we learned": "We learned the importance of thorough testing and version management when integrating various libraries and frameworks to avoid compatibility issues. The experience highlighted the value of user feedback, helping us refine our interface. Finally, we discovered the potential of blockchain technology to enhance transparency and trust in fundraising.",
+      "What's next for Trudo - True Donation": "We plan to enhance our platform by expanding the variety of causes users can support, allowing for more personalized and impactful donations. We also aim to incorporate gamification elements to incentivize community participation and encourage more good deeds. Finally, we will continue to optimize our technology, focusing on scalability and integration with other blockchain networks.",
+      "Built With": "blockchain firebase nft polygon react web3",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n I worked on Front-end. Iam able convince what our project really is to the user through UI. I learnt a lot about react framework and also GitHub interaction. Still Iam not a expert but I learnt many more things other than technical skills such as team interaction, handling pressure as a team leader and the list goes on. Even now I love building projects and follow my passion .\n SHIBIN M S \n NOEL M ABY \n Bhagyalakshmy Saburaj \n Josepaul Jenson \n Like\n 3 \n 3 people like this:\n Share this project:",
+      "Updates": "SHIBIN M S \n started this project\n &mdash;\n Oct 20, 2024 01:11 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 39,
+    "title": "MediSure",
+    "tagline": "Streamlining medical insurance and billing processes to ensure accurate",
+    "url": "https://devpost.com/software/medisure",
+    "awards": [],
+    "github_links": [
+      "https://github.com/119CS0098/Medisure"
+    ],
+    "built_with": [
+      "css3",
+      "html5",
+      "javascript",
+      "mysql",
+      "php",
+      "spotify",
+      "twilio"
+    ],
+    "sections": {
+      "Inspiration": "Not everyone has the right state of mind and body in this pandemic but almost everyone has a webcam. \n In a digital world affected by COVID-19, digital diagnosis and fitness both mental and physical is more necessary than ever. The pandemic has caused an influx in hospital cases, and the limitations on hospital beds have people wondering whether their symptoms are severe enough to warrant a doctor's appointment. Meanwhile, others experience ailments but are unable to afford a visit to the doctor due to a lack of or poor health care. We are in alarming need of free and practical digital healthcare for keeping in touch with our medical needs. More than 2 in 5 people globally reported symptoms of depression and anxiety during the pandemic. As students, we have realized that a lot of our time is spent in front of a laptop and first-hand watched our mental health deteriorate during the pandemic. Even That’s why having an application like Medisure is so important!",
+      "What it does": "Medisure is an app that allows users to regularly check up on their physical and mental well-being without needing to visit a doctor unless needed and enjoy AR/VR fitness demos.\n We analyze your health using just two inputs - your video and your text. The features of our product are numbered below:\n First, it can register the \"mood\" of a person. This is very important to provide automated action and suggestions from the website and to the user. The product can detect a total of 4 moods: happy, sad, angry, and neutral through the webcam of the user. With different moods, the website can perform different actions. If the user is happy, the website suggests if it should play the user's favorite Spotify playlist. If the user is sad, the website suggests if it should tell the user a joke and play upbeat music. It can also ask \"check-up\" questions. The website also plots a graph of your emotions in a fixed time necessary for regular mental checkup and even suggests to take counsellor help by booking a call.\n There is a friendly chatbot to answer your questions and can even alert the user's relative/friend through SMS if the user gets suicidal and depressed to a certain level. This can be of great help to save someone's precious life.\n We have a symptom checker section where you can just give your inputs step-by-step according to your issues and complaints to get a probable disease diagnosis and department of medicine to be contacted in the case of severity.\n We have a flowing UI catering to the needs of the users. We have tried to make the overall look and feel to make it calming, soothing, safe and engaging enough for our users.\n We also have a AR/VR fitness workout sections.",
+      "How we built it": "System Design \n Video Emotion Detection \n Emotion detection was done using Face recognition API. We used a custom open-source model that we found online to help us process user's emotions. We then extracted the user emotions from the API and connected them to timers on the frontend. This allowed us to have a Hashtable (using chart.js) that contains all of the data on how many minutes the user feels each emotion during the duration of the video recording.\n Playlist Suggestion \n We suggest playlists according to the mood of the user using Spotify API. \n Chatbot alert system \n We implemented a friendly chatbot using JavaScript and the alternative phone number of the user's relative stored in database was used by Twilio API to alert that the user is in danger and he/she needs help.\n Symptom Checker System \n We matched symptoms using Symptom Checker API. This was done in the backend using PHP and JavaScript. \n AR/VR Fitness Zone \n We used echoAR to implement few workout demos in AR/VR so that our users can learn exercises and stay fit from the ease of their houses.\n Frontend \n The frontend was built from a wide variety of web technologies. To start, we used JavaScript, HTML, SASS and CSS to form the core of our frontend stack. There were a lot of challenging components that went into building this project, and we made sure to take care of every single minor detail.\n Backend \n The backend was built using the PHP and MySQL framework PHP and JavaScript to make calls to various APIs and organize the data in a way that is presentable to the users.",
+      "Challenges we ran into": "We were literally racing against time. The building of a good UI with all kind of functioning of different APIs and integrating each of them according to our user's need was indeed a big challenge for us. This was our first time utilizing Firebase to implement the login authentication of our website. We took the time to learn and understand how Firebase works and tried implementing it into our website. There were a variety of bugs to fix till the last moment. Unfortunately we were unable to deploy our web app successfully due to the problems in using multiple pages and PHP files. Implementing AR/VR through echoAR was also very difficult due to various errors showing up.",
+      "Accomplishments that we're proud of": "This project was especially an achievement for us because we created many additional components on the front-end in order to have a completed project. We are also particularly proud that we were able to include a vast array of different features for the user, which we felt makes Medisure such a serviceable form of digital healthcare. Lastly, we think the impact our project could have is a significant accomplishment. Especially in the digital age combined with remote day-to-day communications, this could really be a product that people find useful!",
+      "What we learned": "We have a learnt a plenty much investing time and efforts in this project. Use of various APIs and integrating them plus a UI design to implement in front-end in such a short span of time was unbelievably challenging.",
+      "What's next for Medisure": "Medisure has so many useful features, so we'd love to further expand the project to handle direct 1:1 video calls with certified doctors and counsellors if required! Overall, we hope that one day this project can be widely used as a practical and accurate resource for body and mental checkup.",
+      "Built With": "css3 echoar face html5 javascript mysql php spotify symptomchecker twilio",
+      "Try it out": "github.com \n medisure.herokuapp.com \n Created by\n B Sarina \n Ashutosh Rout \n Like\n Share this project:",
+      "Updates": "B Sarina \n started this project\n &mdash;\n Apr 18, 2021 01:29 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 40,
+    "title": "Elderly-app-launcher",
+    "tagline": "This is an app for senior citizens who are facing difficulties in using",
+    "url": "https://devpost.com/software/elderly-app-launcher",
+    "awards": [],
+    "github_links": [
+      "https://github.com/Kiran-Krishnan-V/ElderlyappLauncher.git"
+    ],
+    "built_with": [
+      "css",
+      "html5",
+      "javascript"
+    ],
+    "sections": {
+      "Built With": "css html5 javascript",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n Kiran-Krishnan-V Krishnanv \n Amith Krishna K \n Parthiv Dinesh Dinesh \n Presin K s \n Like\n Share this project:",
+      "Updates": "Kiran-Krishnan-V Krishnanv \n started this project\n &mdash;\n Oct 20, 2024 01:10 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 41,
+    "title": "Colib.",
+    "tagline": "A library hosting platform for the readers without access to libraries.",
+    "url": "https://devpost.com/software/colib",
+    "awards": [],
+    "github_links": [
+      "https://github.com/n0yal/Colib.git"
+    ],
+    "built_with": [
+      "github",
+      "javascript",
+      "postgresql"
+    ],
+    "sections": {
+      "Inspiration": "The idea for this application struck when we realized us as readers or some of us that who wants to start reading have very limited direct access to good literature. As students we dont always have the ability to buy all the books we want to read and that makes us depended on libraries but the fact is most of us dont have access to a library that meet our literary needs.",
+      "What it does": "CoLib is a platform that allows dedicated and passionate individuals from the reading community to host a library in their own space that can act as a library for the other readers in the community. When someone registers to be a host , after a screening process where we make sure a Colib point will be utilized for the reason it was made , we will provide a collection of books specific to the reader needs of the locality. Readers can checkout books from these colib points in the conventional loan format. In the end we want to create an environment where we give passionate readers a haven and along with this promote reading among the youth.",
+      "How we built it": "We built it by using Next js framework for the frontend part, Tailwind css for easy styling and for the backend and the database we have used the Supabase platform(a Backend as a Service) which uses postgresql for the creation and operations on the database for storing details about the different \"colib points\" and the metadata of the books in the inventory. We gather the location data from the user when the user visits the site and use it for searching the nearby \"colib points\" and books available from the database.",
+      "Challenges we ran into": "We could not fully implement the backend part such as searching a book returns the books available in the nearby locality using the location parameters. \nWe also ran into problems in case of scalability of the website but that inspired us to be creative and come up with some counter measures later on in time.",
+      "Accomplishments that we're proud of": "We are still very new to working with fullstack so this is a personal achievement for us to have integrated back end and front end to the extent that we have.",
+      "What we learned": "Being beginners in the technology stack that we have used , all the information we consumed that help us built this application was new knowledge. From working with next.js to creating the database , everything was a fun and exciting learning curve for us.\nApart from that we also realized the idea we thought was small and wasnt sure could have a large enough userbase , actually could be an amazing space for young readers all around the country and even maybe the world.",
+      "What's next for Colib.": "Although right now we plan to start of as a library hosting app for readers without access to libraries , later we hope to be able to host colib points in cafes and workspaces where there is a scope to make revenue for the app to sustain our services. Along with \"CoSpace\" which is a page where aspiring writers can share their work on the platform for others in the community to see. We believe that would be the next step in sparking literary geniuses all across the country.",
+      "Built With": "github javascript next.js postgresql supabase tailwind vercel",
+      "Try it out": "colib-pi.vercel.app \n github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n Worked on the backend , connecting supabase with the frontend.\n NOYAL MARTIN \n Nikhil Kishore \n Sidhanthvs VS \n Like\n Share this project:",
+      "Updates": "Nikhil Kishore \n started this project\n &mdash;\n Oct 20, 2024 01:10 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 42,
+    "title": "Helpora",
+    "tagline": "Where helping hands earn!",
+    "url": "https://devpost.com/software/helpora",
+    "awards": [],
+    "github_links": [
+      "https://github.com/imakhxl/HelporaV1"
+    ],
+    "built_with": [
+      "flutter"
+    ],
+    "sections": {
+      "Inspiration": "The idea for Helpora was born out of the urgent need for a platform where people seeking part-time work, especially those in need of extra income like students, the elderly, or individuals with health challenges, could easily find opportunities. We were inspired by the struggle many face in searching for trustworthy, local, and short-term jobs, combined with the desire to offer a solution for individuals who want help with everyday tasks but lack an easy way to connect with reliable workers.",
+      "What it does": "Helpora connects job posters and job seekers for domestic tasks. Job posters can upload various chores, such as moving furniture or teaching older adults how to use technology. Applicants can apply, and their ID proof is visible to job posters for authenticity checks. In return, job posters can assign humanity points to applicants based on their performance and behavior. These points help build trust in future job applications. The app ensures transparency, reliability, and safety, creating a LinkedIn-like profile but focused on domestic work.",
+      "How we built it": "We built Helpora using Flutter for the app's front-end, providing a smooth, cross-platform user experience. The backend is powered by Firebase, managing user authentication, job postings, and data storage. Firestore is used for real-time syncing of job data, and Firebase Authentication ensures secure user verification. The app's architecture was designed to offer seamless scalability and easy updates as new features are added.",
+      "Challenges we ran into": "We faced several challenges during the development of Helpora, including:\n User verification: Ensuring the safety and trustworthiness of both job posters and job seekers was critical. Creating a process for uploading and displaying ID proof in a secure yet user-friendly manner was complex. \n Scalability: Balancing real-time data updates while managing large volumes of job postings required thoughtful database structuring and optimization. \n UI/UX Design: Designing an interface that’s easy to use for a wide range of users, from elderly individuals to students, was a balancing act between simplicity and functionality.",
+      "Accomplishments that we're proud of": "We're proud to have created a platform that can genuinely make a difference for people who need immediate, trustworthy help or are in need of quick earnings. Building Helpora with a focus on community trust —through features like humanity points , which reward positive behavior and build a reputation over time, and ID proof verification —ensures a safe, supportive environment for all users. Additionally, we’re proud of our app's inclusive design , which is accessible to people from diverse backgrounds and tech experience levels. Humanity points help foster accountability and trust among users, making it easier for job posters to find reliable help and for applicants to showcase their integrity and commitment.",
+      "What we learned": "Throughout this project, we learned a great deal about building user-centric applications and the importance of trust in digital platforms. We deepened our understanding of Firebase and how to optimize databases for real-time updates. The process also reinforced the value of creating apps that directly address societal needs and provide opportunities for those who may struggle to find traditional jobs.",
+      "What's next for Helpora": "The next steps for Helpora include expanding its features to cover a wider range of tasks and locations. We plan to:\n Introduce in-app messaging for better communication between job posters and applicants. \n Implement reviews and feedback to further build trust and reliability.\n3.Add map directions integration, enabling job posters to easily provide exact locations and helping applicants navigate directly to the job site using in-app mapping tools. \n Expand to more regions to help people in areas with fewer part-time job opportunities. \n Offer more customization for jobs, such as allowing users to set availability, distance, and skill sets.",
+      "Built With": "database flutter",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n Worked on frontend and backend, as well as ui/ux.\n Chaithanya Shaji \n I worked on designing the Front-end of the mobile and also contributed to the back-end of the application \n Krishnadev M \n I worked on connecting the app to Firebase backend, enabling authentication, storage as well as real time updates. Also worked on fine tuning the front end of the application\n Akhil Jyothidas \n Like\n Share this project:",
+      "Updates": "Chaithanya Shaji \n started this project\n &mdash;\n Oct 20, 2024 01:09 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 43,
+    "title": "Campus Connect",
+    "tagline": "Find, Book, Connect -- Your Campus Essentials Made Easy!",
+    "url": "https://devpost.com/software/campus-connect",
+    "awards": [],
+    "github_links": [],
+    "built_with": [],
+    "sections": {
+      "What's next for Campus Connect": "A\n Submitted to\n HackingEDU \n Created by\n Noah Marriott \n Like\n Share this project:",
+      "Updates": "Noah Marriott \n started this project\n &mdash;\n Oct 25, 2015 02:58 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 44,
+    "title": "Manabi- Make Learning Fun",
+    "tagline": "Ever felt like you can't byheart stuff? Manabi is your solution! Generate",
+    "url": "https://devpost.com/software/manabi-make-learning-fun",
+    "awards": [],
+    "github_links": [
+      "https://github.com/Lekshmi38/manabi"
+    ],
+    "built_with": [
+      "css",
+      "express-js",
+      "gemini",
+      "html",
+      "node-js"
+    ],
+    "sections": {
+      "Manabi - How it was born": "We are a group of students and nothing we dread more than byhearting stuff. This is where manabi comes in. You can enter a concept or an equation that you want to learn and manabi will generate a comic for you!",
+      "What it does": "You can enter a concept or an equation that you want to learn and manabi will generate a comic for you!\nYou can even attempt a quiz later to check how much you have learnt. There is also a streak feature that is implemented and you can view your accuracy score.",
+      "How we built it": "We built it using the tech stack Node.js, express.js, Html, and CSS. We have also used two APIs to generate the comics. First when an input is entered, it is sent to gemini asking for 6 panel stories and this is passed on to the Blackforest API to generate the images. And then the output is displayed.",
+      "Challenges we ran into": "We could not get the path for the file that was returned from the API right. No matter how much we tried, it just didn't seem to work. We took help from mentors and all the LLMs we could find. But hey it still didn't work. Then we thought, maybe another framework would work. And created a whole react app. It still didn't work.\nBut then, we found a way to make it work. We created some image files whose paths are mentioned in the display function. Then these are updates when the API returns the result.",
+      "Accomplishments that we're proud of": "We made the images appear on the screen!\n( I Almost sat on it for 6 hours :( )\nWe also deployed a 3d landing page :D",
+      "What we learned": "We learned a lot of stuff. Including a lot of technologies. But more than everything we learned to stay calm and focus on what's important.",
+      "What's next for Manabi- Make Learning Fun": "We are thinking of making it public and improving it.",
+      "Built With": "blackforestapi css express.js gemini html node.js spline",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n Chandana S \n B K Lekshmi Lekshmi \n aaminas402 S \n Like\n Share this project:",
+      "Updates": "aaminas402 S \n started this project\n &mdash;\n Oct 20, 2024 01:07 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 45,
+    "title": "Task Trails",
+    "tagline": "Get your tasks done, on time, every time.",
+    "url": "https://devpost.com/software/task-trails",
+    "awards": [],
+    "github_links": [],
+    "built_with": [
+      "flask",
+      "flutter",
+      "github",
+      "python"
+    ],
+    "sections": {
+      "Inspiration": "Task Trails was inspired by the simple, everyday act of a friend reminding you to pick something up from Walmart on your way home. We wanted to create an in-built friend within your phone that would remind you of tasks as you approach the places where you can complete them. With Task Trails, users can efficiently tackle their to-do lists and make the most of their daily journeys, ensuring no task is forgotten.",
+      "What it does": "Task Trails is an innovative app that sends users notifications based on their current location and proximity to places where they can complete their to-do list items. Designed to enhance efficiency, Task Trails helps users tackle daily tasks on their way to work or any other destination, ensuring they make the most of their time and never forget a task. By integrating location-based reminders, Task Trails empowers users to stay organized and productive throughout their day.",
+      "Challenges we ran into": "Complex Aggregation Framework for Flask and creating the app in flutter. Flutter’s flexibility in building visually appealing interfaces was impressive, but we initially struggled to grasp its widget-based structure and how to manage it efficiently. \n Accomplishments that we're proud \n Integrating and learning flutter while using flask to implement google maps APIs as beginners.",
+      "What we learned": "Location Services: We learned how to incorporate google maps into the app and ensure that location data is precise and timely in order to send location-based reminders.\nBackend Integration: Using Flask to manage our backend processes taught us the importance of a robust and flexible server-side infrastructure. It allowed us to handle data management, API integration, and notifications efficiently.\nAPIs and Real-Time Data: Integrating external APIs, like Google Maps, helped us understand the challenges and benefits of working with real-time data.",
+      "What's next for Task Trails": "The next step in enhancing our app is using geolocation to calculate the distances between multiple nearby locations.\nWe also want to refine the notification system by allowing users to disable notifications for completed tasks, ensuring they don’t receive repeated reminders for the same task. This will improve the app by reducing unnecessary notifications.\nAdditionally, implementing a feature where users can assign a preferred starting location to begin their routes.",
+      "Built With": "figma flask flutter github python \n Submitted to\n HackSMU VI \n Winner \n Best Productivity Project: Anker Portable Power Bank\n Created by\n Zubiya Syeda \n Zainab Syeda \n zunaira firdous \n Like\n Share this project:",
+      "Updates": "Zubiya Syeda \n started this project\n &mdash;\n Oct 06, 2024 12:17 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 46,
+    "title": "MediMate",
+    "tagline": "MediMate: Empowering seniors to manage their health with ease.",
+    "url": "https://devpost.com/software/medimate",
+    "awards": [],
+    "github_links": [
+      "https://github.com/billcui57/medimate"
+    ],
+    "built_with": [
+      "android-studio",
+      "firebase",
+      "flutter",
+      "google-custom-search"
+    ],
+    "sections": {
+      "Inspiration": "In today's rapidly advancing society, we are being inundated with more information than ever before. This cannot be understated when it comes to prescription medications, as new medical advances have allowed for the development of more complex and specific treatments to the spectrum of illnesses that we may face. Medications have become more compact and directions for use have become more detailed, leading to smaller containers and even smaller instructional/informational text. For the older members of our society, who statistically require more medications and have weaker eyesight, in addition to those who are visually impaired, smaller text is one of the leading causes of harmful or fatal medication misuse. With our project, MediMate, we aim to solve this issue using modern technological solutions.",
+      "What it does": "MediMate is an android app that allows users to simply scan medication labels with their phone cameras, which will then generate dosage reminders through the app, alert users of potential side-effects &amp; dangerous medication combinations, and update a user's medical profile.",
+      "How we built it": "Development took place with Android Studio using the Dart language. To parse text information from scanned images, we used OCR with Firebase's ML Kit API for Firebase Vision , which then stores our user's updated medication information with their current medical profile in FireStore . The newly added medication is then searched with Google's Custom Search API for a list of ingredients, potential side-effects, in addition to any known complications from being combined with other medications. This information is immediately displayed for the user, followed by an auto-filled notification set-up form displayed based on the parsed dosage information.",
+      "Challenges we ran into": "The most significant challenge we ran into was being able to integrate the various APIs together so that information could be extracted from the internet and returned to the user.",
+      "Accomplishments that we're proud of": "As a team, we're proud to have collaborated together through this hackathon to bring this idea closer to reality.",
+      "What we learned": "We became much more familiar with Android Development and the Dart language through our experience developing both the front and back ends of MediMate. We also gained a significant amount of knowledge in using Firebase's services and the use of RESTful APIs in general.",
+      "What's next for MediMate": "Next steps include completion of the Android app, expansion into an iOS app, inclusion of an automatic notification system for pharmacies when medication levels are determined to be running low, based on regular dosage rates, and the implementation of geofencing to remind users to bring all necessary medications with them.",
+      "Built With": "android-studio cloud-firestore dart firebase firebase-vision flutter google-custom-search",
+      "Try it out": "share.proto.io \n github.com \n Submitted to\n StarterHacks 2020 \n Created by\n Contributed to the back-end of our app. This was my first time using Flutter and the Firebase services, making it a little overwhelming to learn everything at once. However, I now know where to work on and hope to bring a larger skillset to my next hackathons.\n Allen Lu \n Backend Team Lead @ Hack the North \n Worked on backend using Flutter. First time using the Firebase API. It was intimidating and also extremely difficult to implement, but I learned a lot\n Bill Cui \n I worked on the front-end and created an interactive prototype of our Android app using Proto.io.\n Jennifer Zhang \n Alex Guo \n Jeremy Sun \n Like\n Share this project:",
+      "Updates": "Allen Lu \n started this project\n &mdash;\n Jan 19, 2020 12:53 PM EST\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 47,
+    "title": "HealthWise AI - Your Personal H",
+    "tagline": "HealthWise AI empowers users by simplifying complex medical",
+    "url": "https://devpost.com/software/healthwise-ai-your-personal-h",
+    "awards": [],
+    "github_links": [],
+    "built_with": [],
+    "sections": {
+      "Sorry, that page does not exist.": "But we'd love to help you find what you're looking for. Head to the homepage or discover recent hackathons .\n If you need assistance, please email us at [email&#160;protected] ."
+    }
+  },
+  {
+    "id": 48,
+    "title": "Zero Waste Management",
+    "tagline": "Our project Zero Waste Management is the next step to",
+    "url": "https://devpost.com/software/zero-waste-management",
+    "awards": [],
+    "github_links": [],
+    "built_with": [
+      "bootstrap",
+      "css3",
+      "html5",
+      "javascript"
+    ],
+    "sections": {
+      "Inspiration": "When we came across the difficult working of a waste management committee in the government, we decided to revamp it and give it a kiss of the new technology.",
+      "What it does": "It streamlines the hectic process done by the \"Haritha Karma Sena\" making it more accurate and faster.",
+      "How we built it": "We built it using Front end frameworks like HTML, CSS and Bootstrap. JavaScript was also used.",
+      "Challenges we ran into": "Lack of knowledge in backend frameworks really posed to be a challenge.",
+      "Accomplishments that we're proud of": "Finished everything in the given time and got it working to exactly how we imagined it to.",
+      "What we learned": "We learned a lot of new technologies including backend technologies like JavaScript and also how to save data on localStorage.",
+      "What's next for Zero Waste Management": "Building up a proper server and inculcating IoT and AI technologies to automate this process in the near future.",
+      "Built With": "bootstrap css3 html5 javascript",
+      "Try it out": "cainebenoy.github.io \n Submitted to\n Make-A-Ton 7.0 \n Created by\n CAINE BENOY \n lena shajahan \n Pavithra \n Sreyas Sunandan \n Like\n 1 \n 1 person likes this:\n Share this project:",
+      "Updates": "CAINE BENOY \n started this project\n &mdash;\n Oct 20, 2024 12:26 AM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 49,
+    "title": "CivicEye",
+    "tagline": "CivicEye: Amplifying Voices, Accelerating Action",
+    "url": "https://devpost.com/software/civiceye",
+    "awards": [],
+    "github_links": [
+      "https://github.com/trishanu-init/CivicEye"
+    ],
+    "built_with": [
+      "firebase",
+      "flutter",
+      "javascript",
+      "leaflet-js",
+      "react"
+    ],
+    "sections": {
+      "CivicEye: Empowering Local Communities to Drive Change": "Inspiration \n The inspiration for CivicEye emerged from observing the disconnect between local communities and their governing bodies. In many neighborhoods, pressing social issues—such as water shortages, electrical outages, and safety concerns—often go unreported or unnoticed. I realized that residents often feel powerless in these situations, lacking a clear channel to communicate their problems effectively. \n This motivated me to create a platform that would empower residents to raise issues in real-time, ensuring that their concerns reached the appropriate authorities swiftly. By enabling citizens to document problems with descriptions and photographs, I aimed to foster a sense of community engagement and facilitate quicker responses from local officials. CivicEye is not just an app; it’s a tool for advocacy and change.\n What I Learned \n Developing CivicEye taught me a multitude of valuable lessons:\n User-Centric Design : I learned the importance of designing with the end user in mind. Conducting user interviews and gathering feedback helped shape a more intuitive interface, making the app accessible to all community members, regardless of their tech-savviness.\n Technical Skills : This project deepened my understanding of various technologies:\n Flutter : I honed my skills in building responsive mobile applications, leveraging Flutter’s capabilities to create a seamless user experience. \n Firebase &amp; Firestore : I gained hands-on experience with real-time data management and cloud storage solutions, which are critical for handling user submissions efficiently. \n Collaboration &amp; Communication : I learned how vital it is to communicate clearly with users and potential stakeholders. Engaging with the community and understanding their needs shaped the features and functionalities of CivicEye.\n How I Built It \n The development of CivicEye involved several key components:\n Front-End Development :\n I utilized Flutter to create a mobile-first design that is visually appealing and easy to navigate. The user interface was crafted to encourage quick submissions of issues, featuring simple forms that users can fill out effortlessly. \n Back-End Development :\n I employed Firebase as the back-end solution, using Firestore for real-time database management. This setup allows for efficient tracking and storage of submitted issues, making it easier for local authorities to access and manage the reports. \n Cloud Storage was integrated for users to upload images alongside their issue descriptions, providing a comprehensive view of the problems being reported. \n Implementation of Features :\n The app includes features like location tagging, so users can pinpoint where the issue occurred, and **status updates , allowing users to see when their issue has been acknowledged or resolved. \n Challenges I Faced \n Throughout the development process, I encountered several challenges:\n Database Optimization : Ensuring the app could handle multiple simultaneous submissions without lag was a significant challenge. I had to optimize Firebase queries and structure the database carefully to ensure efficient data retrieval and storage.\n User Interface Complexity : Striking the right balance between simplicity and functionality in the user interface was crucial. I faced difficulties in keeping the app user-friendly while integrating all necessary features. Iterative design testing helped in refining the interface based on user feedback.\n Conclusion \n CivicEye represents my commitment to leveraging technology for social good. This project has not only enhanced my technical skills but has also instilled in me a deeper understanding of community dynamics and the importance of civic engagement. CivicEye aims to empower residents and foster stronger relationships between communities and their local authorities by providing a platform where every voice can be heard. As I continue to refine and expand this project, I am excited about its potential impact on neighborhoods striving for positive change.",
+      "Built With": "auth0 dart firebase flutter javascript leaflet.js react tailwind",
+      "Try it out": "github.com \n www.publicsgotciviceye.co \n Submitted to\n Make-A-Ton 7.0 \n Created by\n Trishanu Nayak \n Partha Bhattacharya \n Gaurav Pandey \n Like\n Share this project:",
+      "Updates": "Trishanu Nayak \n started this project\n &mdash;\n Oct 19, 2024 11:58 PM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  },
+  {
+    "id": 50,
+    "title": "Termigram",
+    "tagline": "remotely access your machine on the go with telegram",
+    "url": "https://devpost.com/software/termigram",
+    "awards": [],
+    "github_links": [
+      "https://github.com/7h3cyb3rm0nk/termigram/tree/master"
+    ],
+    "built_with": [
+      "golang",
+      "telegram"
+    ],
+    "sections": {
+      "Inspiration": "We were talking about how we used to copy programs from computer lab with ssh for lab hours in college and a friend of mine suggested an idea of having to use his server hosted on cloud without having his lap with his side all the time from an app like whatsapp/some other app, due to the great api support we chose telegram",
+      "What it does": "termigram listens for bot commands and executes those commands on the host system and redirects the response to the chat window \n it also ensures that only authorized users can access the host system \n it can also print previous logs of its usage for auditing",
+      "How we built it": "we built it in golang with the help tgbotapi for golang",
+      "Challenges we ran into": "we first struggled to setup proper authorization for users and finally managed to use a config.json for defining the allowed user's telegram ids and also allows users to know their telegram id without authorization",
+      "Accomplishments that we're proud of": "was able to build a complete telegram bot from scratch with little to no previous knowledge about the programming language involved",
+      "What we learned": "Golang \n tgbotapi",
+      "What's next for Termigram": "Implement a tui interface to edit config.json \n Implement sudo command support",
+      "Built With": "golang telegram tgbotapi",
+      "Try it out": "github.com \n Submitted to\n Make-A-Ton 7.0 \n Created by\n Ramees Mohammed M M \n Like\n Share this project:",
+      "Updates": "Ramees Mohammed M M \n started this project\n &mdash;\n Oct 19, 2024 11:33 PM EDT\n Leave feedback in the comments! \n Log in \n or\n sign up for Devpost \n to join the conversation."
+    }
+  }
+]
