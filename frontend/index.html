@@ -1,1391 +1,2505 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Odoo Enterprise | Subscriptions & Recurring Invoicing</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="vendor/chart.umd.js"></script>
-</head>
-<body>
-
-  <!-- 1. TOP ODOO PURPLE NAVBAR -->
-  <nav id="odoo-top-navbar" class="o_main_navbar">
-    <div class="o_navbar_apps">
-      <!-- 9-Dot App Drawer Trigger -->
-      <div class="o_app_drawer_icon" title="Odoo Apps Drawer" onclick="toggleAppDrawer()">
-        <div class="o_app_drawer_dot"></div>
-        <div class="o_app_drawer_dot"></div>
-        <div class="o_app_drawer_dot"></div>
-        <div class="o_app_drawer_dot"></div>
-        <div class="o_app_drawer_dot"></div>
-        <div class="o_app_drawer_dot"></div>
-        <div class="o_app_drawer_dot"></div>
-        <div class="o_app_drawer_dot"></div>
-        <div class="o_app_drawer_dot"></div>
-      </div>
-      <div class="o_app_brand" onclick="navigateTo('dashboard')" style="cursor: pointer;">
-        <span id="o-current-app-name">Subscriptions</span>
-      </div>
-
-      <!-- Odoo App Links -->
-      <div class="o_navbar_menu">
-        <button id="nav-dashboard" class="o_nav_tab" onclick="navigateTo('dashboard')">Dashboard</button>
-        <button id="nav-subscriptions" class="o_nav_tab active" onclick="navigateTo('kanban')">Subscriptions</button>
-        <button id="nav-invoices" class="o_nav_tab" onclick="navigateTo('invoices')">Invoicing</button>
-        <button id="nav-billing" class="o_nav_tab" onclick="navigateTo('billing')">Batch Billing</button>
-        <button id="nav-products" class="o_nav_tab" onclick="navigateTo('products')">Products &amp; Pricing</button>
-        <button id="nav-pivot" class="o_nav_tab" onclick="navigateTo('pivot')">Pivot &amp; Reporting</button>
-        <button id="nav-settings" class="o_nav_tab" onclick="navigateTo('settings')">Settings</button>
-      </div>
-    </div>
-
-    <!-- Right Systray Tools -->
-    <div class="o_navbar_systray">
-      <button class="o_portal_toggle_btn" onclick="togglePortalMode()">
-        <span id="portal-toggle-icon">👤</span>
-        <span id="portal-toggle-label">Customer Portal View</span>
-      </button>
-
-      <div id="backend-status-badge" style="display: flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 600; color: #FFFFFF; background: rgba(0,0,0,0.25); padding: 4px 10px; border-radius: 4px;">
-        <span style="width: 7px; height: 7px; border-radius: 50%; background: #4ADE80;"></span>
-        <span id="backend-status-text">Port 8001 Live (38ms)</span>
-      </div>
-
-      <!-- User Profile Pill & Session Dropdown -->
-      <div class="o_user_pill" onclick="toggleUserMenu(event)">
-        <div class="o_user_avatar" id="user-avatar-initials">MD</div>
-        <span id="user-display-name">Marc Demo</span>
-        <span style="font-size: 0.65rem;">▼</span>
-        <div id="o-user-menu" class="o_user_menu">
-          <div id="menu-item-settings" class="o_user_menu_item" onclick="navigateTo('settings')">⚙️ System Settings</div>
-          <div id="menu-item-provision-staff" class="o_user_menu_item" onclick="openStaffModal()">👥 Provision Staff Member</div>
-          <div id="menu-item-portal" class="o_user_menu_item" onclick="togglePortalMode()">👤 Customer Portal</div>
-          <div class="o_user_menu_divider"></div>
-          <div class="o_user_menu_item" style="color: var(--odoo-danger);" onclick="logoutUser()">🚪 Log Out</div>
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Brightloop | Subscriptions &amp; Billing</title>
+    <link href="style.css" rel="stylesheet" />
+    <script src="vendor/chart.umd.js"></script>
+  </head>
+  <body>
+    <div hidden="" id="workspace-message" role="status"></div>
+    <!-- 1. TOP ODOO PURPLE NAVBAR -->
+    <nav class="o_main_navbar" id="odoo-top-navbar">
+      <div class="o_navbar_apps">
+        <!-- 9-Dot App Drawer Trigger -->
+        <div
+          class="o_app_drawer_icon"
+          onclick="toggleAppDrawer()"
+          title="Odoo Apps Drawer"
+        >
+          <div class="o_app_drawer_dot"></div>
+          <div class="o_app_drawer_dot"></div>
+          <div class="o_app_drawer_dot"></div>
+          <div class="o_app_drawer_dot"></div>
+          <div class="o_app_drawer_dot"></div>
+          <div class="o_app_drawer_dot"></div>
+          <div class="o_app_drawer_dot"></div>
+          <div class="o_app_drawer_dot"></div>
+          <div class="o_app_drawer_dot"></div>
         </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- 9-DOT APP LAUNCHER OVERLAY -->
-  <div id="o-app-drawer-overlay" class="o_app_drawer_overlay" onclick="toggleAppDrawer()">
-    <div class="o_app_drawer_grid" onclick="event.stopPropagation()">
-      <div class="o_app_tile" onclick="openAppFromDrawer('dashboard')">
-        <div class="o_app_tile_icon" style="background: linear-gradient(135deg, #17A2B8, #00A09D);">📈</div>
-        <div class="o_app_tile_label">Dashboard</div>
-      </div>
-      <div class="o_app_tile" onclick="openAppFromDrawer('kanban')">
-        <div class="o_app_tile_icon" style="background: linear-gradient(135deg, #714B67, #8E6583);">📋</div>
-        <div class="o_app_tile_label">Subscriptions</div>
-      </div>
-      <div class="o_app_tile" onclick="openAppFromDrawer('invoices')">
-        <div class="o_app_tile_icon" style="background: linear-gradient(135deg, #28A745, #20C997);">💳</div>
-        <div class="o_app_tile_label">Invoicing</div>
-      </div>
-      <div class="o_app_tile" onclick="openAppFromDrawer('billing')">
-        <div class="o_app_tile_icon" style="background: linear-gradient(135deg, #FD7E14, #E8590C);">⚡</div>
-        <div class="o_app_tile_label">Batch Billing</div>
-      </div>
-      <div class="o_app_tile" onclick="openAppFromDrawer('products')">
-        <div class="o_app_tile_icon" style="background: linear-gradient(135deg, #6F42C1, #845EF7);">📦</div>
-        <div class="o_app_tile_label">Products &amp; Pricing</div>
-      </div>
-      <div class="o_app_tile" onclick="openAppFromDrawer('pivot')">
-        <div class="o_app_tile_icon" style="background: linear-gradient(135deg, #20C997, #0CA678);">📊</div>
-        <div class="o_app_tile_label">Pivot Reporting</div>
-      </div>
-      <div class="o_app_tile" onclick="openAppFromDrawer('settings')">
-        <div class="o_app_tile_icon" style="background: linear-gradient(135deg, #6C757D, #495057);">⚙️</div>
-        <div class="o_app_tile_label">Settings &amp; Engine</div>
-      </div>
-      <div class="o_app_tile" onclick="openAppFromDrawer('portal')">
-        <div class="o_app_tile_icon" style="background: linear-gradient(135deg, #339AF0, #1C7ED6);">👤</div>
-        <div class="o_app_tile_label">Customer Portal</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2. CONTROL PANEL (Breadcrumbs & Actions) -->
-  <div id="odoo-control-panel" class="o_control_panel">
-    <div class="o_breadcrumb">
-      <span id="cp-parent-view" class="o_breadcrumb_item" onclick="navigateTo('kanban')">Subscriptions</span>
-      <span class="o_breadcrumb_separator">/</span>
-      <span id="cp-current-view" class="o_breadcrumb_active">All Subscriptions</span>
-    </div>
-
-    <div class="o_cp_actions">
-      <button id="cp-btn-new" class="btn btn-primary" onclick="createNewQuotation()">
-        + New
-      </button>
-      <button id="cp-btn-billing" class="btn btn-teal" onclick="navigateTo('billing')">
-        ⚡ Run Billing Day
-      </button>
-
-      <div class="o_search_box">
-        <input type="text" id="cp-search-input" class="o_search_input" placeholder="Search customer, subscription..." oninput="handleSearch(this.value)">
-      </div>
-
-      <!-- View Switchers (Dashboard, Kanban, List, Form, Pivot) -->
-      <div style="display: flex; gap: 2px; border: 1px solid var(--odoo-border); border-radius: 4px; overflow: hidden;">
-        <button id="view-switch-kanban" class="btn btn-secondary" style="padding: 5px 9px;" title="Kanban View" onclick="navigateTo('kanban')">▦</button>
-        <button id="view-switch-list" class="btn btn-secondary" style="padding: 5px 9px;" title="List View" onclick="navigateTo('list')">☰</button>
-        <button id="view-switch-form" class="btn btn-secondary" style="padding: 5px 9px;" title="Form View" onclick="navigateTo('form')">📄</button>
-        <button id="view-switch-pivot" class="btn btn-secondary" style="padding: 5px 9px;" title="Pivot Analysis" onclick="navigateTo('pivot')">⊞</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 3. MAIN ODOO CONTENT AREA -->
-  <div class="o_content">
-
-    <!-- VIEW 0: ODOO WEB LOGIN / DATABASE SELECTOR -->
-    <div id="view-login" class="o_view_container" style="display: none;">
-      <div class="o_login_card">
-        <div class="o_login_header">
-          <div class="o_login_brand">
-            <span>odoo</span>
-            <span class="badge">Enterprise 18</span>
-          </div>
-          <div class="o_login_subtitle">Brightloop Subscription Management System</div>
+        <div
+          class="o_app_brand"
+          onclick="navigateTo('dashboard')"
+          style="cursor: pointer"
+        >
+          <span id="o-current-app-name">Subscriptions</span>
         </div>
-
-        <!-- Auth Mode Tabs -->
-        <div class="o_auth_tabs">
-          <div id="tab-auth-login" class="o_auth_tab active" onclick="switchAuthTab('login')">Sign In</div>
-          <div id="tab-auth-register" class="o_auth_tab" onclick="switchAuthTab('register')">Create Account</div>
-          <div id="tab-auth-forgot" class="o_auth_tab" onclick="switchAuthTab('forgot')">Forgot Password</div>
-        </div>
-
-        <!-- TAB 1: LOGIN -->
-        <div id="auth-panel-login" class="o_login_body">
-          <div id="login-error-msg" style="display: none; background: #FDE8E8; color: #9B1C1C; padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 12px;"></div>
-
-          <div class="o_login_group">
-            <label class="o_login_label">Select Database</label>
-            <select id="login-db-select" class="o_login_select">
-              <option value="brightloop_production">brightloop_production (5,000 Subs, SQLite WAL)</option>
-              <option value="brightloop_sandbox">brightloop_sandbox (Offline Demo Mode)</option>
-            </select>
-          </div>
-
-          <div class="o_login_group">
-            <label class="o_login_label">Email Address</label>
-            <input type="email" id="login-email" class="o_login_input" placeholder="admin@brightloop.com" value="admin@brightloop.com">
-          </div>
-
-          <div class="o_login_group">
-            <label class="o_login_label">Password</label>
-            <input type="password" id="login-password" class="o_login_input" value="Admin@Brightloop123!">
-          </div>
-
-          <button id="btn-manual-login" class="btn btn-primary" style="width: 100%; padding: 10px; font-size: 0.95rem; margin-top: 8px;" onclick="handleManualLogin()">
-            Log in to Odoo
+        <!-- Odoo App Links -->
+        <div class="o_navbar_menu">
+          <button
+            class="o_nav_tab"
+            id="nav-dashboard"
+            onclick="navigateTo('dashboard')"
+          >
+            Dashboard
           </button>
-
-          <!-- Quick One-Click Demo Profiles for Evaluators / Hackathon Judges -->
-          <div class="o_quick_login_section">
-            <div class="o_quick_login_title">Quick Demo Profiles (Instant Verified Credentials)</div>
-            <div class="o_quick_login_buttons">
-              <button class="o_quick_btn" onclick="quickLogin('admin')">
-                <div>
-                  <strong>Marc Demo (Admin)</strong>
-                  <div style="font-size: 0.72rem; color: var(--odoo-text-muted);">admin@brightloop.com</div>
-                </div>
-                <span class="o_quick_btn_role">Admin ERP</span>
-              </button>
-              <button class="o_quick_btn" onclick="quickLogin('staff')">
-                <div>
-                  <strong>Sarah Connor (Staff)</strong>
-                  <div style="font-size: 0.72rem; color: var(--odoo-text-muted);">staff@brightloop.com</div>
-                </div>
-                <span class="o_quick_btn_role">Staff Ops</span>
-              </button>
-              <button class="o_quick_btn" onclick="quickLogin('customer')">
-                <div>
-                  <strong>ClientCorp (Customer)</strong>
-                  <div style="font-size: 0.72rem; color: var(--odoo-text-muted);">customer@clientcorp.com</div>
-                </div>
-                <span class="o_quick_btn_role">Customer</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB 2: CREATE ACCOUNT (Strict Password Complexity & Duplicate Email Handling) -->
-        <div id="auth-panel-register" class="o_login_body" style="display: none;">
-          <div id="reg-error-msg" style="display: none; background: #FDE8E8; color: #9B1C1C; padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 12px;"></div>
-          <div id="reg-success-msg" style="display: none; background: #DEF7EC; color: #03543F; padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 12px;"></div>
-
-          <div class="o_login_group">
-            <label class="o_login_label">Full Name</label>
-            <input type="text" id="reg-name" class="o_login_input" placeholder="e.g. John Doe">
-          </div>
-
-          <div class="o_login_group">
-            <label class="o_login_label">Company Name</label>
-            <input type="text" id="reg-company" class="o_login_input" placeholder="e.g. Acme Corporation">
-          </div>
-
-          <div class="o_login_group">
-            <label class="o_login_label">Email Address</label>
-            <input type="email" id="reg-email" class="o_login_input" placeholder="name@company.com">
-          </div>
-
-          <div class="o_login_group">
-            <label class="o_login_label">Password</label>
-            <input type="password" id="reg-password" class="o_login_input" placeholder="Enter secure password" oninput="validateLivePasswordHints(this.value)">
-          </div>
-
-          <!-- Live client-side password validation hints -->
-          <div class="pwd-hints-box">
-            <div class="pwd-hints-title">Password Complexity Requirements:</div>
-            <div id="hint-len" class="pwd-hint invalid">More than 8 characters in length</div>
-            <div id="hint-upper" class="pwd-hint invalid">At least 1 uppercase letter (A-Z)</div>
-            <div id="hint-lower" class="pwd-hint invalid">At least 1 lowercase letter (a-z)</div>
-            <div id="hint-special" class="pwd-hint invalid">At least 1 special character (!@#$%^&amp;*...)</div>
-          </div>
-
-          <button id="btn-register" class="btn btn-primary" style="width: 100%; padding: 10px; font-size: 0.95rem; margin-top: 4px;" onclick="handleAccountRegistration()">
-            Create Free Account
+          <button
+            class="o_nav_tab active"
+            id="nav-subscriptions"
+            onclick="navigateTo('kanban')"
+          >
+            Subscriptions
+          </button>
+          <button
+            class="o_nav_tab"
+            id="nav-invoices"
+            onclick="navigateTo('invoices')"
+          >
+            Invoicing
+          </button>
+          <button
+            class="o_nav_tab"
+            id="nav-billing"
+            onclick="navigateTo('billing')"
+          >
+            Batch Billing
+          </button>
+          <button
+            class="o_nav_tab"
+            id="nav-products"
+            onclick="navigateTo('products')"
+          >
+            Products &amp; Pricing
+          </button>
+          <button
+            class="o_nav_tab"
+            id="nav-pivot"
+            onclick="navigateTo('pivot')"
+          >
+            Pivot &amp; Reporting
+          </button>
+          <button
+            class="o_nav_tab"
+            id="nav-settings"
+            onclick="navigateTo('settings')"
+          >
+            Settings
           </button>
         </div>
-
-        <!-- TAB 3: FORGOT PASSWORD -->
-        <div id="auth-panel-forgot" class="o_login_body" style="display: none;">
-          <div id="forgot-error-msg" style="display: none; background: #FDE8E8; color: #9B1C1C; padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 12px;"></div>
-
-          <p style="font-size: 0.82rem; color: var(--odoo-text-muted); margin-bottom: 12px;">
-            Enter your registered email address to receive an audit reset token and secure recovery link.
-          </p>
-
-          <div class="o_login_group">
-            <label class="o_login_label">Email Address</label>
-            <input type="email" id="forgot-email" class="o_login_input" placeholder="user@domain.com">
-          </div>
-
-          <button id="btn-forgot-submit" class="btn btn-teal" style="width: 100%; padding: 10px; font-size: 0.95rem; margin-top: 8px;" onclick="handleForgotPassword()">
-            Send Reset Token
-          </button>
-
-          <div id="forgot-result-box" style="display: none; background: #F8F9FA; border: 1px solid var(--odoo-border); border-radius: 6px; padding: 12px; margin-top: 14px; font-size: 0.8rem;">
-            <div style="font-weight: 700; color: var(--odoo-primary); margin-bottom: 4px;">Audit Reset Token Generated:</div>
-            <div id="forgot-token-val" style="font-family: var(--font-mono); font-size: 0.75rem; word-break: break-all; color: var(--odoo-teal); margin-bottom: 8px;"></div>
-            <div style="font-size: 0.75rem; color: var(--odoo-text-muted);">Reset URL:</div>
-            <a id="forgot-url-link" href="#" target="_blank" style="font-family: var(--font-mono); font-size: 0.72rem; word-break: break-all; color: var(--odoo-primary);"></a>
+      </div>
+      <!-- Right Systray Tools -->
+      <div class="o_navbar_systray">
+        <button class="o_portal_toggle_btn" onclick="togglePortalMode()">
+          <span id="portal-toggle-icon">👤</span>
+          <span id="portal-toggle-label">Customer Portal View</span>
+        </button>
+        <div
+          id="backend-status-badge"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 4px 10px;
+            border-radius: 4px;
+          "
+        >
+          <span
+            style="
+              width: 7px;
+              height: 7px;
+              border-radius: 50%;
+              background: #4ade80;
+            "
+          ></span>
+          <span id="backend-status-text">Port 8001 Live (38ms)</span>
+        </div>
+        <!-- User Profile Pill & Session Dropdown -->
+        <div class="o_user_pill" onclick="toggleUserMenu(event)">
+          <div class="o_user_avatar" id="user-avatar-initials">MD</div>
+          <span id="user-display-name">Marc Demo</span>
+          <span style="font-size: 0.65rem">▼</span>
+          <div class="o_user_menu" id="o-user-menu">
+            <div class="o_user_menu_item" onclick="navigateTo('settings')">
+              ⚙️ System Settings
+            </div>
+            <div class="o_user_menu_item" onclick="togglePortalMode()">
+              👤 Customer Portal
+            </div>
+            <div class="o_user_menu_divider"></div>
+            <div
+              class="o_user_menu_item"
+              onclick="logoutUser()"
+              style="color: var(--odoo-danger)"
+            >
+              🚪 Log Out
+            </div>
           </div>
         </div>
-
+      </div>
+    </nav>
+    <!-- 9-DOT APP LAUNCHER OVERLAY -->
+    <div
+      class="o_app_drawer_overlay"
+      id="o-app-drawer-overlay"
+      onclick="toggleAppDrawer()"
+    >
+      <div class="o_app_drawer_grid" onclick="event.stopPropagation()">
+        <div class="o_app_tile" onclick="openAppFromDrawer('dashboard')">
+          <div
+            class="o_app_tile_icon"
+            style="background: linear-gradient(135deg, #17a2b8, #00a09d)"
+          >
+            📈
+          </div>
+          <div class="o_app_tile_label">Dashboard</div>
+        </div>
+        <div class="o_app_tile" onclick="openAppFromDrawer('kanban')">
+          <div
+            class="o_app_tile_icon"
+            style="background: linear-gradient(135deg, #714b67, #8e6583)"
+          >
+            📋
+          </div>
+          <div class="o_app_tile_label">Subscriptions</div>
+        </div>
+        <div class="o_app_tile" onclick="openAppFromDrawer('invoices')">
+          <div
+            class="o_app_tile_icon"
+            style="background: linear-gradient(135deg, #28a745, #20c997)"
+          >
+            💳
+          </div>
+          <div class="o_app_tile_label">Invoicing</div>
+        </div>
+        <div class="o_app_tile" onclick="openAppFromDrawer('billing')">
+          <div
+            class="o_app_tile_icon"
+            style="background: linear-gradient(135deg, #fd7e14, #e8590c)"
+          >
+            ⚡
+          </div>
+          <div class="o_app_tile_label">Batch Billing</div>
+        </div>
+        <div class="o_app_tile" onclick="openAppFromDrawer('products')">
+          <div
+            class="o_app_tile_icon"
+            style="background: linear-gradient(135deg, #6f42c1, #845ef7)"
+          >
+            📦
+          </div>
+          <div class="o_app_tile_label">Products &amp; Pricing</div>
+        </div>
+        <div class="o_app_tile" onclick="openAppFromDrawer('pivot')">
+          <div
+            class="o_app_tile_icon"
+            style="background: linear-gradient(135deg, #20c997, #0ca678)"
+          >
+            📊
+          </div>
+          <div class="o_app_tile_label">Pivot Reporting</div>
+        </div>
+        <div class="o_app_tile" onclick="openAppFromDrawer('settings')">
+          <div
+            class="o_app_tile_icon"
+            style="background: linear-gradient(135deg, #6c757d, #495057)"
+          >
+            ⚙️
+          </div>
+          <div class="o_app_tile_label">Settings &amp; Engine</div>
+        </div>
+        <div class="o_app_tile" onclick="openAppFromDrawer('portal')">
+          <div
+            class="o_app_tile_icon"
+            style="background: linear-gradient(135deg, #339af0, #1c7ed6)"
+          >
+            👤
+          </div>
+          <div class="o_app_tile_label">Customer Portal</div>
+        </div>
       </div>
     </div>
-
-    <!-- VIEW 1: PROPER EXECUTIVE DASHBOARD -->
-    <div id="view-dashboard" class="o_view_container" style="display: none;">
-      <div class="o_dashboard_container">
-        
-        <!-- Header & Quick Filters -->
-        <div class="o_dashboard_header">
-          <div>
-            <h2 class="o_dashboard_title">Subscriptions &amp; Recurring Revenue Dashboard</h2>
-            <p style="font-size: 0.85rem; color: var(--odoo-text-muted); margin-top: 2px;">
-              Real-time enterprise metrics across 5,000 active customer contracts (SQLite WAL engine)
-            </p>
-          </div>
-          <div style="display: flex; gap: 8px; align-items: center;">
-            <select class="o_field_input" style="width: 170px; padding: 6px 10px;" onchange="updateDashboardRange(this.value)">
-              <option value="current">Current Month (Oct 2026)</option>
-              <option value="q4">Q4 2026 Fiscal</option>
-              <option value="ytd">Full Year 2026</option>
-            </select>
-            <button class="btn btn-teal" onclick="navigateTo('billing')">⚡ Run Billing Day</button>
-          </div>
+    <!-- 2. CONTROL PANEL (Breadcrumbs & Actions) -->
+    <div class="o_control_panel" id="odoo-control-panel">
+      <div class="o_breadcrumb">
+        <span
+          class="o_breadcrumb_item"
+          id="cp-parent-view"
+          onclick="navigateTo('kanban')"
+          >Subscriptions</span
+        >
+        <span class="o_breadcrumb_separator">/</span>
+        <span class="o_breadcrumb_active" id="cp-current-view"
+          >All Subscriptions</span
+        >
+      </div>
+      <div class="o_cp_actions">
+        <button
+          class="btn btn-primary"
+          id="cp-btn-new"
+          onclick="createNewQuotation()"
+        >
+          + New
+        </button>
+        <button
+          class="btn btn-teal"
+          id="cp-btn-billing"
+          onclick="navigateTo('billing')"
+        >
+          ⚡ Run Billing Day
+        </button>
+        <div class="o_search_box">
+          <input
+            class="o_search_input"
+            id="cp-search-input"
+            oninput="handleSearch(this.value)"
+            placeholder="Search customer, subscription..."
+            type="text"
+          />
         </div>
-
-        <!-- 6 Key Executive KPI Cards -->
-        <div class="o_kpi_grid">
-          <div class="o_kpi_card">
-            <div class="o_kpi_title">Monthly Recurring Revenue (MRR)</div>
-            <div id="dash-mrr-val" class="o_kpi_value">$47,809.65</div>
-            <div class="o_kpi_trend positive">↑ +12.4% vs last month</div>
-          </div>
-
-          <div class="o_kpi_card teal">
-            <div class="o_kpi_title">Annual Run-Rate (ARR)</div>
-            <div id="dash-arr-val" class="o_kpi_value">$573,715.90</div>
-            <div class="o_kpi_trend positive">↑ $4.8M projected FY27</div>
-          </div>
-
-          <div class="o_kpi_card success">
-            <div class="o_kpi_title">Active Subscriptions</div>
-            <div id="dash-subs-val" class="o_kpi_value">3,747</div>
-            <div class="o_kpi_trend neutral">● 98.2% contract retention</div>
-          </div>
-
-          <div class="o_kpi_card warning">
-            <div class="o_kpi_title">Net Revenue Churn</div>
-            <div id="dash-churn-val" class="o_kpi_value">1.4%</div>
-            <div class="o_kpi_trend positive">↓ Low delinquency risk</div>
-          </div>
-
-          <div class="o_kpi_card danger">
-            <div class="o_kpi_title">Outstanding Receivables (A/R)</div>
-            <div id="dash-ar-val" class="o_kpi_value">$6,296.05</div>
-            <div class="o_kpi_trend negative">▲ 1,384 Overdue Invoices</div>
-          </div>
-
-          <div class="o_kpi_card teal">
-            <div class="o_kpi_title">Engine Query SLA</div>
-            <div id="dash-sla-val" class="o_kpi_value">37.89 ms</div>
-            <div class="o_kpi_trend positive">⚡ 50x faster than 2.0s SLA</div>
-          </div>
+        <!-- View Switchers (Dashboard, Kanban, List, Form, Pivot) -->
+        <div
+          style="
+            display: flex;
+            gap: 2px;
+            border: 1px solid var(--odoo-border);
+            border-radius: 4px;
+            overflow: hidden;
+          "
+        >
+          <button
+            class="btn btn-secondary"
+            id="view-switch-kanban"
+            onclick="navigateTo('kanban')"
+            style="padding: 5px 9px"
+            title="Kanban View"
+          >
+            ▦
+          </button>
+          <button
+            class="btn btn-secondary"
+            id="view-switch-list"
+            onclick="navigateTo('list')"
+            style="padding: 5px 9px"
+            title="List View"
+          >
+            ☰
+          </button>
+          <button
+            class="btn btn-secondary"
+            id="view-switch-form"
+            onclick="navigateTo('form')"
+            style="padding: 5px 9px"
+            title="Form View"
+          >
+            📄
+          </button>
+          <button
+            class="btn btn-secondary"
+            id="view-switch-pivot"
+            onclick="navigateTo('pivot')"
+            style="padding: 5px 9px"
+            title="Pivot Analysis"
+          >
+            ⊞
+          </button>
         </div>
-
-        <!-- Quick Workflow Action Cards -->
-        <div class="o_actions_row">
-          <div class="o_action_card" onclick="navigateTo('billing')">
-            <div class="o_action_icon">⚡</div>
-            <div class="o_action_info">
-              <h4>Automated Billing Day Batch</h4>
-              <p>Evaluate due renewal dates with zero-duplicate SHA-256 idempotency</p>
+      </div>
+    </div>
+    <!-- 3. MAIN ODOO CONTENT AREA -->
+    <div class="o_content">
+      <!-- VIEW 0: ODOO WEB LOGIN / DATABASE SELECTOR -->
+      <div class="o_view_container" id="view-login" style="display: none">
+        <div class="o_login_card">
+          <div class="o_login_header">
+            <div class="o_login_brand">
+              <span>brightloop</span>
+              <span class="badge">Local workspace</span>
+            </div>
+            <div class="o_login_subtitle">
+              Brightloop Subscription Management System
             </div>
           </div>
-
-          <div class="o_action_card" onclick="createNewQuotation()">
-            <div class="o_action_icon" style="background: #E8F5E9; color: #2E7D32;">📄</div>
-            <div class="o_action_info">
-              <h4>Create New Quotation</h4>
-              <p>Draft a new subscription quotation with Odoo brand variant modifiers</p>
-            </div>
-          </div>
-
-          <div class="o_action_card" onclick="navigateTo('invoices')">
-            <div class="o_action_icon" style="background: #FFF3E0; color: #E65100;">💳</div>
-            <div class="o_action_info">
-              <h4>Accounts Receivable Aging</h4>
-              <p>Review 31–60d overdue debt cohorts and trigger payment settlement</p>
+          <div class="o_login_body">
+            <div class="auth-message" id="auth-message" role="status"></div>
+            <form
+              id="auth-login-form"
+              onsubmit="event.preventDefault();handleManualLogin()"
+            >
+              <label class="o_login_label" for="login-email">Email</label
+              ><input
+                autocomplete="username"
+                class="o_login_input"
+                id="login-email"
+                maxlength="254"
+                required=""
+                type="email"
+              />
+              <label class="o_login_label" for="login-password">Password</label
+              ><input
+                autocomplete="current-password"
+                class="o_login_input"
+                id="login-password"
+                maxlength="256"
+                required=""
+                type="password"
+              />
+              <button
+                class="btn btn-primary auth-full"
+                id="auth-login-submit"
+                type="submit"
+              >
+                Continue securely
+              </button>
+              <div class="auth-links">
+                <button
+                  class="record-link"
+                  onclick="showAuthPanel('signup')"
+                  type="button"
+                >
+                  Create customer account</button
+                ><button
+                  class="record-link"
+                  onclick="showAuthPanel('forgot')"
+                  type="button"
+                >
+                  Forgot password?
+                </button>
+              </div>
+            </form>
+            <form
+              hidden=""
+              id="auth-code-form"
+              onsubmit="event.preventDefault();verifySignIn()"
+            >
+              <h3>Verify your sign-in</h3>
+              <p id="auth-code-help"></p>
+              <label class="o_login_label" for="auth-code">Six-digit code</label
+              ><input
+                autocomplete="one-time-code"
+                class="o_login_input"
+                id="auth-code"
+                inputmode="numeric"
+                maxlength="6"
+                pattern="[0-9]{6}"
+                required=""
+              />
+              <button class="btn btn-primary auth-full" id="auth-code-submit">
+                Verify and sign in</button
+              ><button
+                class="record-link"
+                onclick="cancelSignIn()"
+                type="button"
+              >
+                Start again
+              </button>
+            </form>
+            <form
+              hidden=""
+              id="auth-signup-form"
+              onsubmit="event.preventDefault();registerCustomer()"
+            >
+              <h3>Create your customer account</h3>
+              <label class="o_login_label" for="signup-name">Full name</label
+              ><input
+                autocomplete="name"
+                class="o_login_input"
+                id="signup-name"
+                maxlength="120"
+                required=""
+              />
+              <label class="o_login_label" for="signup-email">Email</label
+              ><input
+                autocomplete="username"
+                class="o_login_input"
+                id="signup-email"
+                maxlength="254"
+                required=""
+                type="email"
+              />
+              <label class="o_login_label" for="signup-password">Password</label
+              ><input
+                autocomplete="new-password"
+                class="o_login_input"
+                id="signup-password"
+                maxlength="256"
+                minlength="9"
+                required=""
+                type="password"
+              />
+              <p class="auth-hint">
+                Use more than eight characters with uppercase, lowercase and a
+                special character.
+              </p>
+              <button class="btn btn-primary auth-full">Create account</button
+              ><button
+                class="record-link"
+                onclick="showAuthPanel('login')"
+                type="button"
+              >
+                Back to sign in
+              </button>
+            </form>
+            <form
+              hidden=""
+              id="auth-forgot-form"
+              onsubmit="event.preventDefault();requestPasswordReset()"
+            >
+              <h3>Reset your password</h3>
+              <label class="o_login_label" for="forgot-email"
+                >Registered email</label
+              ><input
+                autocomplete="email"
+                class="o_login_input"
+                id="forgot-email"
+                maxlength="254"
+                required=""
+                type="email"
+              /><button class="btn btn-primary auth-full">
+                Send reset link</button
+              ><button
+                class="record-link"
+                onclick="showAuthPanel('login')"
+                type="button"
+              >
+                Back to sign in
+              </button>
+            </form>
+            <form
+              hidden=""
+              id="auth-reset-form"
+              onsubmit="event.preventDefault();completePasswordReset()"
+            >
+              <h3>Choose a new password</h3>
+              <label class="o_login_label" for="reset-password"
+                >New password</label
+              ><input
+                autocomplete="new-password"
+                class="o_login_input"
+                id="reset-password"
+                maxlength="256"
+                minlength="9"
+                required=""
+                type="password"
+              /><label class="o_login_label" for="reset-confirm"
+                >Confirm password</label
+              ><input
+                autocomplete="new-password"
+                class="o_login_input"
+                id="reset-confirm"
+                maxlength="256"
+                minlength="9"
+                required=""
+                type="password"
+              />
+              <p class="auth-hint">
+                Use uppercase, lowercase and a special character. All existing
+                sign-in sessions will end.
+              </p>
+              <button class="btn btn-primary auth-full">Save password</button
+              ><button
+                class="record-link"
+                onclick="showAuthPanel('login')"
+                type="button"
+              >
+                Back to sign in
+              </button>
+            </form>
+            <!-- Quick One-Click Demo Profiles for Evaluators / Hackathon Judges -->
+            <div class="o_quick_login_section">
+              <div class="o_quick_login_title">
+                Select a local fixture account (password required)
+              </div>
+              <div class="o_quick_login_buttons">
+                <button class="o_quick_btn" onclick="quickLogin('admin')">
+                  <div>
+                    <strong>Demo Admin</strong>
+                    <div
+                      style="font-size: 0.72rem; color: var(--odoo-text-muted)"
+                    >
+                      Executive Director / Admin
+                    </div>
+                  </div>
+                  <span class="o_quick_btn_role">Admin ERP</span>
+                </button>
+                <button class="o_quick_btn" onclick="quickLogin('billing')">
+                  <div>
+                    <strong>Demo Billing</strong>
+                    <div
+                      style="font-size: 0.72rem; color: var(--odoo-text-muted)"
+                    >
+                      Accounts Receivable Lead
+                    </div>
+                  </div>
+                  <span class="o_quick_btn_role">Billing Ops</span>
+                </button>
+                <button class="o_quick_btn" onclick="quickLogin('customer')">
+                  <div>
+                    <strong>Kochi Design Studio</strong>
+                    <div
+                      style="font-size: 0.72rem; color: var(--odoo-text-muted)"
+                    >
+                      Self-Service Portal Client
+                    </div>
+                  </div>
+                  <span class="o_quick_btn_role">Customer</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-
-        <!-- Visual Analytics Graphs Row -->
-        <div class="o_charts_row">
-          <div class="o_chart_card">
+      </div>
+      <!-- VIEW 1: PROPER EXECUTIVE DASHBOARD -->
+      <div class="o_view_container" id="view-dashboard" style="display: none">
+        <div class="o_dashboard_container">
+          <!-- Header & Quick Filters -->
+          <div class="o_dashboard_header">
+            <div>
+              <h2 class="o_dashboard_title">
+                Subscriptions &amp; Recurring Revenue Dashboard
+              </h2>
+              <p
+                style="
+                  font-size: 0.85rem;
+                  color: var(--odoo-text-muted);
+                  margin-top: 2px;
+                "
+              >
+                Live totals from saved records · local PostgreSQL · INR
+              </p>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center">
+              <select
+                class="o_field_input"
+                onchange="updateDashboardRange(this.value)"
+                style="width: 170px; padding: 6px 10px"
+              >
+                <option value="all">All billing periods</option>
+                <option value="current">Current month</option>
+                <option value="q4">Q4 this year</option>
+                <option value="ytd">Year to date</option>
+              </select>
+              <button class="btn btn-teal" onclick="navigateTo('billing')">
+                ⚡ Run Billing Day
+              </button>
+            </div>
+          </div>
+          <!-- 6 Key Executive KPI Cards -->
+          <div class="o_kpi_grid">
+            <div class="o_kpi_card">
+              <div class="o_kpi_title">Monthly Recurring Revenue (MRR)</div>
+              <div class="o_kpi_value" id="dash-mrr-val">—</div>
+              <div class="o_kpi_trend positive">
+                Current contracted run rate
+              </div>
+            </div>
+            <div class="o_kpi_card teal">
+              <div class="o_kpi_title">Annual Run-Rate (ARR)</div>
+              <div class="o_kpi_value" id="dash-arr-val">—</div>
+              <div class="o_kpi_trend positive">MRR × 12 · before tax</div>
+            </div>
+            <div class="o_kpi_card success">
+              <div class="o_kpi_title">Active Subscriptions</div>
+              <div class="o_kpi_value" id="dash-subs-val">—</div>
+              <div class="o_kpi_trend neutral">Current active contracts</div>
+            </div>
+            <div class="o_kpi_card warning">
+              <div class="o_kpi_title">Closed Subscriptions</div>
+              <div class="o_kpi_value" id="dash-churn-val">—</div>
+              <div class="o_kpi_trend positive">Current closed count</div>
+            </div>
+            <div class="o_kpi_card danger">
+              <div class="o_kpi_title">Outstanding Receivables (A/R)</div>
+              <div class="o_kpi_value" id="dash-ar-val">—</div>
+              <div class="o_kpi_trend negative">
+                Confirmed invoices less payments
+              </div>
+            </div>
+            <div class="o_kpi_card teal">
+              <div class="o_kpi_title">Dashboard Request Time</div>
+              <div class="o_kpi_value" id="dash-sla-val">—</div>
+              <div class="o_kpi_trend positive">Measured in this browser</div>
+            </div>
+          </div>
+          <p class="finance-summary" id="finance-summary"></p>
+          <p class="report-definition" id="report-definition"></p>
+          <!-- Quick Workflow Action Cards -->
+          <div class="o_actions_row">
+            <div class="o_action_card" onclick="navigateTo('billing')">
+              <div class="o_action_icon">⚡</div>
+              <div class="o_action_info">
+                <h4>Automated Billing Day Batch</h4>
+                <p>
+                  Evaluate due renewal dates with one invoice per subscription
+                  period
+                </p>
+              </div>
+            </div>
+            <div class="o_action_card" onclick="createNewQuotation()">
+              <div
+                class="o_action_icon"
+                style="background: #e8f5e9; color: #2e7d32"
+              >
+                📄
+              </div>
+              <div class="o_action_info">
+                <h4>Create New Quotation</h4>
+                <p>
+                  Draft a new subscription quotation with Odoo brand variant
+                  modifiers
+                </p>
+              </div>
+            </div>
+            <div class="o_action_card" onclick="navigateTo('invoices')">
+              <div
+                class="o_action_icon"
+                style="background: #fff3e0; color: #e65100"
+              >
+                💳
+              </div>
+              <div class="o_action_info">
+                <h4>Accounts Receivable Aging</h4>
+                <p>
+                  Review 31–60d overdue debt cohorts and trigger payment
+                  settlement
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Visual Analytics Graphs Row -->
+          <div class="o_charts_row">
+            <div class="o_chart_card">
+              <div class="o_chart_card_title">
+                <span>Net Invoiced by Billing Month</span>
+                <span class="o_tag o_tag_teal">Saved records</span>
+              </div>
+              <div style="height: 260px; position: relative">
+                <canvas id="dash-mrr-chart"></canvas>
+              </div>
+            </div>
+            <div class="o_chart_card">
+              <div class="o_chart_card_title">
+                <span>Subscriptions by Tier</span>
+                <span class="o_tag o_tag_purple">Active plans</span>
+              </div>
+              <div style="height: 260px; position: relative">
+                <canvas id="dash-plans-chart"></canvas>
+              </div>
+            </div>
+          </div>
+          <!-- Recent Invoices & Operational Audit Feed -->
+          <div class="o_chart_card" style="margin-top: 20px">
             <div class="o_chart_card_title">
-              <span>Monthly Recurring Revenue Trajectory (MRR 2026)</span>
-              <span class="o_tag o_tag_teal">Verified Live</span>
-            </div>
-            <div style="height: 260px; position: relative;">
-              <canvas id="dash-mrr-chart"></canvas>
-            </div>
-          </div>
-
-          <div class="o_chart_card">
-            <div class="o_chart_card_title">
-              <span>Subscriptions by Tier</span>
-              <span class="o_tag o_tag_purple">5,000 Total</span>
-            </div>
-            <div style="height: 260px; position: relative;">
-              <canvas id="dash-plans-chart"></canvas>
-            </div>
-          </div>
-        </div>
-
-        <!-- Recent Invoices & Operational Audit Feed -->
-        <div class="o_chart_card" style="margin-top: 20px;">
-          <div class="o_chart_card_title">
-            <span>Recent Enterprise Invoices &amp; Settlements</span>
-            <button class="btn btn-secondary" style="font-size: 0.75rem; padding: 4px 8px;" onclick="navigateTo('invoices')">View All Invoices →</button>
-          </div>
-          <table class="o_list_table">
-            <thead>
-              <tr>
-                <th>Invoice #</th>
-                <th>Customer</th>
-                <th>Due Date</th>
-                <th>Amount (incl. 18% Tax)</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="dash-recent-invoices-tbody">
-              <!-- Dynamically rendered -->
-            </tbody>
-          </table>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- VIEW 2: SUBSCRIPTIONS LIST / TREE VIEW -->
-    <div id="view-list" class="o_view_container" style="display: none;">
-      <div style="padding: 16px 20px;">
-        <div style="background: #FFFFFF; border: 1px solid var(--odoo-border); border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-          <div style="padding: 12px 16px; background: #F8F9FA; border-bottom: 1px solid var(--odoo-border); display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-weight: 700; color: var(--odoo-primary); font-size: 0.95rem;">
-              All Subscriptions (<span id="list-total-count">5000</span> records)
-            </div>
-            <div style="display: flex; gap: 8px;">
-              <button class="btn btn-secondary" style="font-size: 0.75rem;" onclick="filterListStatus('ALL')">All</button>
-              <button class="btn btn-secondary" style="font-size: 0.75rem;" onclick="filterListStatus('ACTIVE')">Active</button>
-              <button class="btn btn-secondary" style="font-size: 0.75rem;" onclick="filterListStatus('QUOTATION')">Quotations</button>
-              <button class="btn btn-secondary" style="font-size: 0.75rem;" onclick="filterListStatus('DRAFT')">Drafts</button>
-            </div>
-          </div>
-          <table class="o_list_table">
-            <thead>
-              <tr>
-                <th style="width: 40px;"><input type="checkbox" id="select-all-subs"></th>
-                <th>Reference</th>
-                <th>Customer</th>
-                <th>Next Billing Date</th>
-                <th>Billing Plan</th>
-                <th>Recurring Amount</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="subs-list-tbody">
-              <!-- Dynamically populated -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW 3: ODOO KANBAN VIEW -->
-    <div id="view-kanban" class="o_view_container">
-      <div class="o_kanban_view">
-        <!-- Draft Column -->
-        <div class="o_kanban_group">
-          <div class="o_kanban_header">
-            <span>Draft Quotes</span>
-            <span id="kcount-draft" class="o_tag o_tag_purple">0</span>
-          </div>
-          <div id="kcards-draft"></div>
-        </div>
-
-        <!-- Quotation Sent Column -->
-        <div class="o_kanban_group">
-          <div class="o_kanban_header">
-            <span>Quotation Sent</span>
-            <span id="kcount-quotation" class="o_tag o_tag_teal">0</span>
-          </div>
-          <div id="kcards-quotation"></div>
-        </div>
-
-        <!-- In Progress (Active) Column -->
-        <div class="o_kanban_group">
-          <div class="o_kanban_header">
-            <span>In Progress</span>
-            <span id="kcount-active" class="o_tag o_tag_green">0</span>
-          </div>
-          <div id="kcards-active"></div>
-        </div>
-
-        <!-- Closed Column -->
-        <div class="o_kanban_group">
-          <div class="o_kanban_header">
-            <span>Closed / Expired</span>
-            <span id="kcount-closed" class="o_tag o_tag_red">0</span>
-          </div>
-          <div id="kcards-closed"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW 2: ODOO FORM VIEW SHEET (.o_form_sheet) -->
-    <div id="view-form" class="o_view_container" style="display: none;">
-      <div class="o_form_view">
-        <!-- Form View Status Bar -->
-        <div class="o_form_statusbar">
-          <div class="o_statusbar_buttons">
-            <button id="form-btn-quote" class="btn btn-secondary" onclick="actionTransitionQuote()">
-              Send Quotation
-            </button>
-            <button id="form-btn-confirm" class="btn btn-primary" onclick="actionTransitionConfirm()">
-              Confirm Quotation
-            </button>
-            <button id="form-btn-activate" class="btn btn-teal" onclick="actionTransitionActivate()">
-              Activate Contract
-            </button>
-            <button id="form-btn-invoice" class="btn btn-teal" onclick="createSingleInvoice()">
-              Create Invoice
-            </button>
-            <button id="form-btn-close" class="btn btn-secondary" onclick="actionTransitionClose()">
-              Close Subscription
-            </button>
-            <button id="form-btn-cancel" class="btn btn-secondary" onclick="cancelCurrentSubscription()">
-              Cancel
-            </button>
-          </div>
-
-          <!-- Status Ribbon (5-Stage Strict FSM) -->
-          <div class="o_statusbar_status">
-            <div id="status-step-draft" class="o_arrow_button o_arrow_active">Draft</div>
-            <div id="status-step-quotation" class="o_arrow_button">Quotation</div>
-            <div id="status-step-confirmed" class="o_arrow_button">Confirmed</div>
-            <div id="status-step-active" class="o_arrow_button">In Progress</div>
-            <div id="status-step-closed" class="o_arrow_button">Closed</div>
-          </div>
-        </div>
-
-        <!-- Expiration Alert Banner -->
-        <div id="form-expiration-alert" style="display: none; padding: 10px 18px; margin: 12px 24px 0 24px; background: #FEF3C7; border: 1px solid #F59E0B; border-radius: 6px; color: #92400E; font-size: 0.85rem; font-weight: 600;">
-          <span style="font-size: 1.1rem; margin-right: 6px;">⚠️</span> Quotation expired on <span id="form-expiration-date-val"></span>. Confirmation is blocked by validation rules.
-        </div>
-
-        <!-- White Document Form Sheet -->
-        <div class="o_form_sheet_bg">
-          <div class="o_form_sheet">
-            <!-- Smart Button Box -->
-            <div class="oe_button_box">
-              <button class="oe_stat_button" onclick="showInvoiceList()">
-                <div>
-                  <div id="stat-invoices-count" class="o_stat_value">1</div>
-                  <div class="o_stat_text">Invoices</div>
-                </div>
-              </button>
-              <button class="oe_stat_button">
-                <div>
-                  <div id="stat-mrr-val" class="o_stat_value">$1,760.00</div>
-                  <div class="o_stat_text">Monthly MRR</div>
-                </div>
-              </button>
-              <button class="oe_stat_button">
-                <div>
-                  <div id="stat-renewal-date" class="o_stat_value">Nov 15</div>
-                  <div class="o_stat_text">Next Billing</div>
-                </div>
+              <span>Recent Enterprise Invoices &amp; Settlements</span>
+              <button
+                class="btn btn-secondary"
+                onclick="navigateTo('invoices')"
+                style="font-size: 0.75rem; padding: 4px 8px"
+              >
+                View All Invoices →
               </button>
             </div>
-
-            <!-- Title Header -->
-            <div class="oe_title">
-              <span style="font-size: 0.85rem; color: var(--odoo-text-muted); font-weight: 600;">Recurring Subscription</span>
-              <h1 id="form-doc-number">SUB-2026-00104</h1>
+            <table class="o_list_table">
+              <thead>
+                <tr>
+                  <th>Invoice #</th>
+                  <th>Customer</th>
+                  <th>Due Date</th>
+                  <th>Amount (incl. tax)</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="dash-recent-invoices-tbody">
+                <!-- Dynamically rendered -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- VIEW 2: SUBSCRIPTIONS LIST / TREE VIEW -->
+      <div class="o_view_container" id="view-list" style="display: none">
+        <div style="padding: 16px 20px">
+          <div
+            style="
+              background: #ffffff;
+              border: 1px solid var(--odoo-border);
+              border-radius: 6px;
+              overflow: hidden;
+              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            "
+          >
+            <div
+              style="
+                padding: 12px 16px;
+                background: #f8f9fa;
+                border-bottom: 1px solid var(--odoo-border);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <div
+                style="
+                  font-weight: 700;
+                  color: var(--odoo-primary);
+                  font-size: 0.95rem;
+                "
+              >
+                All Subscriptions (<span id="list-total-count">5000</span>
+                records)
+              </div>
+              <div style="display: flex; gap: 8px">
+                <button
+                  class="btn btn-secondary"
+                  onclick="filterListStatus('ALL')"
+                  style="font-size: 0.75rem"
+                >
+                  All
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  onclick="filterListStatus('ACTIVE')"
+                  style="font-size: 0.75rem"
+                >
+                  Active
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  onclick="filterListStatus('QUOTATION')"
+                  style="font-size: 0.75rem"
+                >
+                  Quotations
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  onclick="filterListStatus('DRAFT')"
+                  style="font-size: 0.75rem"
+                >
+                  Drafts
+                </button>
+              </div>
             </div>
-
-            <!-- 2-Column Partner & Plan Group -->
-            <div class="o_group">
-              <div>
-                <div class="o_field_row" id="form-customer-select-row" style="display: none;">
-                  <label class="o_form_label">Select Customer</label>
-                  <select id="form-customer-select" class="o_field_input"></select>
-                </div>
-                <div class="o_field_row" id="form-customer-display-row">
-                  <label class="o_form_label">Customer</label>
-                  <div id="form-customer-name" class="o_field_widget" style="font-weight: 700; color: var(--odoo-primary);">
-                    ClientCorp International (Aaron Alex Mathew)
+            <table class="o_list_table">
+              <thead>
+                <tr>
+                  <th style="width: 40px">
+                    <input id="select-all-subs" type="checkbox" />
+                  </th>
+                  <th>Reference</th>
+                  <th>Customer</th>
+                  <th>Next Billing Date</th>
+                  <th>Billing Plan</th>
+                  <th>Recurring Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="subs-list-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+            <div class="record-pager" id="subscription-pager"></div>
+          </div>
+        </div>
+      </div>
+      <!-- VIEW 3: ODOO KANBAN VIEW -->
+      <div class="o_view_container" id="view-kanban">
+        <p id="kanban-page-note"></p>
+        <div class="o_kanban_view">
+          <!-- Draft Column -->
+          <div class="o_kanban_group">
+            <div class="o_kanban_header">
+              <span>Draft Quotes</span>
+              <span class="o_tag o_tag_purple" id="kcount-draft">0</span>
+            </div>
+            <div id="kcards-draft"></div>
+          </div>
+          <!-- Quotation Sent Column -->
+          <div class="o_kanban_group">
+            <div class="o_kanban_header">
+              <span>Quotation Sent</span>
+              <span class="o_tag o_tag_teal" id="kcount-quotation">0</span>
+            </div>
+            <div id="kcards-quotation"></div>
+          </div>
+          <div class="o_kanban_group">
+            <div class="o_kanban_header">
+              <span>Confirmed</span
+              ><span class="o_tag o_tag_purple" id="kcount-confirmed">0</span>
+            </div>
+            <div id="kcards-confirmed"></div>
+          </div>
+          <!-- In Progress (Active) Column -->
+          <div class="o_kanban_group">
+            <div class="o_kanban_header">
+              <span>In Progress</span>
+              <span class="o_tag o_tag_green" id="kcount-active">0</span>
+            </div>
+            <div id="kcards-active"></div>
+          </div>
+          <div class="o_kanban_group">
+            <div class="o_kanban_header">
+              <span>Paused</span
+              ><span class="o_tag o_tag_purple" id="kcount-paused">0</span>
+            </div>
+            <div id="kcards-paused"></div>
+          </div>
+          <!-- Closed Column -->
+          <div class="o_kanban_group">
+            <div class="o_kanban_header">
+              <span>Closed / Expired</span>
+              <span class="o_tag o_tag_red" id="kcount-closed">0</span>
+            </div>
+            <div id="kcards-closed"></div>
+          </div>
+        </div>
+      </div>
+      <!-- VIEW 2: ODOO FORM VIEW SHEET (.o_form_sheet) -->
+      <div class="o_view_container" id="view-form" style="display: none">
+        <div class="o_chart_card" hidden="" id="quotation-builder">
+          <h3>New quotation</h3>
+          <form
+            class="identity-grid"
+            onsubmit="event.preventDefault();saveQuotation()"
+          >
+            <label for="quote-customer"
+              >Customer<select
+                class="o_field_input"
+                id="quote-customer"
+                required=""
+              ></select></label
+            ><label for="quote-plan"
+              >Plan<select
+                class="o_field_input"
+                id="quote-plan"
+                required=""
+              ></select></label
+            ><label for="quote-template"
+              >Template (optional)<select
+                class="o_field_input"
+                id="quote-template"
+              >
+                <option value="">No template</option>
+              </select></label
+            ><label for="quote-product"
+              >Product<select
+                class="o_field_input"
+                id="quote-product"
+                onchange="populateQuoteVariants()"
+              ></select></label
+            ><label for="quote-variant"
+              >Variant<select
+                class="o_field_input"
+                id="quote-variant"
+              ></select></label
+            ><label for="quote-quantity"
+              >Quantity<input
+                class="o_field_input"
+                id="quote-quantity"
+                max="100000"
+                min="1"
+                required=""
+                type="number"
+                value="1" /></label
+            ><label for="quote-start"
+              >Start<input
+                class="o_field_input"
+                id="quote-start"
+                required=""
+                type="date" /></label
+            ><label for="quote-validity"
+              >Validity days<input
+                class="o_field_input"
+                id="quote-validity"
+                max="365"
+                min="1"
+                required=""
+                type="number"
+                value="7" /></label
+            ><label for="quote-coupon"
+              >Coupon (optional)<input
+                class="o_field_input"
+                id="quote-coupon"
+                maxlength="120" /></label
+            ><button class="btn btn-primary" id="quote-save">
+              Create draft
+            </button>
+          </form>
+          <p id="quote-error" role="alert"></p>
+          <form
+            class="identity-grid"
+            onsubmit="event.preventDefault();saveQuotationTemplate()"
+          >
+            <label for="quote-template-name"
+              >Save current product configuration as template<input
+                class="o_field_input"
+                id="quote-template-name"
+                maxlength="120"
+                required="" /></label
+            ><button class="btn btn-secondary" id="quote-template-save">
+              Save template
+            </button>
+          </form>
+        </div>
+        <div class="o_form_view">
+          <!-- Form View Status Bar -->
+          <div class="o_form_statusbar">
+            <div class="o_statusbar_buttons">
+              <button
+                class="btn btn-primary"
+                id="subscription-quote"
+                onclick="transitionContract('QUOTE')"
+              >
+                Create quotation</button
+              ><button
+                class="btn btn-primary"
+                id="subscription-confirm"
+                onclick="transitionContract('CONFIRM')"
+              >
+                Confirm</button
+              ><button
+                class="btn btn-primary"
+                id="subscription-activate"
+                onclick="transitionContract('ACTIVATE')"
+              >
+                Activate</button
+              ><button
+                class="btn btn-primary"
+                id="subscription-pause"
+                onclick="transitionContract('PAUSE')"
+              >
+                Pause</button
+              ><button
+                class="btn btn-primary"
+                id="subscription-resume"
+                onclick="transitionContract('RESUME')"
+              >
+                Resume</button
+              ><button
+                class="btn btn-primary"
+                id="subscription-close"
+                onclick="transitionContract('CLOSE')"
+              >
+                Close</button
+              ><button
+                class="btn btn-secondary"
+                onclick="navigateTo('billing')"
+              >
+                Billing
+              </button>
+            </div>
+            <!-- Status Ribbon -->
+            <div class="o_statusbar_status">
+              <span class="o_tag" id="subscription-state"></span>
+              <div class="o_arrow_button o_arrow_active" id="status-step-draft">
+                Draft
+              </div>
+              <div class="o_arrow_button" id="status-step-quotation">
+                Quotation
+              </div>
+              <div class="o_arrow_button" id="status-step-confirmed">
+                Confirmed
+              </div>
+              <div class="o_arrow_button" id="status-step-active">
+                In Progress
+              </div>
+              <div class="o_arrow_button" id="status-step-paused">Paused</div>
+              <div class="o_arrow_button" id="status-step-closed">Closed</div>
+            </div>
+          </div>
+          <!-- White Document Form Sheet -->
+          <div class="o_form_sheet_bg">
+            <div class="o_form_sheet">
+              <!-- Smart Button Box -->
+              <div class="oe_button_box">
+                <button class="oe_stat_button" onclick="showInvoiceList()">
+                  <div>
+                    <div class="o_stat_value" id="stat-invoices-count">1</div>
+                    <div class="o_stat_text">Invoices</div>
+                  </div>
+                </button>
+                <button class="oe_stat_button">
+                  <div>
+                    <div class="o_stat_value" id="stat-mrr-val">₹1,760.00</div>
+                    <div class="o_stat_text">Per-cycle total</div>
+                  </div>
+                </button>
+                <button class="oe_stat_button">
+                  <div>
+                    <div class="o_stat_value" id="stat-renewal-date">
+                      Nov 15
+                    </div>
+                    <div class="o_stat_text">Next Billing</div>
+                  </div>
+                </button>
+              </div>
+              <!-- Title Header -->
+              <div class="oe_title">
+                <span
+                  style="
+                    font-size: 0.85rem;
+                    color: var(--odoo-text-muted);
+                    font-weight: 600;
+                  "
+                  >Recurring Subscription</span
+                >
+                <h1 id="form-doc-number">SUB-2026-00104</h1>
+              </div>
+              <!-- 2-Column Partner & Plan Group -->
+              <div class="o_group">
+                <div>
+                  <div class="o_field_row">
+                    <label class="o_form_label">Customer</label>
+                    <div
+                      class="o_field_widget"
+                      id="form-customer-name"
+                      style="font-weight: 700; color: var(--odoo-primary)"
+                    >
+                      ClientCorp International (Aaron Alex Mathew)
+                    </div>
+                  </div>
+                  <div class="o_field_row">
+                    <label class="o_form_label">Invoice Address</label>
+                    <div
+                      class="o_field_widget"
+                      style="color: var(--odoo-text-muted)"
+                    >
+                      See customer record
+                    </div>
+                  </div>
+                  <div class="o_field_row">
+                    <label class="o_form_label">Pricelist</label>
+                    <div class="o_field_widget">INR</div>
                   </div>
                 </div>
-                <div class="o_field_row">
-                  <label class="o_form_label">Quotation Template</label>
-                  <select id="form-template-select" class="o_field_input" onchange="handleTemplateSelection(this.value)">
-                    <option value="">-- Manual Configuration --</option>
+                <div>
+                  <div class="o_field_row">
+                    <label class="o_form_label">Recurrence Plan</label>
+                    <div
+                      class="o_field_widget"
+                      id="form-plan-name"
+                      style="font-weight: 600"
+                    >
+                      Monthly Standard (7-Day Grace Period)
+                    </div>
+                  </div>
+                  <div class="o_field_row">
+                    <label class="o_form_label">Start Date</label>
+                    <div class="o_field_widget" id="form-start-date">
+                      2026-10-15
+                    </div>
+                  </div>
+                  <div class="o_field_row">
+                    <label class="o_form_label">Next Invoice</label>
+                    <div
+                      class="o_field_widget"
+                      id="form-next-billing"
+                      style="font-weight: 700; color: var(--odoo-teal)"
+                    >
+                      2026-11-15
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Notebook Tabs -->
+              <div class="o_notebook_headers">
+                <button
+                  class="o_notebook_tab active"
+                  id="contract-tab-lines"
+                  onclick="showContractTab('lines')"
+                >
+                  Subscription Lines
+                </button>
+                <button
+                  class="o_notebook_tab"
+                  id="contract-tab-info"
+                  onclick="showContractTab('info')"
+                >
+                  Other Info
+                </button>
+              </div>
+              <!-- Order Lines Table -->
+              <div id="contract-lines">
+                <table class="o_table">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Unit Price</th>
+                      <th>Taxes</th>
+                      <th style="text-align: right">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody id="form-lines-tbody"></tbody>
+                </table>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: flex-end;
+                    margin-top: 24px;
+                  "
+                >
+                  <div
+                    style="
+                      width: 320px;
+                      border-top: 1px solid var(--odoo-border);
+                      padding-top: 12px;
+                    "
+                  >
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 8px;
+                        font-size: 0.9rem;
+                      "
+                    >
+                      <span style="color: var(--odoo-text-muted)"
+                        >Untaxed Amount:</span
+                      >
+                      <span id="form-subtotal" style="font-weight: 600"
+                        >₹1,760.00</span
+                      >
+                    </div>
+                    <div class="finance-summary">
+                      Discount: <span id="form-discount"></span>
+                      <p id="form-discount-reason"></p>
+                    </div>
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 8px;
+                        font-size: 0.9rem;
+                      "
+                    >
+                      <span style="color: var(--odoo-text-muted)"
+                        >Configured taxes:</span
+                      >
+                      <span id="form-tax">₹316.80</span>
+                    </div>
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        font-size: 1.15rem;
+                        font-weight: 800;
+                        border-top: 2px solid var(--odoo-primary);
+                        padding-top: 8px;
+                        color: var(--odoo-primary);
+                      "
+                    >
+                      <span>Total Amount:</span>
+                      <span id="form-total">₹2,076.80</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div hidden="" id="contract-info"></div>
+              <!-- Subtotals / Tax Summary -->
+            </div>
+          </div>
+        </div>
+        <div class="o_chart_card" id="contract-coupon-card">
+          <h3>Coupon preview</h3>
+          <form onsubmit="event.preventDefault();previewContractCoupon()">
+            <label for="contract-coupon">Coupon code</label
+            ><input
+              class="o_field_input"
+              id="contract-coupon"
+              maxlength="120"
+              required=""
+            /><button class="btn btn-secondary">Validate</button>
+          </form>
+          <p id="contract-coupon-result" role="status"></p>
+          <p>
+            A preview does not alter a confirmed contract. Select a coupon when
+            creating the draft; billing revalidates it each period.
+          </p>
+        </div>
+      </div>
+      <!-- VIEW 3: ODOO BATCH BILLING ACTION WIZARD -->
+      <div class="o_view_container" id="view-billing" style="display: none">
+        <div
+          style="
+            background: #ffffff;
+            border: 1px solid var(--odoo-border);
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+          "
+        >
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              border-bottom: 1px solid var(--odoo-border);
+              padding-bottom: 16px;
+              margin-bottom: 20px;
+            "
+          >
+            <div>
+              <h2
+                style="
+                  font-size: 1.25rem;
+                  font-weight: 700;
+                  color: var(--odoo-primary);
+                "
+              >
+                Automated Billing Day Batch Engine
+              </h2>
+              <p
+                style="
+                  font-size: 0.85rem;
+                  color: var(--odoo-text-muted);
+                  margin-top: 4px;
+                "
+              >
+                Preview due periods, generate draft invoices, then confirm
+                invoices before recording payments.
+              </p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px">
+              <input
+                class="o_field_input"
+                id="billing-target-date"
+                style="width: 150px"
+                type="date"
+              />
+              <button
+                class="btn btn-secondary"
+                onclick="executeBatchBillingRun(true)"
+              >
+                Preview</button
+              ><button
+                class="btn btn-teal"
+                id="btn-trigger-billing"
+                onclick="executeBatchBillingRun()"
+                style="padding: 8px 18px"
+              >
+                🚀 Run Billing Day Batch
+              </button>
+            </div>
+          </div>
+          <!-- Audit Counter Badges -->
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(4, 1fr);
+              gap: 16px;
+              margin-bottom: 24px;
+            "
+          >
+            <div
+              style="
+                background: #f8f9fa;
+                padding: 16px;
+                border-radius: 6px;
+                border: 1px solid var(--odoo-border);
+              "
+            >
+              <div
+                style="
+                  font-size: 0.75rem;
+                  color: var(--odoo-text-muted);
+                  font-weight: 700;
+                  text-transform: uppercase;
+                "
+              >
+                Due Periods
+              </div>
+              <div
+                id="bill-due"
+                style="
+                  font-size: 1.6rem;
+                  font-weight: 700;
+                  color: var(--odoo-text-main);
+                  margin-top: 4px;
+                "
+              >
+                —
+              </div>
+            </div>
+            <div
+              style="
+                background: #f8f9fa;
+                padding: 16px;
+                border-radius: 6px;
+                border: 1px solid var(--odoo-border);
+              "
+            >
+              <div
+                style="
+                  font-size: 0.75rem;
+                  color: var(--odoo-text-muted);
+                  font-weight: 700;
+                  text-transform: uppercase;
+                "
+              >
+                Invoices to Create / Created
+              </div>
+              <div
+                id="bill-gen"
+                style="
+                  font-size: 1.6rem;
+                  font-weight: 700;
+                  color: var(--odoo-teal);
+                  margin-top: 4px;
+                "
+              >
+                —
+              </div>
+            </div>
+            <div
+              style="
+                background: #f8f9fa;
+                padding: 16px;
+                border-radius: 6px;
+                border: 1px solid var(--odoo-border);
+              "
+            >
+              <div
+                style="
+                  font-size: 0.75rem;
+                  color: var(--odoo-text-muted);
+                  font-weight: 700;
+                  text-transform: uppercase;
+                "
+              >
+                Duplicates Prevented
+              </div>
+              <div
+                id="bill-skip"
+                style="
+                  font-size: 1.6rem;
+                  font-weight: 700;
+                  color: var(--odoo-warning);
+                  margin-top: 4px;
+                "
+              >
+                —
+              </div>
+            </div>
+            <div
+              style="
+                background: #f8f9fa;
+                padding: 16px;
+                border-radius: 6px;
+                border: 1px solid var(--odoo-border);
+              "
+            >
+              <div
+                style="
+                  font-size: 0.75rem;
+                  color: var(--odoo-text-muted);
+                  font-weight: 700;
+                  text-transform: uppercase;
+                "
+              >
+                Request Time
+              </div>
+              <div
+                id="bill-time"
+                style="
+                  font-size: 1.6rem;
+                  font-weight: 700;
+                  color: var(--odoo-primary);
+                  margin-top: 4px;
+                "
+              >
+                —
+              </div>
+            </div>
+          </div>
+          <!-- Odoo Execution Terminal Log -->
+          <div
+            id="odoo-billing-log"
+            role="status"
+            style="
+              background: #1e293b;
+              border-radius: 6px;
+              padding: 16px;
+              font-family: var(--font-mono);
+              font-size: 0.8rem;
+              color: #4ade80;
+              height: 220px;
+              overflow-y: auto;
+              white-space: pre-wrap;
+            "
+          >
+            <div>
+              Choose a billing date. Preview calculates without changing
+              records.
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- VIEW 4: ODOO PRODUCTS & VARIANT MODIFIER CATALOG -->
+      <div class="o_view_container" id="view-products" style="display: none">
+        <div
+          style="
+            background: #ffffff;
+            border: 1px solid var(--odoo-border);
+            border-radius: 8px;
+            padding: 24px;
+          "
+        >
+          <!-- Toolbar: Title & Action Buttons -->
+          <div class="o_catalog_toolbar">
+            <div>
+              <h2
+                style="
+                  font-size: 1.25rem;
+                  font-weight: 700;
+                  color: var(--odoo-primary);
+                "
+              >
+                Product Catalog &amp; Dynamic Variant Builder
+              </h2>
+              <p
+                style="
+                  font-size: 0.85rem;
+                  color: var(--odoo-text-muted);
+                  margin-top: 2px;
+                "
+              >
+                Saved catalog prices and variant modifiers in INR. Select one
+                configuration for a quotation line.
+              </p>
+            </div>
+            <div style="display: flex; gap: 10px">
+              <button
+                class="btn btn-primary"
+                onclick="openCreateProductModal()"
+              >
+                ➕ Create Product
+              </button>
+              <button class="btn btn-secondary" onclick="openAddVariantModal()">
+                ➕ Add Variant
+              </button>
+            </div>
+          </div>
+          <!-- Live Price Calculator Widget -->
+          <div class="o_calc_box">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                flex-wrap: wrap;
+                gap: 16px;
+              "
+            >
+              <div style="flex: 1; min-width: 280px">
+                <div
+                  style="
+                    font-size: 0.8rem;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    color: var(--odoo-text-muted);
+                    margin-bottom: 6px;
+                  "
+                >
+                  ⚡ Live Price Calculator &amp; Variant Simulator
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    margin-bottom: 10px;
+                  "
+                >
+                  <label
+                    style="
+                      font-size: 0.85rem;
+                      font-weight: 600;
+                      color: var(--odoo-text-main);
+                    "
+                    >Product:</label
+                  >
+                  <select
+                    class="o_field_input"
+                    id="calc-product-select"
+                    onchange="handleCalcProductChange()"
+                    style="max-width: 320px"
+                  >
+                    <option value="">Loading products...</option>
                   </select>
                 </div>
-                <div class="o_field_row">
-                  <label class="o_form_label">Coupon / Discount</label>
-                  <div style="display: flex; align-items: center; gap: 8px; flex: 1;">
-                    <input type="text" id="form-discount-code" class="o_field_input" placeholder="e.g. MAKEATON15 or ODOOPARTNER" onchange="handleDiscountInput(this.value)">
-                    <span id="discount-status-icon" style="font-size: 0.82rem; font-weight: 600;"></span>
-                  </div>
+                <div style="font-size: 0.8rem; color: var(--odoo-text-muted)">
+                  Select attribute variants below to dynamically calculate the
+                  live recurring price:
                 </div>
-                <div class="o_field_row">
-                  <label class="o_form_label">Pricelist</label>
-                  <div class="o_field_widget">
-                    USD Standard (Public)
-                  </div>
+                <div class="o_variant_pills" id="calc-variant-pills">
+                  <!-- Dynamically generated variant pills -->
                 </div>
               </div>
-
-              <div>
-                <div class="o_field_row">
-                  <label class="o_form_label">Recurrence Plan</label>
-                  <div id="form-plan-name" class="o_field_widget" style="font-weight: 600;">
-                    Monthly Standard (7-Day Grace Period)
-                  </div>
+              <!-- Price Output Box -->
+              <div
+                style="
+                  background: #ffffff;
+                  border: 1px solid var(--odoo-border);
+                  border-radius: 6px;
+                  padding: 14px 20px;
+                  min-width: 240px;
+                  text-align: right;
+                "
+              >
+                <div
+                  style="
+                    font-size: 0.75rem;
+                    color: var(--odoo-text-muted);
+                    font-weight: 700;
+                    text-transform: uppercase;
+                  "
+                >
+                  Base Price + Modifiers
                 </div>
-                <div class="o_field_row">
-                  <label class="o_form_label">Validity Duration</label>
-                  <div id="form-validity-days" class="o_field_widget" style="color: var(--odoo-text-muted);">
-                    30 Days
-                  </div>
+                <div
+                  style="
+                    font-size: 0.85rem;
+                    color: var(--odoo-text-light);
+                    margin-top: 4px;
+                  "
+                >
+                  Base: <span id="calc-base-price">—</span> | Modifiers:
+                  <span
+                    id="calc-modifier-sum"
+                    style="color: var(--odoo-teal); font-weight: 700"
+                    >—</span
+                  >
                 </div>
-                <div class="o_field_row">
-                  <label class="o_form_label">Start Date</label>
-                  <div id="form-start-date" class="o_field_widget">
-                    2026-10-15
-                  </div>
+                <div
+                  id="calc-total-price"
+                  style="
+                    font-size: 1.85rem;
+                    font-weight: 800;
+                    color: var(--odoo-primary);
+                    margin-top: 4px;
+                  "
+                >
+                  —
                 </div>
-                <div class="o_field_row">
-                  <label class="o_form_label">Next Invoice</label>
-                  <div id="form-next-billing" class="o_field_widget" style="font-weight: 700; color: var(--odoo-teal);">
-                    2026-11-15
-                  </div>
-                </div>
+                <div style="margin-top: 6px"></div>
               </div>
             </div>
-
-            <!-- Notebook Tabs -->
-            <div class="o_notebook_headers">
-              <button class="o_notebook_tab active">Subscription Lines</button>
-              <button class="o_notebook_tab">Other Info</button>
-            </div>
-
-            <!-- Order Lines Table -->
+          </div>
+          <!-- Product Catalog Table -->
+          <div
+            style="border-top: 1px solid var(--odoo-border); padding-top: 16px"
+          >
+            <h3
+              style="
+                font-size: 1rem;
+                font-weight: 700;
+                color: var(--odoo-text-main);
+                margin-bottom: 12px;
+              "
+            >
+              Active Catalog
+            </h3>
             <table class="o_table">
               <thead>
                 <tr>
+                  <th>Product Template</th>
+                  <th>Type</th>
+                  <th>Base Sales Price</th>
+                  <th>Cost Price</th>
+                  <th>Configured Variants &amp; Modifiers</th>
+                  <th style="text-align: right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="odoo-products-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- VIEW 5: ODOO PIVOT ANALYSIS & FINANCIAL REPORTING -->
+      <div class="o_view_container" id="view-pivot" style="display: none">
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+          "
+        >
+          <!-- Left: A/R Aging Bar Chart -->
+          <div
+            style="
+              background: #ffffff;
+              border: 1px solid var(--odoo-border);
+              border-radius: 8px;
+              padding: 20px;
+            "
+          >
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 16px;
+              "
+            >
+              <h3
+                style="
+                  font-size: 1rem;
+                  font-weight: 700;
+                  color: var(--odoo-primary);
+                "
+              >
+                Accounts Receivable (A/R) Aging Distribution
+              </h3>
+              <span class="o_tag o_tag_teal">Saved invoice balances</span>
+            </div>
+            <div style="height: 250px">
+              <canvas id="odooAgingCanvas"></canvas>
+            </div>
+          </div>
+          <!-- Right: SLA & Metric Highlights -->
+          <div
+            style="
+              background: #ffffff;
+              border: 1px solid var(--odoo-border);
+              border-radius: 8px;
+              padding: 20px;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+            "
+          >
+            <div>
+              <h3
+                style="
+                  font-size: 1rem;
+                  font-weight: 700;
+                  color: var(--odoo-primary);
+                  margin-bottom: 12px;
+                "
+              >
+                Database Performance SLA
+              </h3>
+              <div
+                style="
+                  background: #f8f9fa;
+                  border: 1px solid var(--odoo-border);
+                  border-radius: 6px;
+                  padding: 14px;
+                  margin-bottom: 14px;
+                "
+              >
+                <div
+                  style="
+                    font-size: 0.75rem;
+                    color: var(--odoo-text-muted);
+                    font-weight: 700;
+                    text-transform: uppercase;
+                  "
+                >
+                  Latest Dashboard Request
+                </div>
+                <div
+                  id="pivot-sla-ms"
+                  style="
+                    font-size: 2.2rem;
+                    font-weight: 800;
+                    color: var(--odoo-teal);
+                  "
+                >
+                  —
+                </div>
+                <div
+                  style="
+                    font-size: 0.75rem;
+                    color: var(--odoo-success);
+                    font-weight: 600;
+                    margin-top: 4px;
+                  "
+                >
+                  Measured end to end in this browser; target below 2 seconds
+                </div>
+              </div>
+              <div
+                style="
+                  font-size: 0.85rem;
+                  line-height: 1.6;
+                  color: var(--odoo-text-light);
+                "
+              >
+                <div>
+                  • Normalized MRR: <strong id="pivot-mrr-text">—</strong>
+                </div>
+                <div>
+                  • Annual Run-Rate (ARR):
+                  <strong id="pivot-arr-text">—</strong>
+                </div>
+                <div>
+                  • Active Subscribers:
+                  <strong><span id="pivot-active">—</span> contracts</strong>
+                </div>
+              </div>
+            </div>
+            <button
+              class="btn btn-secondary"
+              onclick="retestOdooSLA()"
+              style="width: 100%; justify-content: center"
+            >
+              🔄 Test Query Speed (<span id="pivot-btn-time">—</span>)
+            </button>
+          </div>
+        </div>
+        <div class="invoice-extras" id="overdue-log"></div>
+        <!-- Odoo Pivot Table Matrix -->
+        <div class="o_pivot_container">
+          <div
+            style="
+              margin-bottom: 12px;
+              font-weight: 700;
+              color: var(--odoo-primary);
+              font-size: 0.95rem;
+            "
+          >
+            Outstanding Balances by Days Past Due
+          </div>
+          <table class="o_pivot_table">
+            <thead>
+              <tr>
+                <th>Aging Bucket</th>
+                <th>Outstanding INR</th>
+              </tr>
+            </thead>
+            <tbody id="odoo-pivot-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- VIEW 7: INVOICES MANAGEMENT LIST VIEW -->
+      <div class="o_view_container" id="view-invoices" style="display: none">
+        <div style="padding: 16px 20px">
+          <div
+            style="
+              background: #ffffff;
+              border: 1px solid var(--odoo-border);
+              border-radius: 6px;
+              overflow: hidden;
+              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            "
+          >
+            <div
+              style="
+                padding: 12px 16px;
+                background: #f8f9fa;
+                border-bottom: 1px solid var(--odoo-border);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 8px;
+              "
+            >
+              <div style="display: flex; gap: 8px; align-items: center">
+                <span
+                  style="
+                    font-weight: 700;
+                    color: var(--odoo-primary);
+                    font-size: 0.95rem;
+                  "
+                  >Customer Invoices</span
+                >
+                <span class="o_tag o_tag_teal" id="invoices-count-badge"
+                  >5056 Invoices</span
+                >
+              </div>
+              <div style="display: flex; gap: 6px">
+                <button
+                  class="btn btn-secondary"
+                  onclick="filterInvoicesStatus('ALL')"
+                  style="font-size: 0.75rem"
+                >
+                  All
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  onclick="filterInvoicesStatus('CONFIRMED')"
+                  style="font-size: 0.75rem"
+                >
+                  Confirmed / To Pay
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  onclick="filterInvoicesStatus('OVERDUE')"
+                  style="font-size: 0.75rem"
+                >
+                  Overdue
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  onclick="filterInvoicesStatus('PAID')"
+                  style="font-size: 0.75rem"
+                >
+                  Paid
+                </button>
+              </div>
+            </div>
+            <div class="record-pager">
+              <button
+                class="btn btn-secondary"
+                onclick="filterInvoicesStatus('DRAFT')"
+              >
+                Draft</button
+              ><button
+                class="btn btn-secondary"
+                onclick="filterInvoicesStatus('CANCELLED')"
+              >
+                Cancelled
+              </button>
+            </div>
+            <table class="o_list_table">
+              <thead>
+                <tr>
+                  <th>Number</th>
+                  <th>Customer</th>
+                  <th>Billing Period</th>
+                  <th>Due Date</th>
+                  <th>Taxes</th>
+                  <th>Total</th>
+                  <th>Payment Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="invoices-list-tbody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+            <div class="record-pager" id="invoice-pager"></div>
+          </div>
+        </div>
+      </div>
+      <!-- VIEW 8: INVOICE FORM VIEW (Odoo Document Sheet) -->
+      <div
+        class="o_view_container"
+        id="view-invoice-form"
+        style="display: none"
+      >
+        <div class="o_form_statusbar">
+          <div class="o_statusbar_buttons">
+            <button
+              class="btn btn-primary"
+              id="invoice-confirm"
+              onclick="invoiceAction('CONFIRM')"
+            >
+              Confirm</button
+            ><button
+              class="btn btn-secondary"
+              id="invoice-send"
+              onclick="invoiceAction('SEND')"
+            >
+              Send Email</button
+            ><button
+              class="btn btn-secondary"
+              id="invoice-cancel"
+              onclick="invoiceAction('CANCEL')"
+            >
+              Cancel</button
+            ><span class="o_tag" id="invoice-state"></span
+            ><button
+              class="btn btn-primary"
+              id="btn-invoice-register-payment"
+              onclick="openPaymentModalForActiveInvoice()"
+            >
+              Register Payment
+            </button>
+            <button class="btn btn-secondary" onclick="simulatePrintInvoice()">
+              Print PDF
+            </button>
+            <button class="btn btn-secondary" onclick="navigateTo('invoices')">
+              Back to Invoices
+            </button>
+          </div>
+          <div class="o_statusbar_status">
+            <div class="o_arrow_button" id="istatus-draft">Draft</div>
+            <div class="o_arrow_button current" id="istatus-posted">
+              Confirmed
+            </div>
+            <div class="o_arrow_button" id="istatus-paid">Paid</div>
+          </div>
+        </div>
+        <div class="o_form_sheet_bg">
+          <div class="o_form_sheet">
+            <div class="oe_title">
+              <span class="o_form_label" style="text-transform: uppercase"
+                >Customer Invoice</span
+              >
+              <h1 id="inv-form-number" style="color: var(--odoo-primary)">
+                INV/2026/00451
+              </h1>
+            </div>
+            <div class="o_group">
+              <div class="o_inner_group">
+                <div class="o_field_row">
+                  <label class="o_form_label">Customer</label>
+                  <div id="inv-form-customer" style="font-weight: 700">
+                    ClientCorp International
+                  </div>
+                </div>
+                <div class="o_field_row">
+                  <label class="o_form_label">Payment Terms</label>
+                  <div>See invoice due date</div>
+                </div>
+              </div>
+              <div class="o_inner_group">
+                <div class="o_field_row">
+                  <label class="o_form_label">Billing Period</label>
+                  <div id="inv-form-date">2026-10-07</div>
+                </div>
+                <div class="o_field_row">
+                  <label class="o_form_label">Due Date</label>
+                  <div id="inv-form-due">2026-11-07</div>
+                </div>
+              </div>
+            </div>
+            <table class="o_table" style="margin-top: 20px">
+              <thead>
+                <tr>
                   <th>Product</th>
-                  <th>Brand &amp; Attribute Variants</th>
                   <th>Quantity</th>
                   <th>Unit Price</th>
                   <th>Taxes</th>
-                  <th style="text-align: right;">Amount</th>
+                  <th style="text-align: right">Amount</th>
                 </tr>
               </thead>
-              <tbody id="form-lines-tbody">
-                <tr>
-                  <td style="font-weight: 600;">Brightloop Enterprise ERP</td>
-                  <td>
-                    <span class="o_tag o_tag_purple" style="font-weight: 700;">
-                      Brand: Odoo (+ $560.00)
-                    </span>
-                  </td>
-                  <td>1.00</td>
-                  <td>$1,760.00</td>
-                  <td>18% GST</td>
-                  <td style="text-align: right; font-weight: 700;">$1,760.00</td>
-                </tr>
+              <tbody id="inv-form-lines-tbody">
+                <!-- Lines populated dynamically -->
               </tbody>
             </table>
-
-            <!-- Subtotals / Tax Summary -->
-            <div style="display: flex; justify-content: flex-end; margin-top: 24px;">
-              <div style="width: 320px; border-top: 1px solid var(--odoo-border); padding-top: 12px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
-                  <span style="color: var(--odoo-text-muted);">Untaxed Amount:</span>
-                  <span id="form-subtotal" style="font-weight: 600;">$1,760.00</span>
+            <div class="invoice-extras">
+              <p>
+                Discount: <strong id="inv-discount"></strong> ·
+                <span id="inv-discount-reason"></span>
+              </p>
+              <p>
+                Recorded payments: <strong id="inv-paid"></strong> · Remaining
+                balance: <strong id="inv-balance"></strong>
+              </p>
+              <div id="invoice-payments"></div>
+              <div id="invoice-audit"></div>
+            </div>
+            <div
+              style="display: flex; justify-content: flex-end; margin-top: 20px"
+            >
+              <div
+                style="
+                  width: 320px;
+                  background: #f8f9fa;
+                  padding: 14px;
+                  border: 1px solid var(--odoo-border);
+                  border-radius: 6px;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 6px;
+                    font-size: 0.85rem;
+                  "
+                >
+                  <span>Subtotal before discount:</span>
+                  <span id="inv-form-untaxed" style="font-weight: 600"
+                    >₹1,491.53</span
+                  >
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
-                  <span style="color: var(--odoo-text-muted);">Taxes (18% GST):</span>
-                  <span id="form-tax">$316.80</span>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 8px;
+                    font-size: 0.85rem;
+                  "
+                >
+                  <span>Line-item taxes:</span>
+                  <span id="inv-form-tax" style="font-weight: 600"
+                    >₹268.47</span
+                  >
                 </div>
-                <div style="display: flex; justify-content: space-between; font-size: 1.15rem; font-weight: 800; border-top: 2px solid var(--odoo-primary); padding-top: 8px; color: var(--odoo-primary);">
-                  <span>Total Amount:</span>
-                  <span id="form-total">$2,076.80</span>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    border-top: 2px solid var(--odoo-border);
+                    padding-top: 8px;
+                    font-size: 1.15rem;
+                    font-weight: 800;
+                    color: var(--odoo-primary);
+                  "
+                >
+                  <span>Total:</span>
+                  <span id="inv-form-total">₹1,760.00</span>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- VIEW 3: ODOO BATCH BILLING ACTION WIZARD -->
-    <div id="view-billing" class="o_view_container" style="display: none;">
-      <div style="background: #FFFFFF; border: 1px solid var(--odoo-border); border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--odoo-border); padding-bottom: 16px; margin-bottom: 20px;">
-          <div>
-            <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--odoo-primary);">
-              Automated Billing Day Batch Engine
-            </h2>
-            <p style="font-size: 0.85rem; color: var(--odoo-text-muted); margin-top: 4px;">
-              Executes recurring billing cycle, generates posted customer invoices, and applies mathematical SHA-256 idempotency locks.
+      <div class="o_view_container" id="view-settings" style="display: none">
+        <div class="o_chart_card">
+          <h2>Account &amp; access</h2>
+          <div id="security-account"></div>
+          <form
+            id="factor-start-form"
+            onsubmit="event.preventDefault();beginAuthenticator()"
+          >
+            <h3>Authenticator protection</h3>
+            <p>
+              Email codes protect accounts until an authenticator is enrolled.
+              Keep access to your authenticator before switching.
             </p>
-          </div>
-
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <input type="date" id="billing-target-date" class="o_field_input" style="width: 150px;">
-            <button id="btn-trigger-billing" class="btn btn-teal" style="padding: 8px 18px;" onclick="executeBatchBillingRun()">
-              🚀 Run Billing Day Batch
-            </button>
-          </div>
-        </div>
-
-        <!-- Audit Counter Badges -->
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
-          <div style="background: #F8F9FA; padding: 16px; border-radius: 6px; border: 1px solid var(--odoo-border);">
-            <div style="font-size: 0.75rem; color: var(--odoo-text-muted); font-weight: 700; text-transform: uppercase;">Due Subscriptions</div>
-            <div id="bill-due" style="font-size: 1.6rem; font-weight: 700; color: var(--odoo-text-main); margin-top: 4px;">2,260</div>
-          </div>
-          <div style="background: #F8F9FA; padding: 16px; border-radius: 6px; border: 1px solid var(--odoo-border);">
-            <div style="font-size: 0.75rem; color: var(--odoo-text-muted); font-weight: 700; text-transform: uppercase;">Invoices Generated</div>
-            <div id="bill-gen" style="font-size: 1.6rem; font-weight: 700; color: var(--odoo-teal); margin-top: 4px;">2,260</div>
-          </div>
-          <div style="background: #F8F9FA; padding: 16px; border-radius: 6px; border: 1px solid var(--odoo-border);">
-            <div style="font-size: 0.75rem; color: var(--odoo-text-muted); font-weight: 700; text-transform: uppercase;">Duplicates Prevented</div>
-            <div id="bill-skip" style="font-size: 1.6rem; font-weight: 700; color: var(--odoo-warning); margin-top: 4px;">0</div>
-          </div>
-          <div style="background: #F8F9FA; padding: 16px; border-radius: 6px; border: 1px solid var(--odoo-border);">
-            <div style="font-size: 0.75rem; color: var(--odoo-text-muted); font-weight: 700; text-transform: uppercase;">Execution Latency</div>
-            <div id="bill-time" style="font-size: 1.6rem; font-weight: 700; color: var(--odoo-primary); margin-top: 4px;">11.7 ms</div>
-          </div>
-        </div>
-
-        <!-- Odoo Execution Terminal Log -->
-        <div style="background: #1E293B; border-radius: 6px; padding: 16px; font-family: var(--font-mono); font-size: 0.8rem; color: #4ADE80; height: 220px; overflow-y: auto;" id="odoo-billing-log">
-          <div>[ODOO-CRON] Batch worker standby. Idempotency constraint active on invoices(idempotency_key).</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW 4: ODOO PRODUCTS & VARIANT MODIFIER CATALOG -->
-    <div id="view-products" class="o_view_container" style="display: none;">
-      <div style="background: #FFFFFF; border: 1px solid var(--odoo-border); border-radius: 8px; padding: 24px;">
-        
-        <!-- Toolbar: Title & Action Buttons -->
-        <div class="o_catalog_toolbar">
-          <div>
-            <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--odoo-primary);">Product Catalog &amp; Dynamic Variant Builder</h2>
-            <p style="font-size: 0.85rem; color: var(--odoo-text-muted); margin-top: 2px;">
-              Manage enterprise product templates and configurable price additions (e.g. Odoo brand adds +$560.00).
+            <label for="factor-password">Confirm your password</label
+            ><input
+              autocomplete="current-password"
+              class="o_field_input"
+              id="factor-password"
+              maxlength="256"
+              required=""
+              type="password"
+            /><button class="btn btn-primary">Set up authenticator</button>
+          </form>
+          <div hidden="" id="factor-enrollment">
+            <p>
+              Scan this setup code in your authenticator app. Verify within five
+              minutes.
             </p>
+            <img
+              alt="Authenticator enrollment QR"
+              height="200"
+              id="factor-qr"
+              width="200"
+            />
+            <details>
+              <summary>Manual setup key</summary>
+              <code id="factor-key"></code>
+            </details>
+            <form onsubmit="event.preventDefault();enableAuthenticator()">
+              <label for="factor-code">Authenticator code</label
+              ><input
+                autocomplete="one-time-code"
+                class="o_field_input"
+                id="factor-code"
+                inputmode="numeric"
+                maxlength="6"
+                pattern="[0-9]{6}"
+                required=""
+              /><button class="btn btn-primary">Verify and enable</button>
+            </form>
           </div>
-          <div style="display: flex; gap: 10px;">
-            <button class="btn btn-primary" onclick="openCreateProductModal()">
-              ➕ Create Product
-            </button>
-            <button class="btn btn-secondary" onclick="openAddVariantModal()">
-              ➕ Add Variant
-            </button>
-          </div>
+          <form
+            hidden=""
+            id="factor-disable-form"
+            onsubmit="event.preventDefault();disableAuthenticator()"
+          >
+            <h3>Authenticator is enabled</h3>
+            <p>
+              To return to email codes, verify your password and a fresh
+              authenticator code.
+            </p>
+            <label for="factor-disable-password">Password</label
+            ><input
+              autocomplete="current-password"
+              class="o_field_input"
+              id="factor-disable-password"
+              maxlength="256"
+              required=""
+              type="password"
+            /><label for="factor-disable-code">Fresh authenticator code</label
+            ><input
+              class="o_field_input"
+              id="factor-disable-code"
+              inputmode="numeric"
+              maxlength="6"
+              pattern="[0-9]{6}"
+              required=""
+            /><button class="btn btn-secondary">Switch to email codes</button>
+          </form>
         </div>
-
-        <!-- Live Price Calculator Widget -->
-        <div class="o_calc_box">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
-            <div style="flex: 1; min-width: 280px;">
-              <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--odoo-text-muted); margin-bottom: 6px;">
-                ⚡ Live Price Calculator &amp; Variant Simulator
-              </div>
-              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                <label style="font-size: 0.85rem; font-weight: 600; color: var(--odoo-text-main);">Product:</label>
-                <select id="calc-product-select" class="o_field_input" style="max-width: 320px;" onchange="handleCalcProductChange()">
-                  <option value="">Loading products...</option>
-                </select>
-              </div>
-              <div style="font-size: 0.8rem; color: var(--odoo-text-muted);">
-                Select attribute variants below to dynamically calculate the live recurring price:
-              </div>
-              <div id="calc-variant-pills" class="o_variant_pills">
-                <!-- Dynamically generated variant pills -->
-              </div>
-            </div>
-
-            <!-- Price Output Box -->
-            <div style="background: #FFFFFF; border: 1px solid var(--odoo-border); border-radius: 6px; padding: 14px 20px; min-width: 240px; text-align: right;">
-              <div style="font-size: 0.75rem; color: var(--odoo-text-muted); font-weight: 700; text-transform: uppercase;">
-                Base Price + Modifiers
-              </div>
-              <div style="font-size: 0.85rem; color: var(--odoo-text-light); margin-top: 4px;">
-                Base: <span id="calc-base-price">$1,200.00</span> | Modifiers: <span id="calc-modifier-sum" style="color: var(--odoo-teal); font-weight: 700;">+$560.00</span>
-              </div>
-              <div id="calc-total-price" style="font-size: 1.85rem; font-weight: 800; color: var(--odoo-primary); margin-top: 4px;">
-                $1,760.00
-              </div>
-              <div style="margin-top: 6px;">
-                <span class="o_badge_odoo">Brand: Odoo (+ $560.00) ★ Official Hackathon Partner</span>
-              </div>
-            </div>
-          </div>
+        <div class="o_chart_card" hidden="" id="admin-access-panel">
+          <h2>Staff &amp; users</h2>
+          <form
+            class="identity-grid"
+            id="staff-create-form"
+            onsubmit="event.preventDefault();provisionStaff()"
+          >
+            <label
+              >Full name<input
+                autocomplete="name"
+                class="o_field_input"
+                id="staff-name"
+                maxlength="120"
+                required="" /></label
+            ><label
+              >Email<input
+                autocomplete="username"
+                class="o_field_input"
+                id="staff-email"
+                maxlength="254"
+                required=""
+                type="email" /></label
+            ><label
+              >Initial password<input
+                autocomplete="new-password"
+                class="o_field_input"
+                id="staff-password"
+                maxlength="256"
+                minlength="9"
+                required=""
+                type="password" /></label
+            ><button class="btn btn-primary">Provision internal staff</button>
+          </form>
+          <p class="auth-hint">
+            Staff can manage operations and log payments. Core catalog prices,
+            taxes and discounts remain administrator-only.
+          </p>
+          <div id="staff-users"></div>
         </div>
-
-        <!-- Product Catalog Table -->
-        <div style="border-top: 1px solid var(--odoo-border); padding-top: 16px;">
-          <h3 style="font-size: 1rem; font-weight: 700; color: var(--odoo-text-main); margin-bottom: 12px;">Active Catalog</h3>
-          <table class="o_table">
-            <thead>
-              <tr>
-                <th>Product Template</th>
-                <th>Type</th>
-                <th>Base Sales Price</th>
-                <th>Cost Price</th>
-                <th>Configured Variants &amp; Modifiers</th>
-                <th style="text-align: right;">Action</th>
-              </tr>
-            </thead>
-            <tbody id="odoo-products-tbody"></tbody>
-          </table>
-        </div>
-
+      </div>
+      <div class="o_view_container" id="view-portal" style="display: none">
+        <div class="o_chart_card" id="portal-live"></div>
       </div>
     </div>
-
-    <!-- VIEW 5: ODOO PIVOT ANALYSIS & FINANCIAL REPORTING -->
-    <div id="view-pivot" class="o_view_container" style="display: none;">
-      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 24px;">
-        <!-- Left: A/R Aging Bar Chart -->
-        <div style="background: #FFFFFF; border: 1px solid var(--odoo-border); border-radius: 8px; padding: 20px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <h3 style="font-size: 1rem; font-weight: 700; color: var(--odoo-primary);">Accounts Receivable (A/R) Aging Distribution</h3>
-            <span class="o_tag o_tag_teal">Live PostgreSQL/SQLite WAL Aggregation</span>
+    <!-- PAYMENT SETTLEMENT MODAL (Odoo Style) -->
+    <div class="o_modal_backdrop" id="odoo-payment-modal" style="display: none">
+      <div class="o_modal_dialog">
+        <div class="o_modal_header">
+          <div class="o_modal_title">Register Customer Payment</div>
+          <button
+            onclick="closePaymentModal()"
+            style="
+              border: none;
+              background: none;
+              font-size: 1.25rem;
+              cursor: pointer;
+              color: var(--odoo-text-muted);
+            "
+          >
+            ✕
+          </button>
+        </div>
+        <div class="o_modal_body">
+          <div
+            style="
+              background: #f8f9fa;
+              border: 1px solid var(--odoo-border);
+              border-radius: 6px;
+              padding: 14px;
+              margin-bottom: 16px;
+            "
+          >
+            <div style="font-size: 0.8rem; color: var(--odoo-text-muted)">
+              INVOICE NUMBER
+            </div>
+            <div
+              id="modal-invoice-ref"
+              style="
+                font-family: var(--font-mono);
+                font-weight: 700;
+                font-size: 1.1rem;
+                color: var(--odoo-primary);
+              "
+            >
+              INV-2026-00451
+            </div>
+            <div
+              style="
+                font-size: 0.8rem;
+                color: var(--odoo-text-muted);
+                margin-top: 8px;
+              "
+            >
+              OUTSTANDING AMOUNT
+            </div>
+            <div
+              id="modal-invoice-amt"
+              style="
+                font-size: 1.7rem;
+                font-weight: 800;
+                color: var(--odoo-teal);
+              "
+            >
+              ₹1,760.00
+            </div>
           </div>
-          <div style="height: 250px;">
-            <canvas id="odooAgingCanvas"></canvas>
+          <div class="o_field_row" style="margin-bottom: 14px">
+            <label class="o_form_label">Payment Journal</label>
+            <select class="o_field_input" id="modal-journal-select">
+              <option value="BANK">Bank transfer (manual record)</option>
+              <option value="CARD">Credit card (manual record)</option>
+              <option value="CASH">Cash</option>
+              <option value="UPI">UPI (manual record)</option>
+              <option value="OTHER">Other</option>
+            </select>
+          </div>
+          <div class="o_field_row">
+            <label class="o_form_label" for="payment-amount">Amount (INR)</label
+            ><input
+              class="o_field_input"
+              id="payment-amount"
+              min="0.01"
+              required=""
+              step="0.01"
+              type="number"
+            />
+          </div>
+          <div class="o_field_row">
+            <label class="o_form_label" for="payment-reference"
+              >Unique reference</label
+            ><input
+              class="o_field_input"
+              id="payment-reference"
+              maxlength="120"
+              required=""
+            />
+          </div>
+          <div class="o_field_row">
+            <label class="o_form_label" for="payment-note">Notes</label
+            ><input class="o_field_input" id="payment-note" maxlength="2000" />
+          </div>
+          <p id="payment-error" role="alert"></p>
+          <div class="o_field_row">
+            <label class="o_form_label">Payment Date</label>
+            <input class="o_field_input" id="modal-payment-date" type="date" />
           </div>
         </div>
-
-        <!-- Right: SLA & Metric Highlights -->
-        <div style="background: #FFFFFF; border: 1px solid var(--odoo-border); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-          <div>
-            <h3 style="font-size: 1rem; font-weight: 700; color: var(--odoo-primary); margin-bottom: 12px;">Database Performance SLA</h3>
-            <div style="background: #F8F9FA; border: 1px solid var(--odoo-border); border-radius: 6px; padding: 14px; margin-bottom: 14px;">
-              <div style="font-size: 0.75rem; color: var(--odoo-text-muted); font-weight: 700; text-transform: uppercase;">Average Query Latency</div>
-              <div style="font-size: 2.2rem; font-weight: 800; color: var(--odoo-teal);" id="pivot-sla-ms">37.89 ms</div>
-              <div style="font-size: 0.75rem; color: var(--odoo-success); font-weight: 600; margin-top: 4px;">✓ 50x faster than 2.0s SLA requirement</div>
-            </div>
-            <div style="font-size: 0.85rem; line-height: 1.6; color: var(--odoo-text-light);">
-              <div>• Normalized MRR: <strong id="pivot-mrr-text">$47,809,658.59</strong></div>
-              <div>• Annual Run-Rate (ARR): <strong id="pivot-arr-text">$573,715,903.05</strong></div>
-              <div>• Active Subscribers: <strong>3,747 accounts</strong></div>
-            </div>
-          </div>
-          <button class="btn btn-secondary" style="width: 100%; justify-content: center;" onclick="retestOdooSLA()">
-            🔄 Test Query Speed (<span id="pivot-btn-time">38ms</span>)
+        <div class="o_modal_footer">
+          <button class="btn btn-secondary" onclick="closePaymentModal()">
+            Discard
+          </button>
+          <button
+            class="btn btn-primary"
+            id="payment-submit"
+            onclick="confirmPaymentSettlement()"
+          >
+            Create Payment
           </button>
         </div>
       </div>
-
-      <!-- Odoo Pivot Table Matrix -->
-      <div class="o_pivot_container">
-        <div style="margin-bottom: 12px; font-weight: 700; color: var(--odoo-primary); font-size: 0.95rem;">
-          ⊞ Financial Pivot Grid: MRR Run-Rate by Recurrence Plan &amp; Aging Status
-        </div>
-        <table class="o_pivot_table">
-          <thead>
-            <tr class="o_pivot_header">
-              <th style="width: 220px;">Billing Plan</th>
-              <th class="o_pivot_measure_cell">Current (0-30d)</th>
-              <th class="o_pivot_measure_cell">31-60d Overdue</th>
-              <th class="o_pivot_measure_cell">61-90d Overdue</th>
-              <th class="o_pivot_measure_cell">Total MRR Run-Rate</th>
-            </tr>
-          </thead>
-          <tbody id="odoo-pivot-tbody">
-            <tr>
-              <td style="font-weight: 600;">Monthly Standard</td>
-              <td class="o_pivot_measure_cell">$2,450,120.00</td>
-              <td class="o_pivot_measure_cell">$1,210,400.00</td>
-              <td class="o_pivot_measure_cell">$240,100.00</td>
-              <td class="o_pivot_total_cell">$3,900,620.00</td>
-            </tr>
-            <tr>
-              <td style="font-weight: 600;">Annual Growth (Pro)</td>
-              <td class="o_pivot_measure_cell">$1,120,500.00</td>
-              <td class="o_pivot_measure_cell">$540,200.00</td>
-              <td class="o_pivot_measure_cell">$95,000.00</td>
-              <td class="o_pivot_total_cell">$1,755,700.00</td>
-            </tr>
-            <tr>
-              <td style="font-weight: 600;">Weekly Micro-Billing</td>
-              <td class="o_pivot_measure_cell">$280,400.00</td>
-              <td class="o_pivot_measure_cell">$180,100.00</td>
-              <td class="o_pivot_measure_cell">$35,200.00</td>
-              <td class="o_pivot_total_cell">$495,700.00</td>
-            </tr>
-            <tr>
-              <td style="font-weight: 600;">Daily Pass</td>
-              <td class="o_pivot_measure_cell">$78,530.06</td>
-              <td class="o_pivot_measure_cell">$59,388.86</td>
-              <td class="o_pivot_measure_cell">$6,117.87</td>
-              <td class="o_pivot_total_cell">$144,036.79</td>
-            </tr>
-            <tr style="background: #E9ECEF; font-weight: 800;">
-              <td>Total Outstanding Collections</td>
-              <td class="o_pivot_measure_cell" style="color: var(--odoo-teal);">$3,929,550.06</td>
-              <td class="o_pivot_measure_cell" style="color: var(--odoo-warning);">$1,990,088.86</td>
-              <td class="o_pivot_measure_cell" style="color: var(--odoo-danger);">$376,417.87</td>
-              <td class="o_pivot_total_cell" style="color: var(--odoo-primary); font-size: 1rem;">$6,296,056.79</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </div>
-
-    <!-- VIEW 7: INVOICES MANAGEMENT LIST VIEW -->
-    <div id="view-invoices" class="o_view_container" style="display: none;">
-      <div style="padding: 16px 20px;">
-        <div style="background: #FFFFFF; border: 1px solid var(--odoo-border); border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-          <div style="padding: 12px 16px; background: #F8F9FA; border-bottom: 1px solid var(--odoo-border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-            <div style="display: flex; gap: 8px; align-items: center;">
-              <span style="font-weight: 700; color: var(--odoo-primary); font-size: 0.95rem;">Customer Invoices</span>
-              <span id="invoices-count-badge" class="o_tag o_tag_teal">5056 Invoices</span>
-            </div>
-            <div style="display: flex; gap: 6px;">
-              <button class="btn btn-secondary" style="font-size: 0.75rem;" onclick="filterInvoicesStatus('ALL')">All</button>
-              <button class="btn btn-secondary" style="font-size: 0.75rem;" onclick="filterInvoicesStatus('POSTED')">To Pay / Posted</button>
-              <button class="btn btn-secondary" style="font-size: 0.75rem;" onclick="filterInvoicesStatus('OVERDUE')">Overdue</button>
-              <button class="btn btn-secondary" style="font-size: 0.75rem;" onclick="filterInvoicesStatus('PAID')">Paid</button>
-            </div>
-          </div>
-          <table class="o_list_table">
-            <thead>
-              <tr>
-                <th>Number</th>
-                <th>Customer</th>
-                <th>Invoice Date</th>
-                <th>Due Date</th>
-                <th>Taxes (18%)</th>
-                <th>Total</th>
-                <th>Payment Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="invoices-list-tbody">
-              <!-- Populated dynamically -->
-            </tbody>
-          </table>
+    <script src="app.js"></script>
+    <script src="identity.js"></script>
+    <div
+      class="o_modal_overlay"
+      id="modal-create-product"
+      style="display: none"
+    >
+      <div class="o_modal_card">
+        <div class="o_modal_header">
+          <h3 class="o_modal_title">➕ Create Product Template</h3>
+          <button class="o_toast_close" onclick="closeCreateProductModal()">
+            ✕
+          </button>
         </div>
-      </div>
-    </div>
-
-    <!-- VIEW 8: INVOICE FORM VIEW (Odoo Document Sheet) -->
-    <div id="view-invoice-form" class="o_view_container" style="display: none;">
-      <div class="o_form_statusbar">
-        <div class="o_statusbar_buttons">
-          <button id="btn-invoice-register-payment" class="btn btn-primary" onclick="openPaymentModalForActiveInvoice()">Register Payment</button>
-          <button class="btn btn-secondary" onclick="simulatePrintInvoice()">Print PDF</button>
-          <button class="btn btn-secondary" onclick="navigateTo('invoices')">Back to Invoices</button>
-        </div>
-        <div class="o_statusbar_status">
-          <div id="istatus-draft" class="o_arrow_button">Draft</div>
-          <div id="istatus-posted" class="o_arrow_button current">Posted</div>
-          <div id="istatus-partially-paid" class="o_arrow_button">Partially Paid</div>
-          <div id="istatus-paid" class="o_arrow_button">Paid</div>
-        </div>
-      </div>
-
-      <div class="o_form_sheet_bg">
-        <div class="o_form_sheet">
-          <div class="oe_title">
-            <span class="o_form_label" style="text-transform: uppercase;">Customer Invoice</span>
-            <h1 id="inv-form-number" style="color: var(--odoo-primary);">INV/2026/00451</h1>
+        <div class="o_modal_body">
+          <div class="o_field_row" style="margin-bottom: 12px">
+            <label class="o_form_label" for="prod-new-name">Product Name</label>
+            <input
+              class="o_field_input"
+              id="prod-new-name"
+              placeholder="e.g. Brightloop Enterprise Cloud Suite"
+              type="text"
+            />
           </div>
-
-          <div class="o_group">
-            <div class="o_inner_group">
-              <div class="o_field_row">
-                <label class="o_form_label">Customer</label>
-                <div id="inv-form-customer" style="font-weight: 700;">ClientCorp International</div>
-              </div>
-              <div class="o_field_row">
-                <label class="o_form_label">Payment Terms</label>
-                <div>Net 30 Days</div>
-              </div>
-            </div>
-            <div class="o_inner_group">
-              <div class="o_field_row">
-                <label class="o_form_label">Invoice Date</label>
-                <div id="inv-form-date">2026-10-07</div>
-              </div>
-              <div class="o_field_row">
-                <label class="o_form_label">Due Date</label>
-                <div id="inv-form-due">2026-11-07</div>
-              </div>
-            </div>
+          <div class="o_field_row" style="margin-bottom: 12px">
+            <label class="o_form_label" for="prod-new-type">Product Type</label>
+            <select class="o_field_input" id="prod-new-type">
+              <option value="SOFTWARE">SOFTWARE</option>
+              <option value="SERVICE">SERVICE</option>
+              <option value="ADDON">ADDON</option>
+              <option value="GOODS">GOODS</option>
+            </select>
           </div>
-
-          <table class="o_table" style="margin-top: 20px;">
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Unit Price</th>
-                <th>Taxes</th>
-                <th style="text-align: right;">Amount</th>
-              </tr>
-            </thead>
-            <tbody id="inv-form-lines-tbody">
-              <!-- Lines populated dynamically -->
-            </tbody>
-          </table>
-
-          <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-            <div style="width: 360px; background: #F8F9FA; padding: 16px; border: 1px solid var(--odoo-border); border-radius: 6px;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem;">
-                <span>Untaxed Amount:</span>
-                <span id="inv-form-untaxed" style="font-weight: 600;">$1,491.53</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem;">
-                <span>Tax 18% (GST/VAT):</span>
-                <span id="inv-form-tax" style="font-weight: 600;">$268.47</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; border-top: 2px solid var(--odoo-border); padding-top: 8px; font-size: 1.15rem; font-weight: 800; color: var(--odoo-primary);">
-                <span>Total:</span>
-                <span id="inv-form-total">$1,760.00</span>
-              </div>
-              <div class="o_residual_callout">
-                <span>Amount Due:</span>
-                <span id="inv-form-residual">$1,760.00</span>
-              </div>
-              <!-- Odoo-style payment widget under total -->
-              <div id="inv-form-payments-widget" style="display: none;" class="o_payment_widget">
-                <!-- Dynamically populated payment logs -->
-              </div>
+          <div class="o_field_row" style="margin-bottom: 12px">
+            <label class="o_form_label" for="prod-new-tax">Tax rule</label
+            ><select class="o_field_input" id="prod-new-tax"></select>
+          </div>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 12px;
+              margin-bottom: 12px;
+            "
+          >
+            <div class="o_field_row">
+              <label class="o_form_label" for="prod-new-sales-price"
+                >Sales Price (₹)</label
+              >
+              <input
+                class="o_field_input"
+                id="prod-new-sales-price"
+                min="0"
+                step="0.01"
+                type="number"
+                value="1200.00"
+              />
+            </div>
+            <div class="o_field_row">
+              <label class="o_form_label" for="prod-new-cost-price"
+                >Cost Price (₹)</label
+              >
+              <input
+                class="o_field_input"
+                id="prod-new-cost-price"
+                min="0"
+                step="0.01"
+                type="number"
+                value="450.00"
+              />
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW 9: SETTINGS & FISCAL ENGINE CONFIGURATION -->
-    <div id="view-settings" class="o_view_container" style="display: none;">
-      <div class="o_settings_container">
-        
-        <div class="o_settings_card">
-          <div class="o_settings_section_title">
-            <span>⚙️</span> Company &amp; Fiscal Configuration
+          <div class="o_field_row" style="margin-bottom: 14px">
+            <label class="o_form_label" for="prod-new-notes"
+              >Internal Notes</label
+            >
+            <input
+              class="o_field_input"
+              id="prod-new-notes"
+              placeholder="e.g. Core SaaS cloud platform with SLA"
+              type="text"
+            />
           </div>
-          <div class="o_settings_grid">
-            <div class="o_setting_item">
-              <span class="o_setting_label">Company Name</span>
-              <span class="o_setting_value">Brightloop Software Inc.</span>
+          <div
+            style="border-top: 1px solid var(--odoo-border); padding-top: 12px"
+          >
+            <div
+              style="
+                font-size: 0.8rem;
+                font-weight: 700;
+                color: var(--odoo-primary);
+                margin-bottom: 8px;
+              "
+            >
+              Optional Initial Variant:
             </div>
-            <div class="o_setting_item">
-              <span class="o_setting_label">Main Currency</span>
-              <span class="o_setting_value">USD ($) - US Dollar</span>
-            </div>
-            <div class="o_setting_item">
-              <span class="o_setting_label">Default Tax Scheme</span>
-              <span class="o_setting_value">18.00% GST / VAT (Computed on Subtotal)</span>
-            </div>
-            <div class="o_setting_item">
-              <span class="o_setting_label">Default Payment Terms</span>
-              <span class="o_setting_value">Net 30 Days (End of Following Month)</span>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 8px;
+              "
+            >
+              <input
+                aria-label="Initial variant attribute"
+                class="o_field_input"
+                id="prod-new-var-attr"
+                placeholder="Attribute (e.g. Brand)"
+                type="text"
+                value="Brand Integration"
+              />
+              <input
+                aria-label="Initial variant value"
+                class="o_field_input"
+                id="prod-new-var-val"
+                placeholder="Value (e.g. Odoo)"
+                type="text"
+                value="Odoo Enterprise 18"
+              />
+              <input
+                aria-label="Initial variant modifier"
+                class="o_field_input"
+                id="prod-new-var-mod"
+                min="0"
+                placeholder="Modifier"
+                step="0.01"
+                type="number"
+                value="560.00"
+              />
             </div>
           </div>
         </div>
-
-        <div class="o_settings_card">
-          <div class="o_settings_section_title">
-            <span>⚡</span> Automated Subscription Engine (Cron &amp; Idempotency)
-          </div>
-          <div class="o_settings_grid">
-            <div class="o_setting_item">
-              <span class="o_setting_label">Idempotency Algorithm</span>
-              <span class="o_setting_value" style="font-family: var(--font-mono); color: var(--odoo-teal-dark);">SHA-256(subscription_id + billing_date)</span>
-            </div>
-            <div class="o_setting_item">
-              <span class="o_setting_label">Double-Billing Prevention</span>
-              <span class="o_setting_value">Enforced &amp; Tested (0 duplicates on re-run)</span>
-            </div>
-            <div class="o_setting_item">
-              <span class="o_setting_label">Batch Deduplication Lookup</span>
-              <span class="o_setting_value">Pre-fetched in chunks of 900 keys</span>
-            </div>
-            <div class="o_setting_item">
-              <span class="o_setting_label">Automatic Recurring Invoicing</span>
-              <span class="o_setting_value">Enabled (Active Subscriptions)</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="o_settings_card">
-          <div class="o_settings_section_title">
-            <span>🗄️</span> High-Performance Database Engine &amp; SLA
-          </div>
-          <div class="o_settings_grid">
-            <div class="o_setting_item">
-              <span class="o_setting_label">Database Architecture</span>
-              <span class="o_setting_value">SQLite 3 (PRAGMA journal_mode=WAL)</span>
-            </div>
-            <div class="o_setting_item">
-              <span class="o_setting_label">RAM Cache Size</span>
-              <span class="o_setting_value">64 MB (-64000 PRAGMA cache_size)</span>
-            </div>
-            <div class="o_setting_item">
-              <span class="o_setting_label">Query Latency Benchmark</span>
-              <span class="o_setting_value" style="color: var(--odoo-success); font-weight: 700;">37.89 ms (Tested on 5,000 subscriptions)</span>
-            </div>
-            <div class="o_setting_item">
-              <span class="o_setting_label">Hackathon SLA Requirement</span>
-              <span class="o_setting_value">&lt; 2.0s Requirement (50x Supercharged)</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- VIEW 10: ODOO CUSTOMER PORTAL VIEW (/my/subscriptions) -->
-    <div id="view-portal" class="o_view_container" style="display: none;">
-      <div style="background: #FFFFFF; border: 1px solid var(--odoo-border); border-radius: 8px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <div style="font-size: 0.85rem; color: var(--odoo-teal); font-weight: 700; text-transform: uppercase;">
-              Odoo Customer Self-Service Portal
-            </div>
-            <h1 style="font-size: 1.6rem; font-weight: 700; color: var(--odoo-primary); margin-top: 4px;">
-              Welcome, Aaron Alex Mathew
-            </h1>
-            <p style="color: var(--odoo-text-muted); font-size: 0.9rem;">
-              Partner Account: <strong>ClientCorp International</strong> &bull; Reference: #CUST-10492
-            </p>
-          </div>
-          <button class="btn btn-secondary" onclick="togglePortalMode()">
-            ← Back to Odoo Backend Staff ERP
+        <div class="o_modal_footer">
+          <button class="btn btn-secondary" onclick="closeCreateProductModal()">
+            Discard
+          </button>
+          <button
+            class="btn btn-primary"
+            id="btn-save-product"
+            onclick="submitCreateProduct()"
+          >
+            Save Product
           </button>
         </div>
       </div>
-
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-        <!-- Customer Active Plan Details -->
-        <div style="background: #FFFFFF; border: 1px solid var(--odoo-border); border-radius: 8px; padding: 20px;">
-          <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--odoo-primary); margin-bottom: 14px;">
-            My Active Subscriptions
-          </h3>
-          <div style="border: 1px solid var(--odoo-border); border-radius: 6px; padding: 14px; background: #F8F9FA; margin-bottom: 14px;">
-            <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 1rem;">
-              <span>Brightloop Enterprise ERP</span>
-              <span style="color: var(--odoo-teal);">$1,760.00 / month</span>
-            </div>
-            <div style="font-size: 0.85rem; color: var(--odoo-primary); font-weight: 600; margin-top: 4px;">
-              + Brand Variant: <strong>Odoo (+ $560.00)</strong>
-            </div>
-            <div style="font-size: 0.75rem; color: var(--odoo-text-muted); margin-top: 6px;">
-              Contract ID: #SUB-2026-00104 &bull; Next Billing Date: <strong>2026-11-15</strong>
-            </div>
+    </div>
+    <div class="o_modal_overlay" id="modal-add-variant" style="display: none">
+      <div class="o_modal_card">
+        <div class="o_modal_header">
+          <h3 class="o_modal_title">➕ Add Attribute Variant</h3>
+          <button class="o_toast_close" onclick="closeAddVariantModal()">
+            ✕
+          </button>
+        </div>
+        <div class="o_modal_body">
+          <div class="o_field_row" style="margin-bottom: 12px">
+            <label class="o_form_label" for="var-target-product"
+              >Target Product</label
+            >
+            <select class="o_field_input" id="var-target-product"></select>
           </div>
-          <div style="font-size: 0.85rem; color: var(--odoo-text-muted);">
-            Payment Status: <span class="o_tag o_tag_green">Active Automatic Renewal</span>
+          <div class="o_field_row" style="margin-bottom: 12px">
+            <label class="o_form_label" for="var-attr-name"
+              >Attribute Name</label
+            >
+            <input
+              class="o_field_input"
+              id="var-attr-name"
+              placeholder="e.g. Brand, Cloud Tier, HA SLA"
+              type="text"
+            />
+          </div>
+          <div class="o_field_row" style="margin-bottom: 12px">
+            <label class="o_form_label" for="var-attr-value"
+              >Attribute Value</label
+            >
+            <input
+              class="o_field_input"
+              id="var-attr-value"
+              placeholder="e.g. Odoo, High Availability, Gold"
+              type="text"
+            />
+          </div>
+          <div class="o_field_row" style="margin-bottom: 12px">
+            <label class="o_form_label" for="var-price-mod"
+              >Price Modifier (₹)</label
+            >
+            <input
+              class="o_field_input"
+              id="var-price-mod"
+              min="0"
+              placeholder="e.g. 560.00 or -50.00"
+              step="0.01"
+              type="number"
+              value="560.00"
+            />
           </div>
         </div>
-
-        <!-- Customer Invoices & Pay Online -->
-        <div style="background: #FFFFFF; border: 1px solid var(--odoo-border); border-radius: 8px; padding: 20px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--odoo-primary);">
-              Billing Invoices
-            </h3>
-            <button class="btn btn-teal" style="font-size: 0.8rem;" onclick="openPaymentModal('INV-2026-00451', 1760.00)">
-              💳 Pay Online ($1,760.00)
-            </button>
-          </div>
-
-          <table class="o_table">
-            <thead>
-              <tr>
-                <th>Invoice Reference</th>
-                <th>Due Date</th>
-                <th>Amount</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="font-family: var(--font-mono); font-weight: 700; color: var(--odoo-primary);">INV-2026-00451</td>
-                <td>2026-11-07</td>
-                <td style="font-weight: 700;">$1,760.00</td>
-                <td><span class="o_tag o_tag_teal">To Pay</span></td>
-              </tr>
-              <tr>
-                <td style="font-family: var(--font-mono); font-weight: 700; color: var(--odoo-primary);">INV-2026-00318</td>
-                <td>2026-10-07</td>
-                <td style="font-weight: 700;">$1,760.00</td>
-                <td><span class="o_tag o_tag_green">Paid</span></td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="o_modal_footer">
+          <button class="btn btn-secondary" onclick="closeAddVariantModal()">
+            Discard
+          </button>
+          <button
+            class="btn btn-primary"
+            id="btn-save-variant"
+            onclick="submitAddVariant()"
+          >
+            Save Variant
+          </button>
         </div>
       </div>
     </div>
-
-  </div>
-
-  <!-- PAYMENT SETTLEMENT MODAL (Odoo Style - Partial Payments & A/R Reconciliation) -->
-  <div id="odoo-payment-modal" class="o_modal_backdrop" style="display: none;">
-    <div class="o_modal_dialog">
-      <div class="o_modal_header">
-        <div class="o_modal_title">Register Customer Payment</div>
-        <button onclick="closePaymentModal()" style="border: none; background: none; font-size: 1.25rem; cursor: pointer; color: var(--odoo-text-muted);">✕</button>
-      </div>
-      <div class="o_modal_body">
-        <div id="modal-payment-error" style="display: none; background: #FDE8E8; color: #9B1C1C; padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 12px;"></div>
-
-        <div style="background: #F8F9FA; border: 1px solid var(--odoo-border); border-radius: 6px; padding: 14px; margin-bottom: 16px;">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <div>
-              <div style="font-size: 0.75rem; color: var(--odoo-text-muted); font-weight: 700; text-transform: uppercase;">INVOICE NUMBER</div>
-              <div id="modal-invoice-ref" style="font-family: var(--font-mono); font-weight: 700; font-size: 1.1rem; color: var(--odoo-primary);">INV-2026-00451</div>
-            </div>
-            <div style="text-align: right;">
-              <div style="font-size: 0.75rem; color: var(--odoo-text-muted); font-weight: 700; text-transform: uppercase;">OUTSTANDING BALANCE</div>
-              <div id="modal-invoice-amt" style="font-size: 1.5rem; font-weight: 800; color: var(--odoo-teal);">$1,760.00</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="o_field_row" style="margin-bottom: 12px;">
-          <label class="o_form_label">Payment Amount ($)</label>
-          <input type="number" id="modal-payment-amount" step="0.01" min="0.01" class="o_field_input" oninput="updateModalResidualPreview()">
-        </div>
-
-        <!-- Live residual preview -->
-        <div style="background: #FAF5F9; border: 1px solid #E2D3DF; border-radius: 6px; padding: 10px 14px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
-          <span style="color: var(--odoo-primary); font-weight: 600;">Residual Balance After Payment:</span>
-          <span id="modal-residual-preview" style="font-weight: 800; font-family: var(--font-mono); font-size: 1rem; color: var(--odoo-primary);">$0.00</span>
-        </div>
-
-        <div class="o_field_row" style="margin-bottom: 12px;">
-          <label class="o_form_label">Payment Journal / Method</label>
-          <select id="modal-journal-select" class="o_field_input">
-            <option value="Bank">Bank Account (Stripe Card Instant)</option>
-            <option value="UPI">UPI Fast QR Payment</option>
-            <option value="Cash">Cash Settlement</option>
-            <option value="Stripe">Stripe Direct Gateway</option>
-          </select>
-        </div>
-
-        <div class="o_field_row" style="margin-bottom: 12px;">
-          <label class="o_form_label">Payment Date</label>
-          <input type="date" id="modal-payment-date" class="o_field_input">
-        </div>
-
-        <div class="o_field_row">
-          <label class="o_form_label">Payment Memo / Notes</label>
-          <input type="text" id="modal-payment-notes" class="o_field_input" placeholder="e.g. Wire transfer #TX-901 or partial instalment">
-        </div>
-      </div>
-      <div class="o_modal_footer">
-        <button class="btn btn-secondary" onclick="closePaymentModal()">Discard</button>
-        <button id="btn-confirm-payment" class="btn btn-primary" onclick="confirmPaymentSettlement()">Register Payment</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ADMIN STAFF PROVISIONING MODAL -->
-  <div id="odoo-staff-modal" class="o_modal_backdrop" style="display: none;">
-    <div class="o_modal_dialog">
-      <div class="o_modal_header">
-        <div class="o_modal_title">Provision Internal Staff Member</div>
-        <button onclick="closeStaffModal()" style="border: none; background: none; font-size: 1.25rem; cursor: pointer; color: var(--odoo-text-muted);">✕</button>
-      </div>
-      <div class="o_modal_body">
-        <div id="modal-staff-error" style="display: none; background: #FDE8E8; color: #9B1C1C; padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 12px;"></div>
-        <div id="modal-staff-success" style="display: none; background: #DEF7EC; color: #03543F; padding: 8px 12px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 12px;"></div>
-
-        <div class="o_field_row" style="margin-bottom: 12px;">
-          <label class="o_form_label">Staff Full Name</label>
-          <input type="text" id="staff-name" class="o_field_input" placeholder="e.g. Sarah Connor">
-        </div>
-        <div class="o_field_row" style="margin-bottom: 12px;">
-          <label class="o_form_label">Department / Unit</label>
-          <input type="text" id="staff-company" class="o_field_input" value="Brightloop Internal Operations">
-        </div>
-        <div class="o_field_row" style="margin-bottom: 12px;">
-          <label class="o_form_label">Staff Email</label>
-          <input type="email" id="staff-email" class="o_field_input" placeholder="staff@brightloop.com">
-        </div>
-        <div class="o_field_row" style="margin-bottom: 8px;">
-          <label class="o_form_label">Secure Password</label>
-          <input type="password" id="staff-password" class="o_field_input" placeholder="Staff@Brightloop123!" oninput="validateStaffPasswordHints(this.value)">
-        </div>
-
-        <div class="pwd-hints-box">
-          <div class="pwd-hints-title">Required Complexity:</div>
-          <div id="staff-hint-len" class="pwd-hint invalid">More than 8 characters</div>
-          <div id="staff-hint-upper" class="pwd-hint invalid">At least 1 uppercase letter</div>
-          <div id="staff-hint-lower" class="pwd-hint invalid">At least 1 lowercase letter</div>
-          <div id="staff-hint-special" class="pwd-hint invalid">At least 1 special character (!@#$%^&amp;*...)</div>
-        </div>
-      </div>
-      <div class="o_modal_footer">
-        <button class="btn btn-secondary" onclick="closeStaffModal()">Cancel</button>
-        <button id="btn-provision-staff" class="btn btn-primary" onclick="submitStaffProvisioning()">Provision Staff</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast Notification Container -->
-  <div id="odoo-toast-container" class="o_toast_container"></div>
-
-  <!-- Modal: Create Product -->
-  <div id="modal-create-product" class="o_modal_overlay" style="display: none;">
-    <div class="o_modal_card">
-      <div class="o_modal_header">
-        <h3 class="o_modal_title">➕ Create Product Template</h3>
-        <button class="o_toast_close" onclick="closeCreateProductModal()">✕</button>
-      </div>
-      <div class="o_modal_body">
-        <div class="o_field_row" style="margin-bottom: 12px;">
-          <label class="o_form_label">Product Name</label>
-          <input type="text" id="prod-new-name" class="o_field_input" placeholder="e.g. Brightloop Enterprise Cloud Suite">
-        </div>
-        <div class="o_field_row" style="margin-bottom: 12px;">
-          <label class="o_form_label">Product Type</label>
-          <select id="prod-new-type" class="o_field_input">
-            <option value="Service">Service (Recurring)</option>
-            <option value="Storable">Storable Product</option>
-            <option value="Consumable">Consumable</option>
-          </select>
-        </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
-          <div class="o_field_row">
-            <label class="o_form_label">Sales Price ($)</label>
-            <input type="number" step="0.01" id="prod-new-sales-price" class="o_field_input" value="1200.00">
-          </div>
-          <div class="o_field_row">
-            <label class="o_form_label">Cost Price ($)</label>
-            <input type="number" step="0.01" id="prod-new-cost-price" class="o_field_input" value="450.00">
-          </div>
-        </div>
-        <div class="o_field_row" style="margin-bottom: 14px;">
-          <label class="o_form_label">Internal Notes</label>
-          <input type="text" id="prod-new-notes" class="o_field_input" placeholder="e.g. Core SaaS cloud platform with SLA">
-        </div>
-        <div style="border-top: 1px solid var(--odoo-border); padding-top: 12px;">
-          <div style="font-size: 0.8rem; font-weight: 700; color: var(--odoo-primary); margin-bottom: 8px;">
-            Optional Initial Variant:
-          </div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
-            <input type="text" id="prod-new-var-attr" class="o_field_input" placeholder="Attribute (e.g. Brand)" value="Brand Integration">
-            <input type="text" id="prod-new-var-val" class="o_field_input" placeholder="Value (e.g. Odoo)" value="Odoo Enterprise 18">
-            <input type="number" step="0.01" id="prod-new-var-mod" class="o_field_input" placeholder="Modifier" value="560.00">
-          </div>
-        </div>
-      </div>
-      <div class="o_modal_footer">
-        <button class="btn btn-secondary" onclick="closeCreateProductModal()">Discard</button>
-        <button id="btn-save-product" class="btn btn-primary" onclick="submitCreateProduct()">Save Product</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal: Add Variant -->
-  <div id="modal-add-variant" class="o_modal_overlay" style="display: none;">
-    <div class="o_modal_card">
-      <div class="o_modal_header">
-        <h3 class="o_modal_title">➕ Add Attribute Variant</h3>
-        <button class="o_toast_close" onclick="closeAddVariantModal()">✕</button>
-      </div>
-      <div class="o_modal_body">
-        <div class="o_field_row" style="margin-bottom: 12px;">
-          <label class="o_form_label">Target Product</label>
-          <select id="var-target-product" class="o_field_input"></select>
-        </div>
-        <div class="o_field_row" style="margin-bottom: 12px;">
-          <label class="o_form_label">Attribute Name</label>
-          <input type="text" id="var-attr-name" class="o_field_input" placeholder="e.g. Brand, Cloud Tier, HA SLA">
-        </div>
-        <div class="o_field_row" style="margin-bottom: 12px;">
-          <label class="o_form_label">Attribute Value</label>
-          <input type="text" id="var-attr-value" class="o_field_input" placeholder="e.g. Odoo, High Availability, Gold">
-        </div>
-        <div class="o_field_row" style="margin-bottom: 12px;">
-          <label class="o_form_label">Price Modifier ($)</label>
-          <input type="number" step="0.01" id="var-price-mod" class="o_field_input" placeholder="e.g. 560.00 or -50.00" value="560.00">
-        </div>
-      </div>
-      <div class="o_modal_footer">
-        <button class="btn btn-secondary" onclick="closeAddVariantModal()">Discard</button>
-        <button id="btn-save-variant" class="btn btn-primary" onclick="submitAddVariant()">Save Variant</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="app.js"></script>
-  <script src="identity.js"></script>
-</body>
+    <script src="catalog.js"></script>
+  </body>
 </html>

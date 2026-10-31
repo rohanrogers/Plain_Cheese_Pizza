@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException, Query, Request
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
-from sqlalchemy import create_engine, event, text
+from sqlalchemy import create_engine, event, text, func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import sessionmaker
 from .models import (
@@ -47,19 +47,14 @@ from .contracts import (
     Transition,
 )
 from .billing import amounts, period_date
+from .iam import IAMDependencies, create_iam_router
+from .finance import FinanceDependencies, create_finance_router
 
 load_dotenv()
 ROOT = Path(__file__).resolve().parents[2]
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./brightloop.db")
-if DATABASE_URL.startswith("postgresql://") and not DATABASE_URL.startswith("postgresql+"):
-    try:
-        import psycopg2
-    except ImportError:
-        try:
-            import psycopg
-            DATABASE_URL = "postgresql+psycopg://" + DATABASE_URL[len("postgresql://"):]
-        except ImportError:
-            pass
+if DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+psycopg://", 1)
 engine = create_engine(
     DATABASE_URL,
     connect_args={"check_same_thread": False, "timeout": 30}
@@ -257,8 +252,6 @@ def health():
     }
 
 
-from .iam import IAMDependencies, create_iam_router
-
 app.include_router(
     create_iam_router(
         IAMDependencies(
@@ -320,7 +313,8 @@ def catalog(user=Depends(operator), db=Depends(db_session, scope="function")):
 @app.get("/api/products")
 def list_products(
     q: str = Query(default="", max_length=100),
-    db=Depends(db_session, scope="function")
+    user=Depends(operator),
+    db=Depends(db_session, scope="function"),
 ):
     query = db.query(Product)
     if q:
@@ -335,17 +329,21 @@ def list_products(
             attr_name = v.name.split(":")[0].strip() if ":" in v.name else "Attribute"
             attr_val = v.name.split(":")[1].strip() if ":" in v.name else v.name
             calc_cents = p.price + v.modifier
-            p_dict["variants"].append({
-                **serialize(v),
-                "attribute_name": attr_name,
-                "attribute_value": attr_val,
-                "price_modifier": v.modifier,
-                "price_modifier_display": f"+${v.modifier / 100:,.2f}" if v.modifier >= 0 else f"-${abs(v.modifier) / 100:,.2f}",
-                "calculated_price": calc_cents,
-                "calculated_price_display": f"${calc_cents / 100:,.2f}"
-            })
+            p_dict["variants"].append(
+                {
+                    **serialize(v),
+                    "attribute_name": attr_name,
+                    "attribute_value": attr_val,
+                    "price_modifier": v.modifier,
+                    "price_modifier_display": f"+₹{v.modifier / 100:,.2f}"
+                    if v.modifier >= 0
+                    else f"-₹{abs(v.modifier) / 100:,.2f}",
+                    "calculated_price": calc_cents,
+                    "calculated_price_display": f"₹{calc_cents / 100:,.2f}",
+                }
+            )
         p_dict["sales_price"] = round(p.price / 100, 2)
-        p_dict["price_display"] = f"${p.price / 100:,.2f}"
+        p_dict["price_display"] = f"₹{p.price / 100:,.2f}"
         p_dict["cost_price"] = round(p.cost / 100, 2)
         res.append(p_dict)
     return res
@@ -357,13 +355,19 @@ def create_product(
 ):
     if payload.tax_id:
         require(db, Tax, payload.tax_id)
-    prod_data = payload.model_dump(exclude={"variants", "sales_price", "cost_price", "type"})
+    prod_data = payload.model_dump(
+        exclude={"variants", "sales_price", "cost_price", "type"}
+    )
     item = Product(**prod_data)
     db.add(item)
     db.flush()
     for variant in payload.variants:
         v_name = variant.name
-        if variant.attribute_name and variant.attribute_value and (not v_name or v_name == "Standard"):
+        if (
+            variant.attribute_name
+            and variant.attribute_value
+            and (not v_name or v_name == "Standard")
+        ):
             v_name = f"{variant.attribute_name}: {variant.attribute_value}"
         db.add(Variant(product_id=item.id, name=v_name, modifier=variant.modifier))
     audit(db, user, item.id, "PRODUCT_CREATED", item.name)
@@ -374,17 +378,21 @@ def create_product(
         "variants": [
             {
                 **serialize(v),
-                "attribute_name": v.name.split(":")[0].strip() if ":" in v.name else "Attribute",
-                "attribute_value": v.name.split(":")[1].strip() if ":" in v.name else v.name,
+                "attribute_name": v.name.split(":")[0].strip()
+                if ":" in v.name
+                else "Attribute",
+                "attribute_value": v.name.split(":")[1].strip()
+                if ":" in v.name
+                else v.name,
                 "price_modifier": v.modifier,
                 "calculated_price": item.price + v.modifier,
-                "calculated_price_display": f"${(item.price + v.modifier) / 100:,.2f}"
+                "calculated_price_display": f"₹{(item.price + v.modifier) / 100:,.2f}",
             }
             for v in variants
         ],
         "sales_price": round(item.price / 100, 2),
-        "price_display": f"${item.price / 100:,.2f}",
-        "cost_price": round(item.cost / 100, 2)
+        "price_display": f"₹{item.price / 100:,.2f}",
+        "cost_price": round(item.cost / 100, 2),
     }
 
 
@@ -392,19 +400,23 @@ def create_product(
 def add_product_variant(
     id: str,
     payload: VariantInput,
-    user=Depends(operator),
-    db=Depends(db_session, scope="function")
+    user=Depends(admin),
+    db=Depends(db_session, scope="function"),
 ):
     prod = require(db, Product, id)
     v_name = payload.name
-    if payload.attribute_name and payload.attribute_value and (not v_name or v_name == "Standard"):
+    if (
+        payload.attribute_name
+        and payload.attribute_value
+        and (not v_name or v_name == "Standard")
+    ):
         v_name = f"{payload.attribute_name}: {payload.attribute_value}"
-    modifier_cents = payload.price_modifier if payload.price_modifier is not None else payload.modifier
-    variant = Variant(
-        product_id=id,
-        name=v_name,
-        modifier=modifier_cents
+    modifier_cents = (
+        payload.price_modifier
+        if payload.price_modifier is not None
+        else payload.modifier
     )
+    variant = Variant(product_id=id, name=v_name, modifier=modifier_cents)
     db.add(variant)
     db.flush()
     audit(db, user, variant.id, "VARIANT_ADDED", f"{v_name} on {prod.name}")
@@ -417,7 +429,7 @@ def add_product_variant(
         "attribute_value": attr_val,
         "price_modifier": variant.modifier,
         "calculated_price": calc_cents,
-        "calculated_price_display": f"${calc_cents / 100:,.2f}"
+        "calculated_price_display": f"₹{calc_cents / 100:,.2f}",
     }
 
 
@@ -431,12 +443,18 @@ def edit_product(
     item = require(db, Product, id)
     if payload.tax_id:
         require(db, Tax, payload.tax_id)
-    for k, v in payload.model_dump(exclude={"variants", "sales_price", "cost_price", "type"}).items():
+    for k, v in payload.model_dump(
+        exclude={"variants", "sales_price", "cost_price", "type"}
+    ).items():
         setattr(item, k, v)
     existing = {v.name: v for v in db.query(Variant).filter(Variant.product_id == id)}
     for v in payload.variants:
         v_name = v.name
-        if v.attribute_name and v.attribute_value and (not v_name or v_name == "Standard"):
+        if (
+            v.attribute_name
+            and v.attribute_value
+            and (not v_name or v_name == "Standard")
+        ):
             v_name = f"{v.attribute_name}: {v.attribute_value}"
         if v_name in existing:
             existing[v_name].modifier = v.modifier
@@ -453,12 +471,12 @@ def edit_product(
 
 
 @app.get("/api/plans")
-def list_plans(db=Depends(db_session, scope="function")):
+def list_plans(user=Depends(operator), db=Depends(db_session, scope="function")):
     plans = db.query(Plan).all()
     res = []
     for p in plans:
         p_dict = serialize(p)
-        p_dict["price_display"] = f"${p.price / 100:,.2f}"
+        p_dict["price_display"] = f"₹{p.price / 100:,.2f}"
         p_dict["billing_interval"] = p.interval
         res.append(p_dict)
     return res
@@ -492,7 +510,7 @@ def edit_plan(
 
 
 @app.get("/api/taxes")
-def list_taxes(db=Depends(db_session, scope="function")):
+def list_taxes(user=Depends(operator), db=Depends(db_session, scope="function")):
     return [serialize(x) for x in db.query(Tax).all()]
 
 
@@ -522,19 +540,20 @@ def edit_tax(
 
 
 @app.get("/api/discounts")
-def list_discounts(db=Depends(db_session, scope="function")):
+def list_discounts(user=Depends(operator), db=Depends(db_session, scope="function")):
     items = db.query(Discount).all()
     today = date.today()
     res = []
     for d in items:
         d_dict = serialize(d)
         d_dict["code"] = d.name
-        d_dict["is_active"] = (d.starts_on <= today <= d.ends_on) and (d.uses < d.max_uses)
+        d_dict["is_active"] = (d.starts_on <= today <= d.ends_on) and (
+            d.uses < d.max_uses
+        )
         d_dict["used_count"] = d.uses
         d_dict["min_order_amount"] = round(d.min_amount / 100, 2)
         d_dict["value_display"] = (
-            f"{d.value / 100:.1f}%" if d.kind == "PERCENT" and d.value > 100
-            else (f"{d.value}%" if d.kind == "PERCENT" else f"${d.value / 100:,.2f}")
+            f"{d.value / 100:g}%" if d.kind == "PERCENT" else f"₹{d.value / 100:,.2f}"
         )
         res.append(d_dict)
     return res
@@ -576,36 +595,76 @@ def edit_discount(
 @app.post("/api/discounts/validate")
 def validate_discount_endpoint(
     payload: DiscountValidateInput,
-    db=Depends(db_session, scope="function")
+    user=Depends(operator),
+    db=Depends(db_session, scope="function"),
 ):
-    code_clean = payload.code.strip()
-    discount = db.query(Discount).filter(
-        (Discount.name.ilike(code_clean)) | (Discount.id == code_clean)
-    ).first()
+    discount = (
+        db.query(Discount)
+        .filter(
+            (func.lower(Discount.name) == payload.code.lower())
+            | (Discount.id == payload.code)
+        )
+        .first()
+    )
     if not discount:
-        raise HTTPException(400, f"Discount coupon '{payload.code}' is invalid or does not exist.")
-    
-    check_date = payload.target_date or date.today()
-    if check_date < discount.starts_on:
-        raise HTTPException(400, f"Discount coupon '{discount.name}' is not valid until {discount.starts_on}.")
-    if check_date > discount.ends_on:
-        raise HTTPException(400, f"Discount coupon '{discount.name}' expired on {discount.ends_on}.")
-    if discount.uses >= discount.max_uses:
-        raise HTTPException(400, f"Coupon usage limit reached for '{discount.name}'.")
-    if discount.min_amount > 0 and payload.subtotal < discount.min_amount:
-        raise HTTPException(400, f"Minimum spend of ${discount.min_amount / 100:.2f} required.")
-    if discount.min_quantity > 1 and payload.item_quantity < discount.min_quantity:
-        raise HTTPException(400, f"Minimum quantity of {discount.min_quantity} items required.")
-    
-    if discount.kind == "PERCENT":
-        if discount.value > 100:
-            deduction = (payload.subtotal * discount.value) // 10000
-        else:
-            deduction = (payload.subtotal * discount.value) // 100
-    else:
-        deduction = min(discount.value, payload.subtotal)
-    
-    final_cents = max(0, payload.subtotal - deduction)
+        raise HTTPException(400, "Discount coupon is invalid or does not exist")
+    subscription = (
+        require(db, Subscription, payload.subscription_id)
+        if payload.subscription_id
+        else None
+    )
+    if discount.product_id and not (payload.lines or subscription):
+        raise HTTPException(
+            400, "Product-scoped discounts require actual product lines"
+        )
+    lines = (
+        subscription.lines
+        if subscription
+        else snapshot_lines(db, payload.lines)
+        if payload.lines
+        else [
+            {
+                "description": "Preview subtotal",
+                "unit_price": payload.subtotal,
+                "quantity": 1,
+                "tax_id": None,
+            }
+        ]
+    )
+    if not payload.lines and not subscription:
+        # Split aggregate value across quantity without rounding money away.
+        count = payload.item_quantity
+        unit, remainder = divmod(payload.subtotal, count)
+        lines = [
+            {
+                "description": "Preview subtotal",
+                "unit_price": unit,
+                "quantity": count,
+                "tax_id": None,
+            }
+        ]
+        if remainder:
+            lines.append(
+                {
+                    "product_id": None,
+                    "description": "Rounding remainder",
+                    "unit_price": remainder,
+                    "quantity": 1,
+                    "tax_id": None,
+                }
+            )
+    taxes = {x.id: x for x in db.query(Tax).all()}
+    day = payload.target_date or (
+        subscription.next_billing_date if subscription else date.today()
+    )
+    result = amounts(lines, discount, day, taxes)
+    if result["discount_reason"] != "Eligible":
+        reason = result["discount_reason"]
+        if reason == "Minimum purchase or quantity not met":
+            reason = "Minimum spend or Minimum quantity not met"
+        raise HTTPException(400, reason)
+    reduction = result["discount"]
+    subtotal = result["subtotal"]
     return {
         "is_valid": True,
         "valid": True,
@@ -614,12 +673,12 @@ def validate_discount_endpoint(
         "name": discount.name,
         "discount_type": discount.kind,
         "value": discount.value,
-        "discount_amount": deduction,
-        "discount_amount_display": f"${deduction / 100:,.2f}",
-        "new_subtotal": final_cents,
-        "final_amount": final_cents,
-        "final_amount_display": f"${final_cents / 100:,.2f}",
-        "message": f"Coupon '{discount.name}' successfully applied (-${deduction / 100:,.2f})"
+        "discount_amount": reduction,
+        "discount_amount_display": f"₹{reduction / 100:,.2f}",
+        "new_subtotal": subtotal - reduction,
+        "final_amount": subtotal - reduction,
+        "final_amount_display": f"₹{(subtotal - reduction) / 100:,.2f}",
+        "calculation": result,
     }
 
 
@@ -646,16 +705,20 @@ def snapshot_lines(db, inputs):
 
 
 @app.get("/api/quotation-templates")
-def list_quotation_templates(db=Depends(db_session, scope="function")):
+def list_quotation_templates(
+    user=Depends(operator), db=Depends(db_session, scope="function")
+):
     templates = db.query(QuoteTemplate).all()
     res = []
     for t in templates:
         plan = db.get(Plan, t.plan_id)
-        res.append({
-            **serialize(t),
-            "plan_name": plan.name if plan else "Plan",
-            "is_active": True
-        })
+        res.append(
+            {
+                **serialize(t),
+                "plan_name": plan.name if plan else "Plan",
+                "is_active": True,
+            }
+        )
     return res
 
 
@@ -672,7 +735,7 @@ def create_template(
         name=payload.name,
         plan_id=payload.plan_id,
         validity_days=payload.validity_days,
-        lines=lines_snap
+        lines=lines_snap,
     )
     db.add(item)
     db.flush()
@@ -683,79 +746,25 @@ def create_template(
 @app.post("/api/subscriptions/from-template/{template_id}", status_code=201)
 def create_subscription_from_template(
     template_id: str,
-    payload: TemplateSpawnInput = TemplateSpawnInput(),
+    payload: TemplateSpawnInput,
     user=Depends(operator),
     db=Depends(db_session, scope="function"),
 ):
     template = require(db, QuoteTemplate, template_id)
-    plan = require(db, Plan, template.plan_id)
-    cust_id = payload.customer_id
-    if not cust_id:
-        cust = db.query(User).filter(User.role == "CUSTOMER").first()
-        if not cust:
-            cust = User(
-                id=uid(),
-                email="demo_customer@brightloop.local",
-                name="Brightloop Default Customer",
-                password_hash=password_hash("Password123!"),
-                role="CUSTOMER"
-            )
-            db.add(cust)
-            db.flush()
-    else:
-        cust = require(db, User, cust_id)
-    
-    starts_on = payload.starts_on or date.today()
-    validity = template.validity_days or 7
-    quote_expires = starts_on + timedelta(days=validity)
-    
-    lines = []
-    if plan.price:
-        lines.append({
-            "product_id": None,
-            "variant_id": None,
-            "description": f"{plan.name} · base plan fee",
-            "quantity": 1,
-            "unit_price": plan.price,
-            "tax_id": None,
-        })
-    for line in template.lines:
-        p_id = line.get("product_id")
-        v_id = line.get("variant_id")
-        qty = line.get("quantity", 1)
-        prod = require(db, Product, p_id)
-        variant = require(db, Variant, v_id) if v_id else None
-        unit_p = prod.price + (variant.modifier if variant else 0)
-        desc = prod.name + (f" · {variant.name}" if variant else "")
-        lines.append({
-            "product_id": prod.id,
-            "variant_id": variant.id if variant else None,
-            "description": desc,
-            "quantity": qty,
-            "unit_price": unit_p,
-            "tax_id": prod.tax_id
-        })
-
-    sub = Subscription(
-        id=uid(),
-        number="SUB-" + uid()[:8].upper(),
-        customer_id=cust.id,
-        plan_id=plan.id,
+    inputs = [
+        {key: line.get(key) for key in ("product_id", "variant_id", "quantity")}
+        for line in template.lines
+    ]
+    request = SubscriptionInput(
+        customer_id=payload.customer_id,
+        plan_id=template.plan_id,
         discount_id=payload.discount_id,
-        state="DRAFT",
-        starts_on=starts_on,
-        quote_expires_on=quote_expires,
+        starts_on=payload.starts_on or date.today(),
         payment_days=payload.payment_days,
-        next_billing_date=starts_on,
-        anchor_date=starts_on,
-        interval=plan.interval,
-        interval_count=plan.interval_count,
-        lines=lines
+        validity_days=template.validity_days,
+        lines=inputs,
     )
-    db.add(sub)
-    db.flush()
-    audit(db, user, sub.id, "SUBSCRIPTION_FROM_TEMPLATE", f"Created from template {template.name}")
-    return sub_result(db, sub)
+    return create_subscription(request, user, db)
 
 
 def sub_result(db, item, user_map=None, plan_map=None, taxes=None, discounts=None):
@@ -964,7 +973,7 @@ def transition(
         if sub.expires_on and sub.next_billing_date > sub.expires_on:
             raise HTTPException(400, "Renew the expired term before resuming")
         sub.state = "ACTIVE"
-    elif action == "CLOSE" and previous in ("ACTIVE", "PAUSED", "CONFIRMED", "QUOTATION", "DRAFT"):
+    elif action == "CLOSE" and previous in ("ACTIVE", "PAUSED") and plan.allow_close:
         sub.state = "CLOSED"
     elif (
         action == "RENEW"
@@ -996,8 +1005,6 @@ def mailbox(user=Depends(admin), db=Depends(db_session, scope="function")):
         for x in db.query(Mail).order_by(Mail.created_at.desc()).limit(50).all()
     ]
 
-
-from .finance import FinanceDependencies, create_finance_router
 
 app.include_router(
     create_finance_router(

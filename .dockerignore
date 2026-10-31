@@ -1,0 +1,15 @@
+.git
+.env
+.env.*
+!.env.example
+.venv
+node_modules
+**/__pycache__
+test-results
+Research
+*.log
+*.pem
+*.key
+*.pdf
+reference-react
+backend/node_modules

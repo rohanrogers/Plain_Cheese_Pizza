@@ -490,7 +490,7 @@ body {
 /* 6. ODOO KANBAN VIEW */
 .o_kanban_view {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
   align-items: start;
 }
@@ -1521,7 +1521,6 @@ button:disabled {
   margin-top: 24px;
 }
 
-
 /* === Odoo 17/18 Tactile Micro-Interactions & Form Configurator === */
 
 .btn .spinner-inline {
@@ -1529,7 +1528,7 @@ button:disabled {
   height: 14px;
   border: 2px solid rgba(255, 255, 255, 0.35);
   border-radius: 50%;
-  border-top-color: #FFFFFF;
+  border-top-color: #ffffff;
   animation: odooBtnSpin 0.65s linear infinite;
   display: inline-block;
   vertical-align: middle;
@@ -1541,14 +1540,14 @@ button:disabled {
 }
 
 .o_arrow_button.o_arrow_confirmed {
-  background-color: #1D4ED8;
-  color: #FFFFFF;
-  border-color: #1D4ED8;
+  background-color: #1d4ed8;
+  color: #ffffff;
+  border-color: #1d4ed8;
 }
 
 /* Live Password Validation Checklist */
 .pwd-hints-box {
-  background: #F8F9FA;
+  background: #f8f9fa;
   border: 1px solid var(--odoo-border);
   border-radius: 6px;
   padding: 10px 12px;
@@ -1612,14 +1611,16 @@ button:disabled {
   min-width: 320px;
   max-width: 440px;
   padding: 12px 18px;
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid var(--odoo-border);
   border-radius: 6px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   font-size: 0.875rem;
   color: var(--odoo-text-main);
   animation: odooToastSlideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .o_toast.success {
@@ -1671,7 +1672,7 @@ button:disabled {
 }
 
 .o_calc_box {
-  background: #F8F9FA;
+  background: #f8f9fa;
   border: 1px solid var(--odoo-border);
   border-radius: 8px;
   padding: 18px 22px;
@@ -1684,9 +1685,9 @@ button:disabled {
   gap: 6px;
   padding: 4px 10px;
   border-radius: 4px;
-  background-color: #FBF0F6;
-  border: 1px solid #714B67;
-  color: #714B67;
+  background-color: #fbf0f6;
+  border: 1px solid #714b67;
+  color: #714b67;
   font-size: 0.75rem;
   font-weight: 700;
 }
@@ -1706,19 +1707,52 @@ button:disabled {
 }
 
 .o_modal_card {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 8px;
   border: 1px solid var(--odoo-border);
   width: 100%;
   max-width: 540px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-  overflow: hidden;
+  max-height: calc(100vh - 32px);
+  overflow: auto;
   animation: odooModalSlideUp 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.o_modal_card .o_field_row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+.o_modal_card .o_form_label,
+.o_modal_card .o_field_input {
+  min-width: 0;
+  width: 100%;
+}
+#calc-product-select {
+  min-width: 0;
+  max-width: 100%;
+  flex: 1;
+}
+#calc-variant-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+#calc-variant-pills label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+@media (max-width: 600px) {
+  .o_modal_card [style*="display: grid"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
 }
 
 /* 5. Discount Order Line Highlight */
 .o_discount_tr {
-  background: #F0FDF4 !important;
+  background: #f0fdf4 !important;
   color: #166534;
   animation: odooDiscountHighlight 0.25s ease;
 }
