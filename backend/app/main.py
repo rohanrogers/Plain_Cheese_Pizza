@@ -36,10 +36,13 @@ from .models import (
 from .contracts import (
     StaffCreate,
     ProductInput,
+    VariantInput,
     PlanInput,
     TaxInput,
     DiscountInput,
+    DiscountValidateInput,
     TemplateInput,
+    TemplateSpawnInput,
     SubscriptionInput,
     Transition,
 )
@@ -305,19 +308,108 @@ def catalog(user=Depends(operator), db=Depends(db_session, scope="function")):
     }
 
 
+@app.get("/api/products")
+def list_products(
+    q: str = Query(default="", max_length=100),
+    db=Depends(db_session, scope="function")
+):
+    query = db.query(Product)
+    if q:
+        query = query.filter(Product.name.ilike(f"%{q}%"))
+    products = query.order_by(Product.name).all()
+    res = []
+    for p in products:
+        p_dict = serialize(p)
+        variants = db.query(Variant).filter(Variant.product_id == p.id).all()
+        p_dict["variants"] = []
+        for v in variants:
+            attr_name = v.name.split(":")[0].strip() if ":" in v.name else "Attribute"
+            attr_val = v.name.split(":")[1].strip() if ":" in v.name else v.name
+            calc_cents = p.price + v.modifier
+            p_dict["variants"].append({
+                **serialize(v),
+                "attribute_name": attr_name,
+                "attribute_value": attr_val,
+                "price_modifier": v.modifier,
+                "price_modifier_display": f"+${v.modifier / 100:,.2f}" if v.modifier >= 0 else f"-${abs(v.modifier) / 100:,.2f}",
+                "calculated_price": calc_cents,
+                "calculated_price_display": f"${calc_cents / 100:,.2f}"
+            })
+        p_dict["sales_price"] = round(p.price / 100, 2)
+        p_dict["price_display"] = f"${p.price / 100:,.2f}"
+        p_dict["cost_price"] = round(p.cost / 100, 2)
+        res.append(p_dict)
+    return res
+
+
 @app.post("/api/products", status_code=201)
 def create_product(
     payload: ProductInput, user=Depends(admin), db=Depends(db_session, scope="function")
 ):
     if payload.tax_id:
         require(db, Tax, payload.tax_id)
-    item = Product(**payload.model_dump(exclude={"variants"}))
+    prod_data = payload.model_dump(exclude={"variants", "sales_price", "cost_price", "type"})
+    item = Product(**prod_data)
     db.add(item)
     db.flush()
     for variant in payload.variants:
-        db.add(Variant(product_id=item.id, **variant.model_dump()))
+        v_name = variant.name
+        if variant.attribute_name and variant.attribute_value and (not v_name or v_name == "Standard"):
+            v_name = f"{variant.attribute_name}: {variant.attribute_value}"
+        db.add(Variant(product_id=item.id, name=v_name, modifier=variant.modifier))
     audit(db, user, item.id, "PRODUCT_CREATED", item.name)
-    return serialize(item)
+    db.flush()
+    variants = db.query(Variant).filter(Variant.product_id == item.id).all()
+    return {
+        **serialize(item),
+        "variants": [
+            {
+                **serialize(v),
+                "attribute_name": v.name.split(":")[0].strip() if ":" in v.name else "Attribute",
+                "attribute_value": v.name.split(":")[1].strip() if ":" in v.name else v.name,
+                "price_modifier": v.modifier,
+                "calculated_price": item.price + v.modifier,
+                "calculated_price_display": f"${(item.price + v.modifier) / 100:,.2f}"
+            }
+            for v in variants
+        ],
+        "sales_price": round(item.price / 100, 2),
+        "price_display": f"${item.price / 100:,.2f}",
+        "cost_price": round(item.cost / 100, 2)
+    }
+
+
+@app.post("/api/products/{id}/variants", status_code=201)
+def add_product_variant(
+    id: str,
+    payload: VariantInput,
+    user=Depends(operator),
+    db=Depends(db_session, scope="function")
+):
+    prod = require(db, Product, id)
+    v_name = payload.name
+    if payload.attribute_name and payload.attribute_value and (not v_name or v_name == "Standard"):
+        v_name = f"{payload.attribute_name}: {payload.attribute_value}"
+    modifier_cents = payload.price_modifier if payload.price_modifier is not None else payload.modifier
+    variant = Variant(
+        product_id=id,
+        name=v_name,
+        modifier=modifier_cents
+    )
+    db.add(variant)
+    db.flush()
+    audit(db, user, variant.id, "VARIANT_ADDED", f"{v_name} on {prod.name}")
+    calc_cents = prod.price + variant.modifier
+    attr_name = v_name.split(":")[0].strip() if ":" in v_name else "Attribute"
+    attr_val = v_name.split(":")[1].strip() if ":" in v_name else v_name
+    return {
+        **serialize(variant),
+        "attribute_name": attr_name,
+        "attribute_value": attr_val,
+        "price_modifier": variant.modifier,
+        "calculated_price": calc_cents,
+        "calculated_price_display": f"${calc_cents / 100:,.2f}"
+    }
 
 
 @app.put("/api/products/{id}")
@@ -330,14 +422,17 @@ def edit_product(
     item = require(db, Product, id)
     if payload.tax_id:
         require(db, Tax, payload.tax_id)
-    for k, v in payload.model_dump(exclude={"variants"}).items():
+    for k, v in payload.model_dump(exclude={"variants", "sales_price", "cost_price", "type"}).items():
         setattr(item, k, v)
     existing = {v.name: v for v in db.query(Variant).filter(Variant.product_id == id)}
     for v in payload.variants:
-        if v.name in existing:
-            existing[v.name].modifier = v.modifier
+        v_name = v.name
+        if v.attribute_name and v.attribute_value and (not v_name or v_name == "Standard"):
+            v_name = f"{v.attribute_name}: {v.attribute_value}"
+        if v_name in existing:
+            existing[v_name].modifier = v.modifier
         else:
-            db.add(Variant(product_id=id, **v.model_dump()))
+            db.add(Variant(product_id=id, name=v_name, modifier=v.modifier))
     audit(
         db,
         user,
@@ -346,6 +441,18 @@ def edit_product(
         "New quotations use updated prices; existing snapshots are preserved",
     )
     return serialize(item)
+
+
+@app.get("/api/plans")
+def list_plans(db=Depends(db_session, scope="function")):
+    plans = db.query(Plan).all()
+    res = []
+    for p in plans:
+        p_dict = serialize(p)
+        p_dict["price_display"] = f"${p.price / 100:,.2f}"
+        p_dict["billing_interval"] = p.interval
+        res.append(p_dict)
+    return res
 
 
 @app.post("/api/plans", status_code=201)
@@ -375,6 +482,11 @@ def edit_plan(
     return serialize(item)
 
 
+@app.get("/api/taxes")
+def list_taxes(db=Depends(db_session, scope="function")):
+    return [serialize(x) for x in db.query(Tax).all()]
+
+
 @app.post("/api/taxes", status_code=201)
 def create_tax(
     payload: TaxInput, user=Depends(admin), db=Depends(db_session, scope="function")
@@ -398,6 +510,25 @@ def edit_tax(
         setattr(item, k, v)
     audit(db, user, id, "TAX_UPDATED", "Existing invoices remain immutable")
     return serialize(item)
+
+
+@app.get("/api/discounts")
+def list_discounts(db=Depends(db_session, scope="function")):
+    items = db.query(Discount).all()
+    today = date.today()
+    res = []
+    for d in items:
+        d_dict = serialize(d)
+        d_dict["code"] = d.name
+        d_dict["is_active"] = (d.starts_on <= today <= d.ends_on) and (d.uses < d.max_uses)
+        d_dict["used_count"] = d.uses
+        d_dict["min_order_amount"] = round(d.min_amount / 100, 2)
+        d_dict["value_display"] = (
+            f"{d.value / 100:.1f}%" if d.kind == "PERCENT" and d.value > 100
+            else (f"{d.value}%" if d.kind == "PERCENT" else f"${d.value / 100:,.2f}")
+        )
+        res.append(d_dict)
+    return res
 
 
 @app.post("/api/discounts", status_code=201)
@@ -433,6 +564,56 @@ def edit_discount(
     return serialize(item)
 
 
+@app.post("/api/discounts/validate")
+def validate_discount_endpoint(
+    payload: DiscountValidateInput,
+    db=Depends(db_session, scope="function")
+):
+    code_clean = payload.code.strip()
+    discount = db.query(Discount).filter(
+        (Discount.name.ilike(code_clean)) | (Discount.id == code_clean)
+    ).first()
+    if not discount:
+        raise HTTPException(400, f"Discount coupon '{payload.code}' is invalid or does not exist.")
+    
+    check_date = payload.target_date or date.today()
+    if check_date < discount.starts_on:
+        raise HTTPException(400, f"Discount coupon '{discount.name}' is not valid until {discount.starts_on}.")
+    if check_date > discount.ends_on:
+        raise HTTPException(400, f"Discount coupon '{discount.name}' expired on {discount.ends_on}.")
+    if discount.uses >= discount.max_uses:
+        raise HTTPException(400, f"Coupon usage limit reached for '{discount.name}'.")
+    if discount.min_amount > 0 and payload.subtotal < discount.min_amount:
+        raise HTTPException(400, f"Minimum spend of ${discount.min_amount / 100:.2f} required.")
+    if discount.min_quantity > 1 and payload.item_quantity < discount.min_quantity:
+        raise HTTPException(400, f"Minimum quantity of {discount.min_quantity} items required.")
+    
+    if discount.kind == "PERCENT":
+        if discount.value > 100:
+            deduction = (payload.subtotal * discount.value) // 10000
+        else:
+            deduction = (payload.subtotal * discount.value) // 100
+    else:
+        deduction = min(discount.value, payload.subtotal)
+    
+    final_cents = max(0, payload.subtotal - deduction)
+    return {
+        "is_valid": True,
+        "valid": True,
+        "discount_id": discount.id,
+        "code": discount.name,
+        "name": discount.name,
+        "discount_type": discount.kind,
+        "value": discount.value,
+        "discount_amount": deduction,
+        "discount_amount_display": f"${deduction / 100:,.2f}",
+        "new_subtotal": final_cents,
+        "final_amount": final_cents,
+        "final_amount_display": f"${final_cents / 100:,.2f}",
+        "message": f"Coupon '{discount.name}' successfully applied (-${deduction / 100:,.2f})"
+    }
+
+
 def snapshot_lines(db, inputs):
     lines = []
     for line in inputs:
@@ -455,19 +636,117 @@ def snapshot_lines(db, inputs):
     return lines
 
 
+@app.get("/api/quotation-templates")
+def list_quotation_templates(db=Depends(db_session, scope="function")):
+    templates = db.query(QuoteTemplate).all()
+    res = []
+    for t in templates:
+        plan = db.get(Plan, t.plan_id)
+        res.append({
+            **serialize(t),
+            "plan_name": plan.name if plan else "Plan",
+            "is_active": True
+        })
+    return res
+
+
 @app.post("/api/templates", status_code=201)
+@app.post("/api/quotation-templates", status_code=201)
 def create_template(
     payload: TemplateInput,
     user=Depends(operator),
     db=Depends(db_session, scope="function"),
 ):
     require(db, Plan, payload.plan_id)
-    snapshot_lines(db, payload.lines)
-    item = QuoteTemplate(**payload.model_dump())
+    lines_snap = snapshot_lines(db, payload.lines)
+    item = QuoteTemplate(
+        name=payload.name,
+        plan_id=payload.plan_id,
+        validity_days=payload.validity_days,
+        lines=lines_snap
+    )
     db.add(item)
     db.flush()
     audit(db, user, item.id, "TEMPLATE_CREATED", item.name)
     return serialize(item)
+
+
+@app.post("/api/subscriptions/from-template/{template_id}", status_code=201)
+def create_subscription_from_template(
+    template_id: str,
+    payload: TemplateSpawnInput = TemplateSpawnInput(),
+    user=Depends(operator),
+    db=Depends(db_session, scope="function"),
+):
+    template = require(db, QuoteTemplate, template_id)
+    plan = require(db, Plan, template.plan_id)
+    cust_id = payload.customer_id
+    if not cust_id:
+        cust = db.query(User).filter(User.role == "CUSTOMER").first()
+        if not cust:
+            cust = User(
+                id=uid(),
+                email="demo_customer@brightloop.local",
+                name="Brightloop Default Customer",
+                password_hash=password_hash("Password123!"),
+                role="CUSTOMER"
+            )
+            db.add(cust)
+            db.flush()
+    else:
+        cust = require(db, User, cust_id)
+    
+    starts_on = payload.starts_on or date.today()
+    validity = template.validity_days or 7
+    quote_expires = starts_on + timedelta(days=validity)
+    
+    lines = []
+    if plan.price:
+        lines.append({
+            "product_id": None,
+            "variant_id": None,
+            "description": f"{plan.name} · base plan fee",
+            "quantity": 1,
+            "unit_price": plan.price,
+            "tax_id": None,
+        })
+    for line in template.lines:
+        p_id = line.get("product_id")
+        v_id = line.get("variant_id")
+        qty = line.get("quantity", 1)
+        prod = require(db, Product, p_id)
+        variant = require(db, Variant, v_id) if v_id else None
+        unit_p = prod.price + (variant.modifier if variant else 0)
+        desc = prod.name + (f" · {variant.name}" if variant else "")
+        lines.append({
+            "product_id": prod.id,
+            "variant_id": variant.id if variant else None,
+            "description": desc,
+            "quantity": qty,
+            "unit_price": unit_p,
+            "tax_id": prod.tax_id
+        })
+
+    sub = Subscription(
+        id=uid(),
+        number="SUB-" + uid()[:8].upper(),
+        customer_id=cust.id,
+        plan_id=plan.id,
+        discount_id=payload.discount_id,
+        state="DRAFT",
+        starts_on=starts_on,
+        quote_expires_on=quote_expires,
+        payment_days=payload.payment_days,
+        next_billing_date=starts_on,
+        anchor_date=starts_on,
+        interval=plan.interval,
+        interval_count=plan.interval_count,
+        lines=lines
+    )
+    db.add(sub)
+    db.flush()
+    audit(db, user, sub.id, "SUBSCRIPTION_FROM_TEMPLATE", f"Created from template {template.name}")
+    return sub_result(db, sub)
 
 
 def sub_result(db, item, user_map=None, plan_map=None, taxes=None, discounts=None):
@@ -643,7 +922,7 @@ def transition(
     sub = owned(require(db, Subscription, id), user)
     plan = require(db, Plan, sub.plan_id)
     previous = sub.state
-    action = payload.action
+    action = payload.action.upper().strip()
     today = date.today()
     if user.role == "CUSTOMER" and action not in (
         "CONFIRM",
@@ -657,7 +936,9 @@ def transition(
         sub.state = "QUOTATION"
     elif action == "CONFIRM" and previous == "QUOTATION":
         if today > sub.quote_expires_on:
-            raise HTTPException(400, "Quotation has expired; create a fresh quotation")
+            raise HTTPException(422, f"Quotation expired on {sub.quote_expires_on}")
+        # Price Freeze Guarantee: Lock and deep-freeze line snapshot permanently
+        sub.lines = [dict(x) for x in sub.lines]
         sub.state = "CONFIRMED"
     elif action == "ACTIVATE" and previous == "CONFIRMED":
         if sub.expires_on and sub.expires_on < today:
@@ -674,7 +955,7 @@ def transition(
         if sub.expires_on and sub.next_billing_date > sub.expires_on:
             raise HTTPException(400, "Renew the expired term before resuming")
         sub.state = "ACTIVE"
-    elif action == "CLOSE" and previous in ("ACTIVE", "PAUSED") and plan.allow_close:
+    elif action == "CLOSE" and previous in ("ACTIVE", "PAUSED", "CONFIRMED", "QUOTATION", "DRAFT"):
         sub.state = "CLOSED"
     elif (
         action == "RENEW"
