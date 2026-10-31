@@ -124,7 +124,7 @@ flowchart TB
 - Clear tenant boundaries
 - Fast read/write query paths
 - Offline-safe frontend experience
-- Explicit audit logging on billing events
+- Explicit audit logging on billing events.
 
 ---
 
