@@ -1,0 +1,709 @@
+{
+  "10_STVE_-_Sensor_Trust_Verification_Engi": {
+    "files_count": 81,
+    "sample_files": [
+      "LICENSE",
+      "QUICK_START.md",
+      "README.md",
+      "backend\\.env.example",
+      "backend\\.gitignore",
+      "backend\\checkTrustScores.js",
+      "backend\\demo.js",
+      "backend\\fixTrustScores.js",
+      "backend\\package.json",
+      "backend\\pnpm-lock.yaml",
+      "backend\\pnpm-workspace.yaml",
+      "backend\\realtimeCron.js"
+    ],
+    "has_package_json": true,
+    "has_requirements": false,
+    "dependencies": [
+      "@prisma/client",
+      "cors",
+      "dotenv",
+      "express",
+      "framer-motion",
+      "next",
+      "react",
+      "react-dom",
+      "recharts"
+    ]
+  },
+  "11_HealStack_AI": {
+    "files_count": 400,
+    "sample_files": [
+      ".gitignore",
+      "demo.py",
+      "demo_output.txt",
+      "docker-compose.yml",
+      "gateway.py",
+      "gateway_tests.py",
+      "graph_builder.py",
+      "IMPLEMENTATION_SUMMARY.md",
+      "main.py",
+      "README.md",
+      "requirements.txt",
+      "routing_engine.py"
+    ],
+    "has_package_json": false,
+    "has_requirements": true,
+    "dependencies": [
+      "flask>=2.0.0",
+      "flask-cors>=3.0.0",
+      "numpy>=1.21.0",
+      "scipy>=1.7.0",
+      "flask"
+    ]
+  },
+  "13_VigilX_Smart_Anti-Sleep_Safety_System": {
+    "files_count": 161,
+    "sample_files": [
+      ".gitignore",
+      "LICENSE",
+      "platformio.ini",
+      "README.md",
+      "ESP\\.gitignore",
+      "ESP\\platformio.ini",
+      "ESP\\include\\README",
+      "ESP\\lib\\README",
+      "ESP\\src\\main.cpp",
+      "ESP\\test\\README",
+      "imgs\\img1.jpeg",
+      "imgs\\img2.jpeg"
+    ],
+    "has_package_json": false,
+    "has_requirements": false,
+    "dependencies": []
+  },
+  "14_OPTIMA_\u2013_Optimization_Protocol_for_Tr": {
+    "files_count": 15,
+    "sample_files": [
+      "ABCD.css",
+      "AWS_REGION.env",
+      "dashboard.html",
+      "dashboard.js",
+      "junction_medium_cam_4.avi",
+      "login.html",
+      "Optima_test3.py",
+      "Screenshot 2026-02-22 095203.png",
+      "Screenshot 2026-02-22 095212.png",
+      "Screenshot 2026-02-22 095222.png",
+      "Screenshot 2026-02-22 095236.png",
+      "Screenshot 2026-02-22 095300.png"
+    ],
+    "has_package_json": false,
+    "has_requirements": false,
+    "dependencies": []
+  },
+  "15_PCO-US": {
+    "files_count": 23,
+    "sample_files": [
+      "README.md",
+      "backend\\server.py",
+      "Frontend\\.gitignore",
+      "Frontend\\eslint.config.js",
+      "Frontend\\index.html",
+      "Frontend\\package-lock.json",
+      "Frontend\\package.json",
+      "Frontend\\postcss.config.js",
+      "Frontend\\README.md",
+      "Frontend\\tailwind.config.js",
+      "Frontend\\vite.config.js",
+      "Frontend\\public\\vite.svg"
+    ],
+    "has_package_json": true,
+    "has_requirements": false,
+    "dependencies": [
+      "firebase",
+      "react",
+      "react-dom",
+      "react-router-dom"
+    ]
+  },
+  "16_KOLPAY": {
+    "files_count": 0,
+    "sample_files": [],
+    "has_package_json": false,
+    "has_requirements": false,
+    "dependencies": []
+  },
+  "17_Wiki_Cusat": {
+    "files_count": 31,
+    "sample_files": [
+      ".gitattributes",
+      ".gitignore",
+      "pages\\Auth.css",
+      "pages\\LoginPage.tsx",
+      "pages\\Profile.css",
+      "pages\\ProfilePage.tsx",
+      "pages\\schema.sql",
+      "pages\\SignupPage.tsx",
+      "private_room\\forum\\.env.example",
+      "private_room\\forum\\index.html",
+      "private_room\\forum\\package-lock.json",
+      "private_room\\forum\\package.json"
+    ],
+    "has_package_json": true,
+    "has_requirements": true,
+    "dependencies": [
+      "@supabase/supabase-js",
+      "clsx",
+      "date-fns",
+      "lucide-react",
+      "react",
+      "react-dom",
+      "tailwind-merge",
+      "fastapi",
+      "uvicorn",
+      "sqlalchemy",
+      "psycopg2-binary",
+      "pydantic",
+      "python-multipart",
+      "websockets"
+    ]
+  },
+  "18_NEUROMOTION_AI_ASSISTIVE_REHABILITATI": {
+    "files_count": 17,
+    "sample_files": [
+      "compare_and_fuse.py",
+      "refermaker.py",
+      "web\\app.py",
+      "web\\app_error.log",
+      "web\\err.txt",
+      "web\\models.py",
+      "web\\requirements.txt",
+      "web\\instance\\rehab.db",
+      "web\\templates\\admin.html",
+      "web\\templates\\base.html",
+      "web\\templates\\home.html",
+      "web\\templates\\index.html"
+    ],
+    "has_package_json": false,
+    "has_requirements": true,
+    "dependencies": [
+      "f\u0000l\u0000a\u0000s\u0000k\u0000",
+      "\u0000"
+    ]
+  },
+  "19_Ravana": {
+    "files_count": 32,
+    "sample_files": [
+      ".gitattributes",
+      ".gitignore",
+      ".gitmodules",
+      "Desc.txt",
+      "LICENSE",
+      "package-lock.json",
+      "README.md",
+      "client\\.env.example",
+      "client\\index.html",
+      "client\\package-lock.json",
+      "client\\package.json",
+      "client\\postcss.config.js"
+    ],
+    "has_package_json": true,
+    "has_requirements": false,
+    "dependencies": [
+      "@react-three/drei",
+      "@react-three/fiber",
+      "express",
+      "qrcode.react",
+      "react",
+      "react-dom",
+      "socket.io",
+      "socket.io-client",
+      "three",
+      "three-mesh-bvh"
+    ]
+  },
+  "1_Tinkerbluds_-_Cultivated_Land_Validati": {
+    "files_count": 25,
+    "sample_files": [
+      ".gitignore",
+      "config.py",
+      "main.py",
+      "README.md",
+      "requirements.txt",
+      "developers_debug\\01_architecture.md",
+      "developers_debug\\02_kml_geometry.md",
+      "developers_debug\\03_earth_engine_pipeline.md",
+      "developers_debug\\04_validation_scoring.md",
+      "developers_debug\\05_dashboard_frontend.md",
+      "developers_debug\\06_supabase_overlap.md",
+      "developers_debug\\07_yield_service.md"
+    ],
+    "has_package_json": false,
+    "has_requirements": true,
+    "dependencies": [
+      "geopandas",
+      "shapely",
+      "requests",
+      "python-dotenv",
+      "fastapi",
+      "uvicorn[standard]",
+      "earthengine-api",
+      "pydantic",
+      "python-multipart",
+      "supabase",
+      "xgboost",
+      "scikit-learn"
+    ]
+  },
+  "1_Tinkerbluds_-_Cultivated_Land_Validation_Pl": {
+    "files_count": 25,
+    "sample_files": [
+      ".gitignore",
+      "config.py",
+      "main.py",
+      "README.md",
+      "requirements.txt",
+      "developers_debug\\01_architecture.md",
+      "developers_debug\\02_kml_geometry.md",
+      "developers_debug\\03_earth_engine_pipeline.md",
+      "developers_debug\\04_validation_scoring.md",
+      "developers_debug\\05_dashboard_frontend.md",
+      "developers_debug\\06_supabase_overlap.md",
+      "developers_debug\\07_yield_service.md"
+    ],
+    "has_package_json": false,
+    "has_requirements": true,
+    "dependencies": [
+      "geopandas",
+      "shapely",
+      "requests",
+      "python-dotenv",
+      "fastapi",
+      "uvicorn[standard]",
+      "earthengine-api",
+      "pydantic",
+      "python-multipart",
+      "supabase",
+      "xgboost",
+      "scikit-learn"
+    ]
+  },
+  "20_DEFENDER": {
+    "files_count": 97,
+    "sample_files": [
+      ".gitignore",
+      "README.md",
+      "backend\\app.py",
+      "backend\\requirements.txt",
+      "backend\\response.json",
+      "backend\\start.bat",
+      "backend\\test_inf.py",
+      "frontend\\.gitignore",
+      "frontend\\bun.lockb",
+      "frontend\\components.json",
+      "frontend\\eslint.config.js",
+      "frontend\\index.html"
+    ],
+    "has_package_json": true,
+    "has_requirements": true,
+    "dependencies": [
+      "flask",
+      "flask-cors",
+      "ultralytics",
+      "opencv-python",
+      "Pillow",
+      "werkzeug",
+      "transformers>=4.30.0",
+      "torch",
+      "soundfile",
+      "@hookform/resolvers",
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-alert-dialog",
+      "@radix-ui/react-aspect-ratio",
+      "@radix-ui/react-avatar",
+      "@radix-ui/react-checkbox"
+    ]
+  },
+  "22_Ready_Classified_Coconuts": {
+    "files_count": 124,
+    "sample_files": [
+      ".gitignore",
+      "backend.py",
+      "coconuts.db",
+      "coconut_sensor_hub.ino",
+      "components.json",
+      "next.config.mjs",
+      "package-lock.json",
+      "package.json",
+      "pnpm-lock.yaml",
+      "postcss.config.mjs",
+      "README.md",
+      "requirements.txt"
+    ],
+    "has_package_json": true,
+    "has_requirements": true,
+    "dependencies": [
+      "@hookform/resolvers",
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-alert-dialog",
+      "@radix-ui/react-aspect-ratio",
+      "@radix-ui/react-avatar",
+      "@radix-ui/react-checkbox",
+      "@radix-ui/react-collapsible",
+      "@radix-ui/react-context-menu",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-hover-card",
+      "@radix-ui/react-label",
+      "@radix-ui/react-menubar",
+      "@radix-ui/react-navigation-menu",
+      "@radix-ui/react-popover"
+    ]
+  },
+  "23_IGNIS": {
+    "files_count": 41,
+    "sample_files": [
+      ".gitignore",
+      "README.md",
+      "requirements.txt",
+      "app\\.gitignore",
+      "app\\config.py",
+      "app\\main.py",
+      "app\\schemas.py",
+      "app\\__init__.py",
+      "app\\data\\ne_10m_admin_0_countries.cpg",
+      "app\\data\\ne_10m_admin_0_countries.dbf",
+      "app\\data\\ne_10m_admin_0_countries.prj",
+      "app\\data\\ne_10m_admin_0_countries.shp"
+    ],
+    "has_package_json": true,
+    "has_requirements": true,
+    "dependencies": [
+      "a\u0000n\u0000n\u0000o\u0000t\u0000a\u0000t\u0000e\u0000d\u0000-\u0000d\u0000o\u0000c\u0000=\u0000=\u00000\u0000.\u00000\u0000.\u00004\u0000",
+      "\u0000",
+      "\u0000a\u0000n\u0000n\u0000o\u0000t\u0000a\u0000t\u0000e\u0000d\u0000-\u0000t\u0000y\u0000p\u0000e\u0000s\u0000=\u0000=\u00000\u0000.\u00007\u0000.\u00000\u0000",
+      "\u0000a\u0000n\u0000y\u0000i\u0000o\u0000=\u0000=\u00004\u0000.\u00001\u00002\u0000.\u00001\u0000",
+      "\u0000a\u0000t\u0000t\u0000r\u0000s\u0000=\u0000=\u00002\u00005\u0000.\u00004\u0000.\u00000\u0000",
+      "\u0000c\u0000a\u0000c\u0000h\u0000e\u0000t\u0000o\u0000o\u0000l\u0000s\u0000=\u0000=\u00006\u0000.\u00002\u0000.\u00006\u0000",
+      "\u0000c\u0000e\u0000r\u0000t\u0000i\u0000f\u0000i\u0000=\u0000=\u00002\u00000\u00002\u00006\u0000.\u00001\u0000.\u00004\u0000",
+      "\u0000c\u0000f\u0000f\u0000i\u0000=\u0000=\u00002\u0000.\u00000\u0000.\u00000\u0000",
+      "\u0000c\u0000h\u0000a\u0000r\u0000s\u0000e\u0000t\u0000-\u0000n\u0000o\u0000r\u0000m\u0000a\u0000l\u0000i\u0000z\u0000e\u0000r\u0000=\u0000=\u00003\u0000.\u00004\u0000.\u00004\u0000",
+      "\u0000c\u0000l\u0000i\u0000c\u0000k\u0000=\u0000=\u00008\u0000.\u00003\u0000.\u00001\u0000",
+      "\u0000c\u0000l\u0000i\u0000c\u0000k\u0000-\u0000p\u0000l\u0000u\u0000g\u0000i\u0000n\u0000s\u0000=\u0000=\u00001\u0000.\u00001\u0000.\u00001\u0000.\u00002\u0000",
+      "\u0000c\u0000l\u0000i\u0000g\u0000j\u0000=\u0000=\u00000\u0000.\u00007\u0000.\u00002\u0000",
+      "\u0000c\u0000o\u0000l\u0000o\u0000r\u0000a\u0000m\u0000a\u0000=\u0000=\u00000\u0000.\u00004\u0000.\u00006\u0000",
+      "\u0000c\u0000r\u0000y\u0000p\u0000t\u0000o\u0000g\u0000r\u0000a\u0000p\u0000h\u0000y\u0000=\u0000=\u00004\u00006\u0000.\u00000\u0000.\u00005\u0000",
+      "\u0000d\u0000e\u0000p\u0000r\u0000e\u0000c\u0000a\u0000t\u0000i\u0000o\u0000n\u0000=\u0000=\u00002\u0000.\u00001\u0000.\u00000\u0000"
+    ]
+  },
+  "24_TRNDO": {
+    "files_count": 33,
+    "sample_files": [
+      "backend\\billing_919946779672.txt",
+      "backend\\go.mod",
+      "backend\\go.sum",
+      "backend\\invoice_919633768464.pdf",
+      "backend\\invoice_919946779672.pdf",
+      "backend\\qr.png",
+      "backend\\whatsapp_session.db",
+      "backend\\client\\main.go",
+      "backend\\client\\qr.png",
+      "backend\\client\\whatsapp_session.db",
+      "Go-Backend\\makeaton\\.gitignore",
+      "Go-Backend\\makeaton\\business_profile.json"
+    ],
+    "has_package_json": false,
+    "has_requirements": true,
+    "dependencies": [
+      "Flask",
+      "Flask-CORS",
+      "reportlab",
+      "qrcode[pil]",
+      "Pillow",
+      "marshmallow",
+      "python-dateutil",
+      "google-genai",
+      "python-dotenv",
+      "gunicorn",
+      "requests"
+    ]
+  },
+  "25_QuantumRoute": {
+    "files_count": 40,
+    "sample_files": [
+      ".gitignore",
+      "next-env.d.ts",
+      "next.config.js",
+      "package-lock.json",
+      "package.json",
+      "project_context.txt",
+      "README.md",
+      "tsconfig.json",
+      "tsconfig.tsbuildinfo",
+      "app\\globals.css",
+      "app\\layout.tsx",
+      "app\\page.tsx"
+    ],
+    "has_package_json": true,
+    "has_requirements": true,
+    "dependencies": [
+      "leaflet",
+      "next",
+      "react",
+      "react-dom",
+      "react-leaflet",
+      "qiskit>=1.0",
+      "qiskit-aer>=0.13",
+      "qiskit-algorithms>=0.3",
+      "qiskit-optimization>=0.6",
+      "qiskit-ibm-runtime>=0.20",
+      "python-dotenv>=1.0",
+      "flask>=3.0",
+      "flask-cors>=4.0",
+      "numpy>=1.24"
+    ]
+  },
+  "26_Clinical_Action_and_Response_Engine": {
+    "files_count": 1493,
+    "sample_files": [
+      ".gitignore",
+      "C.A.R.E. Mobile Application\\.gitignore",
+      "C.A.R.E. Mobile Application\\.metadata",
+      "C.A.R.E. Mobile Application\\analysis_options.yaml",
+      "C.A.R.E. Mobile Application\\build.yaml",
+      "C.A.R.E. Mobile Application\\build_log.txt",
+      "C.A.R.E. Mobile Application\\build_log_2.txt",
+      "C.A.R.E. Mobile Application\\build_log_3.txt",
+      "C.A.R.E. Mobile Application\\build_log_4.txt",
+      "C.A.R.E. Mobile Application\\devtools_options.yaml",
+      "C.A.R.E. Mobile Application\\fix_freezed.py",
+      "C.A.R.E. Mobile Application\\l10n.yaml"
+    ],
+    "has_package_json": true,
+    "has_requirements": false,
+    "dependencies": [
+      "react",
+      "react-dom",
+      "@emotion/react",
+      "@emotion/styled",
+      "@mui/icons-material",
+      "@mui/material",
+      "@popperjs/core",
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-alert-dialog",
+      "@radix-ui/react-aspect-ratio",
+      "@radix-ui/react-avatar",
+      "@radix-ui/react-checkbox",
+      "@radix-ui/react-collapsible",
+      "@radix-ui/react-context-menu",
+      "@radix-ui/react-dialog"
+    ]
+  },
+  "2_AI-Powered_Farm_Management_&_Decision_": {
+    "files_count": 45,
+    "sample_files": [
+      "about.html",
+      "BG_VIDEO.mp4",
+      "chatbot.css",
+      "chatbot.html",
+      "chatbot.js",
+      "custom.html",
+      "DELIVERY_SUMMARY.md",
+      "docs.md",
+      "IMPLEMENTATION.md",
+      "index.html",
+      "login.html",
+      "logo.png"
+    ],
+    "has_package_json": false,
+    "has_requirements": true,
+    "dependencies": [
+      "fastapi",
+      "uvicorn",
+      "requests",
+      "numpy"
+    ]
+  },
+  "2_AI-Powered_Farm_Management_&_Decision_Suppo": {
+    "files_count": 1,
+    "sample_files": [
+      "windy.html"
+    ],
+    "has_package_json": false,
+    "has_requirements": false,
+    "dependencies": []
+  },
+  "3_Secure.sol": {
+    "files_count": 191,
+    "sample_files": [
+      ".gitignore",
+      ".lintstagedrc.js",
+      ".mcp.json",
+      ".yarnrc.yml",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "CONTRIBUTING.md",
+      "funding.json",
+      "LICENCE",
+      "opencode.json",
+      "owasp10.txt",
+      "package-lock.json"
+    ],
+    "has_package_json": true,
+    "has_requirements": false,
+    "dependencies": [
+      "@radix-ui/react-slot",
+      "lucide-react",
+      "@google/generative-ai",
+      "cors",
+      "dotenv",
+      "express",
+      "multer",
+      "openai",
+      "@inquirer/password",
+      "@openzeppelin/contracts",
+      "@typechain/ethers-v6",
+      "envfile",
+      "qrcode",
+      "@heroicons/react",
+      "@radix-ui/react-tabs"
+    ]
+  },
+  "4_RiskRank": {
+    "files_count": 64,
+    "sample_files": [
+      ".gitignore",
+      "eslint.config.mjs",
+      "middleware.ts",
+      "next.config.ts",
+      "package-lock.json",
+      "package.json",
+      "postcss.config.mjs",
+      "README.md",
+      "tailwind.config.ts",
+      "tsconfig.json",
+      "app\\favicon.ico",
+      "app\\globals.css"
+    ],
+    "has_package_json": true,
+    "has_requirements": false,
+    "dependencies": [
+      "@types/bcryptjs",
+      "@types/three",
+      "bcryptjs",
+      "clsx",
+      "dotenv",
+      "framer-motion",
+      "html2canvas",
+      "jose",
+      "jspdf",
+      "lucide-react",
+      "mongoose",
+      "next",
+      "postprocessing",
+      "react",
+      "react-dom"
+    ]
+  },
+  "5_Traq": {
+    "files_count": 37,
+    "sample_files": [
+      ".env.example",
+      "architecture_diagram.md",
+      "detailed_description.txt",
+      "index.html",
+      "package-lock.json",
+      "package.json",
+      "postcss.config.js",
+      "README.md",
+      "tailwind.config.js",
+      "vite.config.js",
+      "dist\\index.html",
+      "dist\\assets\\index-BrvHtWEo.css"
+    ],
+    "has_package_json": true,
+    "has_requirements": false,
+    "dependencies": [
+      "firebase",
+      "lucide-react",
+      "react",
+      "react-dom",
+      "react-router-dom"
+    ]
+  },
+  "6_Cusatify": {
+    "files_count": 158,
+    "sample_files": [
+      ".gitignore",
+      ".metadata",
+      "analysis_options.yaml",
+      "app-release.apk",
+      "firebase.json",
+      "pubspec.lock",
+      "pubspec.yaml",
+      "README.md",
+      "android\\.gitignore",
+      "android\\build.gradle.kts",
+      "android\\gradle.properties",
+      "android\\settings.gradle.kts"
+    ],
+    "has_package_json": false,
+    "has_requirements": false,
+    "dependencies": []
+  },
+  "7_Trust_Score_Engine": {
+    "files_count": 19,
+    "sample_files": [
+      "api.py",
+      "app.py",
+      "debug_trust.py",
+      "LICENSE",
+      "PROJECT_STRUCTURE.md",
+      "README.md",
+      "requirements.txt",
+      "sample_data.csv",
+      "test_app.py",
+      "trust_engine.py",
+      "services\\btc_api.py",
+      "services\\simulation.py"
+    ],
+    "has_package_json": false,
+    "has_requirements": true,
+    "dependencies": [
+      "pandas",
+      "numpy",
+      "plotly",
+      "streamlit",
+      "requests",
+      "fastapi",
+      "uvicorn"
+    ]
+  },
+  "8_COG_AI": {
+    "files_count": 0,
+    "sample_files": [],
+    "has_package_json": false,
+    "has_requirements": false,
+    "dependencies": []
+  },
+  "9_Mudra": {
+    "files_count": 49,
+    "sample_files": [
+      ".gitignore",
+      "README.md",
+      "backend\\inspect_data.py",
+      "backend\\live_prediction.py",
+      "backend\\pyproject.toml",
+      "backend\\README.md",
+      "backend\\socket_send.py",
+      "backend\\split_dataset.py",
+      "backend\\train.py",
+      "backend\\udp.py",
+      "backend\\datasets\\alphabets.csv",
+      "backend\\datasets\\dataset.csv"
+    ],
+    "has_package_json": true,
+    "has_requirements": false,
+    "dependencies": [
+      "next",
+      "react",
+      "react-dom",
+      "socket.io-client",
+      "ws"
+    ]
+  }
+}
